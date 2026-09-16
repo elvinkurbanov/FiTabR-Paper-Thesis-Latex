@@ -1,0 +1,215 @@
+% -*- mode : latex; coding: utf-8 -*-
+\ProvidesPackage{seoultech}\def\contentsname{Contents}
+
+\def\listfigurename{List of Figures}
+\def\listtablename{List of Tables}
+\def\listalgorithname{List of Algorithms}
+\def\refname{References}
+\def\bibname{References}
+\def\indexname{Index}
+\def\figurename{Figure}
+\def\tablename{Table}
+\def\appendixname{Appendix}
+\def\summaryname{Abstract}
+\def\ackname{acknowledge}
+\def\acknowledgename{acknowledge}
+
+%% 전체 줄간격
+\linespread{2.0}
+
+%% 기초 정보
+\makeatletter
+\def\KoreanNameofDegree#1{\gdef\koreannameof@degree{#1}}
+\def\EnglishNameofDegree#1{\gdef\englishnameof@degree{#1}}
+\def\EnglishNameofPaper#1{\gdef\englishnameof@paper{#1}}
+\def\EnglishTitle#1{\gdef\english@title{#1}}
+\def\KoreanTitle#1{\gdef\korean@title{#1}}
+\def\GraduateDate#1{\gdef\graduate@date{#1}}
+\def\GraduateDateEnglish#1{\gdef\english@graduatedate{#1}}
+\def\RefereeDate#1{\gdef\referee@date{#1}}
+\def\SummittedDate#1{\gdef\summitte@date{#1}}
+\def\EnglishSummittedDate#1{\gdef\english@summittedate{#1}}
+\def\AuthorKoreanName#1{\gdef\korean@authorname{#1}}
+\def\AuthorEnglishName#1{\gdef\english@authorname{#1}}
+\def\RefereeChief#1{\gdef\referee@chief{#1}}
+\def\RefereeSecond#1{\gdef\referee@second{#1}}
+\def\RefereeThird#1{\gdef\referee@third{#1}}
+\def\RefereeFourth#1{\gdef\referee@fourth{#1}}
+\def\RefereeFifth#1{\gdef\referee@fifth{#1}}
+\def\AdvisorKoreanName#1{\gdef\korean@advisorname{#1}}
+\def\AdvisorEnglishName#1{\gdef\english@advisorname{#1}}
+\def\KeyWordsEnglish#1{\gdef\key@wordsenglish{#1}}
+\def\KeyWordsKorean#1{\gdef\key@wordskorean{#1}}
+\def\StudentNumber#1{\gdef\student@number{#1}}
+\def\EnglishDepartmentName#1{\gdef\english@departmentname{#1}}
+\def\KoreanDepartmentName#1{\gdef\korean@departmentname{#1}}
+
+%% 학위논문 작성 요령에 따른 글자 크기 / 굵기
+\newcommand{\titlesizebf}[1]{{\huge \textbf{#1}}}
+\newcommand{\subtitlesizebf}[1]{{\Large \textbf{#1}}}
+\newcommand{\sumtitlesizebf}[1]{\Large {#1}}
+\newcommand{\datesizebf}[1]{{\Large \textbf{#1}}}
+\newcommand{\datesizenormal}[1]{{\Large #1}}
+\newcommand{\writtenconsentsizebf}[1]{{\large \textbf{#1}}}
+\newcommand{\writtenconsentsizenormal}[1]{{\large #1}}
+
+%% 클리어엠티더블페이지
+\newcommand{\cedp}{\newpage{\pagestyle{empty}\cleardoublepage}}
+
+%% 겉표지
+\newcommand{\makefrontcover}{%
+  \thispagestyle{empty} \noindent%  
+  \vskip 3.5cm %
+  \datesizebf{\englishnameof@paper} \\ %
+  \begin{center}
+
+    \vskip 1cm %
+    \titlesizebf{\korean@title} \\
+	\titlesizebf{\english@title} \\    
+    \vfill %
+    \vskip 2cm %
+    \datesizebf{by} \\ %
+            
+		\datesizebf{\english@authorname} \\ %    
+            \vskip 2cm %
+            \datesizenormal{\english@graduatedate} \\%
+		\vskip 2.5cm %
+		\datesizenormal{\english@departmentname} \\ %    
+  
+    \subtitlesizebf{The Graduate School \\ Seoul National University of Science and Technology} \\ %
+    \vskip 2cm %
+		
+  \end{center}
+  \newpage %
+}
+
+\newcommand{\refereesign}[1]{\underline{\makebox[3cm][s]{\texttt{#1}}}}
+\newcommand{\refereevskip}{1cm}
+
+%% 영문제출문
+\newcommand{\englishproposal}{%
+  \thispagestyle{empty} \noindent%
+  \begin{center}
+    \vskip 3.5cm
+    \titlesizebf{\english@title} \\ %
+    \vskip 1.5cm		    
+		\subtitlesizebf{by} \\
+		\subtitlesizebf{\english@authorname} \\
+    \vskip 1.8cm
+    \sumtitlesizebf{A \englishnameof@paper~ submitted to the
+		\english@departmentname~ at the Graduate School of the
+		Seoul National University of Science and Technology in partial fulfillment of the requirements
+		for the degree of \englishnameof@degree} \\ %
+    \vskip 0.9cm
+    \datesizenormal{\english@graduatedate} \\%
+    \vfill 
+    \subtitlesizebf{Approved by} \\ %    
+    \subtitlesizebf{\english@advisorname} \\ %    
+		\subtitlesizebf{Advisor} \\ %      
+  \end{center}
+  \newpage
+}
+
+% 인준서도장명령정의
+\newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+%% 대부분의 경우 위 명령 필요 없음. 
+%% 인준서 원본을 제본집에 보내면 컬러 복사로 넣어줌.
+%% 이후 재제본을 위해 컬러 복사된 인준서 1부는 반드시 보관해둘 것. 
+
+%% 영문 인준서
+\newcommand{\makeenglishapproval}{%
+  \thispagestyle{empty} \noindent%
+  \begin{center}
+    \vskip 35mm%
+    \datesizenormal{This certifies that master thesis of \\ \english@authorname \ is approved.} \\ %
+    \vskip 15mm %
+    \begin{center}
+      \begin{tabular}{lll}
+		
+        \subtitlesizebf{Committee Chairman: }  & \referee@chief &  \\ \\ %
+	
+        \subtitlesizebf{Committee Member: } & \referee@second  & \\ \\ %
+	
+        \subtitlesizebf{Committee Member: } & \referee@third  & \\ \\  %
+	
+    \end{tabular}
+    \end{center}
+    \vfill%
+    \subtitlesizebf{The Graduate School \\ Seoul National University of Science and Technology}
+    \vfill%
+    \datesizenormal{\english@graduatedate}%
+  \end{center}
+  \newpage
+}
+%% 영문 초록
+\newenvironment{EnglishSummary}{%
+\thispagestyle{plain}% 
+
+  % \phantomsection % hyperref 패키지를 사용할 때 \addcontentsline 관련 오류 메세지를 없애기 위해  
+  \begin{center}
+    \titlesizebf{Abstract} \\ 
+    \vskip 10mm
+    \begin{flushleft}
+    \sumtitlesizebf{Title: \english@title}
+    \end{flushleft}
+  \end{center}
+  \vskip 8mm
+}
+
+%국문 초록
+\newenvironment{KoreanAbstract}{%
+  \thispagestyle{plain}% 
+  \phantomsection 
+  \addcontentsline{toc}{chapter}{국문초록}%  목차(TOC)에 삽입
+  \begin{center}
+    \subtitlesizebf{국문초록} \\ % 제목 -> 국문초록
+  \end{center}\vskip 5mm
+  \begin{flushleft}
+  \sumtitlesizebf{Title: \english@title}
+  \end{flushleft}
+  \begin{flushright}
+    \korean@authorname \\ %
+    %% 아래 내용은 대학원장님과 상담 후 넣는 것으로 확정됨.
+    (지도교수 : \korean@advisorname) \\
+    \korean@departmentname \\ %
+    일반 대학원 \\
+    서울과학기술대학교
+       
+  \end{flushright}
+  \vskip 5mm
+}
+{  \vfill  
+  % \noindent \textbf{주요어휘:}~\key@wordskorean \\ %
+  \medskip  
+  \newpage
+}
+
+%% 감사의 글
+\newenvironment{KoreanAcknowledgement}{%
+  \thispagestyle{plain}%
+  \phantomsection %
+  \addcontentsline{toc}{chapter}{감사의 글}%  목차(TOC)에 삽입
+  \begin{center}
+    \subtitlesizebf{감사의 글} \\ % 제목 -> 감사의 글
+  \end{center}
+  \vskip 1cm
+}{  \vfill
+  \medskip
+  \newpage
+}
+\makeatother
+
+%% Appendix
+\newcommand{\makeAppendix}{%
+  \thispagestyle{plain}%
+  \phantomsection %
+  \addcontentsline{toc}{chapter}{Appendix}%  목차(TOC)에 삽입
+  \begin{flushleft}
+    \subtitlesizebf{Appendix} \\ 
+    \input{A-appendix.tex}
+  \end{flushleft}
+}{  \vfill
+  \medskip
+  \newpage
+}
+\makeatother
