@@ -1,0 +1,49 @@
+\contentsline {chapter}{Summary}{i}{Doc-Start}%
+\contentsline {chapter}{List of Tables}{iii}{chapter*.4}%
+\contentsline {chapter}{List of Figures}{iv}{chapter*.6}%
+\contentsline {chapter}{\chapternumberline {1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\chapternumberline {2}Research Background}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Classical Machine Learning for Medical Tabular Data}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Deep Learning for Tabular Prediction}{10}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Retrieval-Augmented Tabular Learning}{11}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Attention and Explainability in Medical Machine Learning}{13}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Research Gap and Positioning of FiTabR}{14}{section.2.5}%
+\contentsline {chapter}{\chapternumberline {3}Methodology}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Problem Formulation}{16}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Base Retrieval Model}{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Proposed FiTabR Architecture}{18}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Feature-Attention Module}{19}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Attention Scaling and Residual Feature Weighting}{19}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Feature Fusion}{20}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Integration with TabR Retrieval}{20}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Attention-Based Interpretability}{22}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Methodological Summary}{22}{section.3.9}%
+\contentsline {chapter}{\chapternumberline {4}Experimental Setup}{24}{chapter.4}%
+\contentsline {chapter}{Experimental Setup}{24}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Datasets}{24}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Heart Disease}{24}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Pima Indians Diabetes}{25}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Stroke Prediction}{25}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Preprocessing}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Baselines}{27}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Gradient-Boosted Decision Trees}{27}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Deep Tabular Models}{27}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Retrieval-Based Baseline}{28}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Evaluation Metrics}{28}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Accuracy}{28}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Precision and Recall}{28}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}F1-Score}{29}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}ROC--AUC}{29}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Binary Cross-Entropy}{29}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}Implementation Details}{30}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Equations}{31}{section.4.6}%
+\contentsline {section}{\numberline {4.7}\LaTeX -Specific Advice}{32}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Some Common Mistakes}{33}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Authors and Affiliations}{34}{section.4.9}%
+\contentsline {section}{\numberline {4.10}Identify the Headings}{35}{section.4.10}%
+\contentsline {section}{\numberline {4.11}Figures and Tables}{35}{section.4.11}%
+\contentsline {paragraph}{Positioning Figures and Tables}{35}{paragraph*.9}%
+\contentsline {chapter}{References}{37}{chapter*.14}%
+\contentsline {chapter}{국문초록}{41}{section*.15}%
+\contentsline {chapter}{감사의 글}{42}{section*.16}%
+\contentsfinish 

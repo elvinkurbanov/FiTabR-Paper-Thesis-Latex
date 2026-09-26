@@ -1,0 +1,66 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: thesis.aux
+Reallocating 'name_of_file' (item size: 1) to 16 items.
+A level-1 auxiliary file: abs-summary.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: IEEEtran.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+A level-1 auxiliary file: abs-korean.aux
+Reallocating 'name_of_file' (item size: 1) to 13 items.
+A level-1 auxiliary file: thanksto.aux
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: references.bib
+Warning--I didn't find a database entry for "b7"
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 27 entries,
+            4087 wiz_defined-function locations,
+            951 strings with 11908 characters,
+and the built_in function-call counts, 19204 in all, are:
+= -- 1419
+> -- 537
+< -- 120
++ -- 290
+- -- 110
+* -- 903
+:= -- 2762
+add.period$ -- 54
+call.type$ -- 27
+change.case$ -- 30
+chr.to.int$ -- 294
+cite$ -- 27
+duplicate$ -- 1410
+empty$ -- 1733
+format.name$ -- 128
+if$ -- 4513
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 278
+newline$ -- 104
+num.names$ -- 27
+pop$ -- 725
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 1495
+stack$ -- 0
+substring$ -- 736
+swap$ -- 1042
+text.length$ -- 22
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 27
+warning$ -- 0
+while$ -- 67
+width$ -- 29
+write$ -- 260
+(There was 1 warning)

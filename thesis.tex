@@ -307,39 +307,730 @@ colorlinks = true
   \renewcommand{\headrulewidth}{0pt}
 
     \chapter{Introduction}
-    This document is a model and instructions for \LaTeX.
-    Please observe the conference page limits. 
+
+Machine learning has become increasingly relevant to medical prediction as
+clinical information is progressively collected and stored in structured
+digital form. Many clinical prediction problems are naturally represented as
+tabular data composed of demographic characteristics, physiological
+measurements, laboratory values, medical history, and other patient-related
+variables. Such data support a wide range of predictive tasks, including
+disease identification, risk estimation, and clinical outcome prediction
+\cite{rajkomar2019mlmedicine}. However, medical tabular data also present
+several challenges for predictive modeling. Compared with the large-scale
+datasets commonly available in computer vision and natural language processing,
+medical datasets are often relatively small, may contain heterogeneous feature
+types, and can exhibit substantial differences in class distribution and
+predictive structure across clinical tasks.
+
+Traditional machine learning methods, particularly tree-based models, remain
+strong approaches for tabular prediction. Gradient-boosted decision trees such
+as XGBoost, LightGBM, and CatBoost have demonstrated competitive performance
+across a wide range of structured-data problems
+\cite{chen2016xgboost,ke2017lightgbm,prokhorenkova2018catboost}. In contrast,
+the advantages of deep learning on conventional tabular datasets have been less
+consistent than in image, text, and speech applications. Previous studies have
+shown that carefully tuned tree-based models frequently remain competitive with
+or outperform deep neural networks on typical tabular benchmarks
+\cite{grinsztajn2022tree}. Nevertheless, recent advances in tabular deep
+learning have introduced architectures designed specifically to improve the
+representation of numerical and categorical variables and to model interactions
+between features and observations
+\cite{gorishniy2021revisiting,gorishniy2022embeddings,somepalli2021saint}.
+
+One important direction within this development is retrieval-augmented tabular
+learning. Rather than generating a prediction solely from parameters learned
+during training, retrieval-augmented models additionally use information from
+relevant observations stored in the training set. For a given target sample,
+similar observations are retrieved and incorporated into the prediction
+process. This idea connects representation learning with local information from
+the available data and has motivated several retrieval-based approaches for
+tabular prediction
+\cite{qin2021rim,kossen2021selfattention,gorishniy2024tabr}.
+
+TabR is a recent retrieval-augmented deep learning model for tabular data that
+combines a feed-forward architecture with a nearest-neighbor-like retrieval
+mechanism \cite{gorishniy2024tabr}. The model first constructs a learned
+representation of the target observation and candidate training observations.
+Candidate samples are then retrieved according to similarity in the learned
+representation space, and information from the retrieved observations is
+incorporated through a contextual aggregation mechanism before the final
+prediction is produced. TabR demonstrated that an appropriately designed
+retrieval mechanism can substantially improve the competitiveness of deep
+learning for tabular prediction. At the same time, the original TabR study
+also showed that retrieval is not uniformly beneficial for every dataset,
+highlighting the importance of dataset characteristics in determining the
+effectiveness of retrieval-based learning.
+
+The behavior of a retrieval-augmented model depends not only on how candidate
+observations are retrieved, but also on the representation from which
+similarity is determined. In TabR, numerical and categorical inputs are encoded
+into learned sample representations before candidate retrieval is performed.
+The retrieval component therefore operates on representations whose geometry
+depends on how the original input variables are transformed. However, the
+original TabR architecture does not explicitly introduce sample-specific
+reweighting of individual numerical variables before the encoder. Its
+specialized attention-like mechanism is instead primarily associated with the
+retrieval and aggregation of candidate observations.
+
+This distinction motivates the central question investigated in this thesis.
+Medical tabular datasets commonly contain numerical measurements whose
+predictive relevance may vary across prediction tasks and individual samples.
+An explicit mechanism that allows the numerical representation to adapt to the
+characteristics of each observation may therefore influence the representation
+subsequently used by the retrieval model. At the same time, modern neural
+networks are already capable of learning nonlinear transformations of their
+inputs, and it cannot be assumed in advance that an additional feature-aware
+mechanism will consistently improve predictive performance. The effect of such
+a modification must therefore be evaluated empirically and separated from
+changes to the retrieval architecture itself.
+
+To investigate this problem, this thesis proposes \textit{FiTabR}, a
+feature-aware extension of TabR for medical tabular classification. FiTabR
+introduces a lightweight attention network that operates on numerical features
+before the TabR encoder. For each input sample, the attention module produces
+a distribution over the numerical variables. These values are then used to
+modulate the numerical input through residual feature reweighting. The
+resulting representation is subsequently processed by the original TabR
+encoder and retrieval pipeline.
+
+For a numerical feature vector $\mathbf{x}_i$, the FiTabR representation is
+defined as
+
+\begin{equation}
+    \tilde{\mathbf{x}}_i
+    =
+    \mathbf{x}_i
+    \odot
+    \left(
+        1 + \alpha \mathbf{a}_i
+    \right),
+    \label{eq:fitabr_intro}
+\end{equation}
+
+where $\mathbf{a}_i$ denotes the sample-specific attention distribution,
+$\alpha$ is the attention scaling coefficient, and $\odot$ denotes
+element-wise multiplication. The residual term preserves the original
+numerical input while allowing the learned attention mechanism to modify its
+magnitude before encoding. Importantly, FiTabR does not replace the retrieval
+mechanism of TabR. Candidate retrieval, contextual aggregation, and the final
+prediction mechanism are retained. The architectural change is therefore
+localized to the numerical representation supplied to the TabR encoder.
+
+This controlled design makes it possible to examine whether changes in
+pre-retrieval numerical representation can affect the behavior of a
+retrieval-augmented model without simultaneously redesigning its retrieval
+mechanism. Accordingly, the primary research question of this thesis is:
+
+\begin{quote}
+\textit{Can sample-specific numerical feature modulation provide useful
+improvements to retrieval-augmented tabular classification while preserving
+the underlying TabR retrieval framework?}
+\end{quote}
+
+Two additional questions follow from this objective. First, if differences in
+performance are observed, which components of the proposed representation
+mechanism are responsible for them? Second, does the learned feature-attention
+mechanism provide meaningful information about how the model emphasizes
+numerical clinical variables across different observations?
+
+To address these questions, FiTabR is evaluated on three medical binary
+classification tasks: Heart Disease, Pima Diabetes, and Stroke Prediction.
+These datasets provide different experimental conditions in terms of sample
+size, feature composition, and class distribution. FiTabR is compared directly
+with the original TabR architecture and with conventional machine learning and
+deep tabular learning baselines. The purpose of the cross-dataset evaluation
+is not to assume that feature-aware representation will improve every medical
+prediction task, but to determine whether its effect is consistent and to
+identify the conditions under which the proposed mechanism is beneficial.
+
+The experimental findings provide partial rather than universal support for
+the initial hypothesis. FiTabR shows its clearest improvement relative to TabR
+on the Heart Disease dataset, whereas the differences observed on Pima Diabetes
+are more modest. On the severely imbalanced Stroke Prediction dataset, the
+proposed representation mechanism does not improve threshold-based
+minority-class prediction. These results indicate that explicit feature-aware
+numerical representation can influence retrieval-augmented tabular learning,
+but that its effectiveness depends on the characteristics of the underlying
+dataset. In particular, modifying feature representation alone is not
+sufficient to address learning problems dominated by severe class imbalance.
+
+Predictive comparison between TabR and FiTabR alone is insufficient to
+determine why the proposed method behaves differently. For this reason, the
+thesis additionally conducts a component-level ablation study. Three
+architectural variants are examined: a model without residual feature
+preservation, a model without the explicit attention-scaling factor, and a
+model in which learned feature attention is replaced by uniform weighting.
+These experiments distinguish the contribution of residual preservation,
+numerical modulation, and sample-specific nonuniform weighting. The ablation
+results show that the components do not contribute equally across datasets.
+Residual feature preservation receives the clearest empirical support,
+particularly on Heart Disease, whereas fixed attention scaling and learned
+nonuniform feature weighting exhibit more dataset-dependent effects.
+
+The feature-attention mechanism also provides an explicit internal signal that
+can be examined independently of overall predictive performance. Attention
+values are therefore analyzed across samples using their mean and standard
+deviation. The mean attention assigned to a feature describes its average
+model-assigned emphasis across the dataset, while the standard deviation
+characterizes how strongly this emphasis varies between individual samples.
+These patterns are compared with established medical domain knowledge to
+examine whether the representation learned by FiTabR exhibits clinically
+plausible correspondence. Attention-based tabular models have previously been
+used to expose feature-selection and interaction behavior
+\cite{arik2021tabnet}; however, attention values should not automatically be
+interpreted as causal explanations. Accordingly, the analysis in this thesis
+treats FiTabR attention as evidence of internal model behavior rather than as a
+direct estimate of clinical risk or causal feature importance.
+
+Based on this design and experimental analysis, the principal contributions of
+this thesis are summarized as follows:
+
+\begin{enumerate}
+    \item \textbf{Feature-aware extension of retrieval-augmented tabular
+    learning.}
+    FiTabR introduces sample-specific residual modulation of numerical features
+    before the TabR encoder while retaining the original candidate retrieval,
+    contextual aggregation, and prediction mechanisms. This provides a
+    controlled framework for studying feature-aware representation without
+    redesigning the retrieval architecture.
+
+    \item \textbf{Cross-dataset empirical evaluation of the proposed
+    representation mechanism.}
+    FiTabR is evaluated across three medical tabular classification tasks and
+    compared with TabR, conventional machine learning models, and deep tabular
+    baselines. The results identify both conditions in which feature-aware
+    representation provides measurable benefit and conditions in which its
+    contribution is limited.
+
+    \item \textbf{Component-level analysis through architectural ablation.}
+    Residual preservation, attention scaling, and learned nonuniform weighting
+    are evaluated separately to determine how each component contributes to
+    the observed behavior. The analysis shows that the benefit of FiTabR
+    cannot be attributed uniformly to all components and that residual
+    preservation receives the strongest empirical support in the clearest
+    positive case.
+
+    \item \textbf{Analysis of sample-specific feature emphasis.}
+    The learned attention distributions are examined through their mean and
+    standard deviation and compared with established medical knowledge. This
+    analysis characterizes both population-level feature emphasis and
+    sample-dependent variation while maintaining a distinction between
+    model-assigned attention and clinical importance.
+\end{enumerate}
+
+These contributions position FiTabR as a controlled investigation of
+feature-aware representation within retrieval-augmented tabular learning rather
+than as a universally superior replacement for TabR. The results are used to
+identify not only where the proposed representation mechanism provides
+benefits, but also where its assumptions and capabilities are insufficient.
+Such analysis is particularly important for medical tabular learning, where
+dataset size, class distribution, and feature structure can vary substantially
+between prediction problems.
+
+The remainder of this thesis is organized as follows. Chapter II reviews
+medical tabular learning, deep learning methods for structured data,
+retrieval-augmented tabular learning, the TabR architecture, and feature
+attention approaches relevant to this work. Chapter III presents the proposed
+FiTabR architecture, including the problem formulation, feature-attention
+module, residual feature modulation, and integration with the TabR retrieval
+framework. Chapter IV describes the datasets, baseline models, experimental
+protocol, main comparative results, ablation experiments, attention analysis,
+and discussion of the observed behavior. Finally, Chapter V summarizes the
+main findings, discusses the limitations of the study, and outlines directions
+for future research.
     
-    \chapter{Ease of Use}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% II. RESEARCH BACKGROUND / RELATED WORK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Research Background}
+
+\section{Classical Machine Learning for Medical Tabular Data}
+
+Classical machine learning methods remain strong baselines for structured
+tabular prediction. In particular, gradient-boosted decision tree (GBDT)
+methods are widely used because they can model nonlinear relationships and
+high-order feature interactions while remaining effective on small- and
+medium-sized tabular datasets. XGBoost introduced a scalable gradient-boosting
+framework with regularization and efficient tree construction
+\cite{chen2016xgboost}, while LightGBM improved computational efficiency
+through histogram-based learning and leaf-wise tree growth
+\cite{ke2017lightgbm}. CatBoost further addressed the treatment of categorical
+variables through ordered boosting and specialized categorical-feature
+processing \cite{prokhorenkova2018catboost}.
+
+The continued strength of these approaches is particularly relevant to deep
+learning research on tabular data. Unlike image and language domains, where
+deep neural architectures have become dominant, tree-based methods frequently
+remain highly competitive on conventional tabular benchmarks
+\cite{grinsztajn2022tree}. This observation makes GBDT models important
+reference baselines when evaluating new neural architectures for medical
+tabular prediction.
+
+Local learning provides another relevant perspective. Instead of learning only
+a global mapping from features to outcomes, local methods make predictions
+using observations in the neighborhood of a target sample. Early work on local
+learning demonstrated the general principle of adapting prediction to nearby
+training observations \cite{bottou1992local}. Similarly, standard statistical
+learning methods such as $k$-nearest neighbors provide a simple example of
+instance-based prediction in which similarity between observations directly
+affects the predicted output \cite{james2013islr}. This local-learning
+perspective is conceptually related to modern retrieval-augmented models, which
+combine learned representations with information obtained from selected
+training samples.
+
+
+\section{Deep Learning for Tabular Prediction}
+
+Recent research has investigated whether neural networks can achieve stronger
+performance on structured data through architectures specifically designed for
+tabular inputs. Gorishniy et al. revisited commonly used deep learning models
+for tabular prediction and demonstrated that carefully configured multilayer
+perceptrons and Transformer-based architectures can serve as competitive neural
+baselines \cite{gorishniy2021revisiting}. Subsequent work has also emphasized
+the importance of numerical feature representation, showing that the manner in
+which continuous variables are embedded can substantially affect the
+performance of tabular neural networks \cite{gorishniy2022embeddings}.
+
+Attention mechanisms have been applied to tabular learning in several forms.
+TabTransformer uses contextual representations of categorical variables to
+model relationships among features \cite{huang2020tabtransformer}. TabNet
+introduces sequential attentive feature selection, allowing the model to focus
+on subsets of variables at different decision steps
+\cite{arik2021tabnet}. SAINT extends attention beyond feature interactions by
+applying attention across both rows and columns and combining this mechanism
+with contrastive pre-training \cite{somepalli2021saint}. These methods
+demonstrate that attention can be used to adapt representations to the
+structure of tabular data rather than treating the input only through a
+standard feed-forward transformation.
+
+Despite these developments, deep learning does not consistently dominate
+tree-based methods on typical tabular datasets. Grinsztajn et al. showed that
+tree-based models retain important advantages on many medium-sized structured
+datasets, particularly under conditions commonly encountered in practical
+tabular learning \cite{grinsztajn2022tree}. Consequently, recent research has
+explored mechanisms beyond conventional feed-forward representation learning,
+including improved numerical embeddings, attention-based feature interaction,
+and retrieval of information from other observations.
+
+
+\section{Retrieval-Augmented Tabular Learning}
+
+Retrieval-augmented learning extends conventional predictive models by allowing
+information from other training observations to participate directly in the
+prediction of a target sample. The underlying idea is related to local and
+instance-based learning, but modern retrieval-augmented methods combine this
+principle with learned neural representations. Instead of relying exclusively
+on predefined distances in the original input space, these methods learn a
+representation in which relevant observations can be identified and their
+information subsequently incorporated into prediction.
+
+Several approaches have investigated interactions among observations for
+tabular prediction. The Retrieval and Interaction Machine (RIM) combines
+retrieval with interaction mechanisms to exploit information from related
+training instances \cite{qin2021rim}. Other work has investigated
+neighborhood-based representation propagation as a means of enriching the
+representation of tabular observations using information from nearby samples
+\cite{du2022neighborhood}. Self-attention between datapoints has also been
+proposed as an alternative to architectures that process each observation
+independently, demonstrating that relationships among samples can provide
+additional predictive information \cite{kossen2021selfattention}. Related
+memory-based approaches, including Hopular, further demonstrate the potential
+of associating tabular observations with information stored in the training
+data \cite{schafl2022hopular,ramsauer2021hopfield}.
+
+TabR provides a more direct and computationally efficient realization of
+retrieval-augmented tabular deep learning. The model combines a feed-forward
+network with a nearest-neighbor-like retrieval component operating in a learned
+representation space \cite{gorishniy2024tabr}. For each target observation,
+TabR constructs a query representation, identifies relevant candidate
+observations from the training set, and incorporates their representations and
+labels through an attention-like contextual aggregation mechanism. The
+resulting contextual information is combined with the target representation
+before final prediction.
+
+The TabR study demonstrated that retrieval can substantially strengthen tabular
+deep learning on a range of benchmarks while using a comparatively simple
+architecture \cite{gorishniy2024tabr}. Importantly, however, the effectiveness
+of retrieval was shown to depend on the dataset. The study also identified
+numerical representation and retrieval as distinct but interacting components
+of tabular deep learning, suggesting that the representation on which
+similarity is computed is itself an important architectural consideration.
+
+FiTabR builds directly on this observation. Rather than modifying candidate
+selection, contextual aggregation, or the prediction mechanism, FiTabR changes
+the numerical representation supplied to the TabR encoder. A lightweight
+attention network generates a sample-specific distribution over numerical
+variables, and these values are used for residual modulation before encoding.
+The subsequent TabR retrieval pipeline is retained. FiTabR therefore provides a
+controlled setting for studying whether explicit sample-specific numerical
+modulation before representation learning can affect the behavior of a
+retrieval-augmented tabular model.
+
+
+\section{Attention and Explainability in Medical Machine Learning}
+
+Interpretability is an important consideration in medical machine learning
+because predictive performance alone may be insufficient for understanding how
+a model arrives at its outputs. General-purpose post-hoc explanation methods
+have therefore been widely applied to complex predictive models. LIME explains
+individual predictions by constructing locally interpretable approximations of
+a model around a particular observation \cite{ribeiro2016lime}, whereas SHAP
+uses concepts from cooperative game theory to assign feature-attribution values
+to model predictions \cite{lundberg2017shap}. More broadly, the application of
+machine learning in medicine has emphasized the importance of considering model
+interpretation, validation, and clinical context alongside predictive
+performance \cite{rajkomar2019mlmedicine}.
+
+Attention-based tabular models provide another source of information about
+internal model behavior. TabNet, for example, exposes feature-selection masks
+that indicate which variables are emphasized during different decision steps
+\cite{arik2021tabnet}. In similarity-based learning, interpretable prediction
+has also been studied through mechanisms that relate predictions to nearby
+training observations. Wang and Sabuncu showed that a flexible
+Nadaraya--Watson prediction head can provide similarity-based explanations
+while supporting calibrated classification
+\cite{wang2023nadarayawatson}.
+
+FiTabR combines these two perspectives at the architectural level. TabR already
+provides an instance-retrieval mechanism through which selected training
+observations contribute contextual information to prediction. FiTabR
+additionally produces sample-specific attention values over the numerical
+features before encoding. These values create an explicit feature-level signal
+that can be examined across observations.
+
+However, attention values should not automatically be interpreted as causal
+feature importance or clinical risk estimates. In this thesis, they are treated
+as indicators of the internal allocation of emphasis within the FiTabR
+representation mechanism. Mean attention values are used to characterize the
+average emphasis assigned to individual numerical variables, while their
+standard deviations are used to examine how that emphasis varies across
+samples. The resulting patterns are subsequently compared with established
+medical knowledge as a behavioral analysis of the model rather than as a
+causal explanation.
+
+
+\section{Research Gap and Positioning of FiTabR}
+
+Existing work has therefore addressed several complementary aspects of tabular
+learning. Gradient-boosted decision trees provide strong non-neural baselines
+\cite{chen2016xgboost,ke2017lightgbm,prokhorenkova2018catboost};
+attention-based neural architectures improve feature representation and
+interaction modeling
+\cite{huang2020tabtransformer,arik2021tabnet,somepalli2021saint}; and
+retrieval-augmented approaches incorporate information from other training
+observations
+\cite{qin2021rim,kossen2021selfattention,gorishniy2024tabr}.
+
+Within the methods considered in this thesis, however, the effect of explicitly
+introducing sample-specific modulation of numerical variables before the TabR
+encoder and retrieval representation remains insufficiently characterized.
+TabR learns the representation on which candidate similarity is evaluated, but
+does not explicitly introduce a separate sample-specific numerical
+feature-modulation stage before encoding. Conversely, attention-based tabular
+models provide mechanisms for feature interaction or selection, but are not
+designed as controlled modifications of the TabR retrieval framework.
+
+FiTabR addresses this gap by introducing feature-aware residual modulation of
+numerical inputs before the TabR encoder while preserving the original
+retrieval, contextual aggregation, and prediction mechanisms. This design
+isolates the representation-level modification from changes to the retrieval
+architecture and enables three related questions to be studied: whether the
+modification improves predictive behavior, which components of the
+feature-modulation mechanism contribute to any observed differences, and how
+the learned feature emphasis behaves across medical datasets.
+
+The contribution is therefore not based on the assumption that feature-aware
+modulation is universally superior to the original TabR representation.
+Instead, FiTabR is evaluated as a controlled architectural extension whose
+effectiveness may depend on the characteristics of the dataset. Ablation
+experiments and attention analysis are subsequently used to determine the
+conditions under which the proposed representation mechanism provides
+measurable value and to identify its limitations.
     
-    \section{Maintaining the Integrity of the Specifications}
+    \chapter{Methodology}
+
+\section{Problem Formulation}
+This study proposes FiTabR as an extension of the TabR retrieval-augmented tabular learning model for binary classification on medical tabular datasets. The methodology is designed to isolate the effect of feature-aware numerical representation learning while preserving the original TabR retrieval mechanism. Therefore, the proposed model modifies only the input representation stage before the TabR encoder, allowing a controlled comparison between TabR and FiTabR under the same retrieval, aggregation, and prediction framework.
+
+Proposed method considers supervised binary classification on medical tabular datasets. Let the dataset be denoted as 
+$\mathcal{D} = \{(x_i, y_i)\}_{i=1}^{N}$, where $x_i$ is the feature vector of the $i$-th sample, $y_i \in \{0,1\}$ is the corresponding binary class label, and $N$ is the total number of samples. The binary label represents the target clinical outcome, such as the presence or absence of a disease.
+
+Each input sample consists of numerical and categorical components, represented as 
+$x_i = (x_i^{\mathrm{num}}, x_i^{\mathrm{cat}})$. Here, $x_i^{\mathrm{num}}$ denotes the numerical feature vector and $x_i^{\mathrm{cat}}$ denotes the categorical feature component. The objective is to learn a prediction function $f(x_i) \rightarrow \hat{y}_i$, where $\hat{y}_i$ represents the predicted class probability or class label.
+
+Medical tabular datasets often contain limited samples, heterogeneous feature types, and variables with different levels of clinical relevance. Therefore, the model should not only produce accurate predictions but also construct meaningful representations for retrieval-based reasoning.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{graph.drawio.pdf}
+\caption{Architecture of the proposed FiTabR model. FiTabR applies feature attention, attention scaling, and residual feature weighting to numerical features before feature fusion and the original TabR retrieval and prediction pipeline.}
+\label{fig:fitabr_architecture}
+\end{figure}
+\section{Base Retrieval Model}
+
+This study uses TabR as the base retrieval-augmented tabular learning architecture. TabR combines neural representation learning with a retrieval mechanism that uses similar training samples as contextual information during prediction. In the proposed FiTabR model, the original TabR retrieval architecture is preserved. The main modification is introduced before the TabR encoder, where numerical features are adaptively reweighted using a feature-attention module. Therefore, this section focuses on the proposed feature-aware representation mechanism rather than re-describing the full TabR architecture.
+
+\section{Proposed FiTabR Architecture}
+
+FiTabR extends TabR by introducing a feature-attention module before the TabR encoder. The motivation for this modification is that not all numerical medical features contribute equally to prediction or patient similarity. In clinical datasets, some variables may be highly informative for a specific disease prediction task, while others may be weakly related or noisy. Therefore, treating all numerical features uniformly before retrieval may reduce the quality of the retrieved neighborhood.
+
+The proposed FiTabR pipeline follows the sequence 
+$x_i^{\mathrm{num}} \rightarrow a_i \rightarrow \tilde{x}_i^{\mathrm{num}} \rightarrow \tilde{x}_i \rightarrow z_i \rightarrow k_i \rightarrow \hat{y}_i$. First, the numerical input is passed through a feature-attention module to obtain the attention vector $a_i$. The attention vector is then used to generate the weighted numerical representation $\tilde{x}_i^{\mathrm{num}}$. After feature fusion, the final feature-aware representation $\tilde{x}_i$ is passed into the TabR architecture for retrieval-based prediction.
+
+This design keeps the main TabR retrieval structure unchanged while adding a feature-aware preprocessing stage before representation learning and retrieval.The proposed modification is motivated by the assumption that retrieval quality in TabR depends strongly on the representation used to compute candidate similarity. In medical tabular datasets, numerical variables often differ in diagnostic relevance, measurement scale, and noise level. If all numerical features are encoded uniformly, weak or noisy features may affect the learned representation and consequently degrade neighborhood retrieval. Therefore, FiTabR introduces a feature-attention module before the TabR encoder to adaptively emphasize informative numerical variables while preserving the original retrieval mechanism.
+
+\section{Feature-Attention Module}
+
+The feature-attention module is applied to the numerical feature vector $x_i^{\mathrm{num}}$. The attention vector $a_i$ is computed as
+
+\begin{equation}
+a_i =
+\operatorname{softmax}
+\left(
+W_2 \sigma \left(W_1 x_i^{\mathrm{num}} + b_1\right) + b_2
+\right),
+\label{eq:feature_attention}
+\end{equation}
+
+where $W_1$ and $W_2$ are trainable weight matrices, $b_1$ and $b_2$ are bias terms, and $\sigma(\cdot)$ denotes the ReLU activation function. The softmax function normalizes the attention scores across numerical features, allowing the model to assign sample-specific importance to each numerical variable.
+
+The trainable matrices $W_1$ and $W_2$, together with the bias terms $b_1$ and $b_2$, allow the model to learn nonlinear relationships between numerical features and their importance. Therefore, the feature-attention module can adaptively emphasize features that are more relevant for constructing the retrieval representation.
+
+\section{Attention Scaling and Residual Feature Weighting}
+
+After computing the attention vector $a_i$, FiTabR scales it using $a_i' = \alpha a_i$, where $\alpha$ is the attention scaling coefficient. In the current implementation, $\alpha = 2.0$. This scaling step increases the influence of the attention vector before it is applied to the original numerical input. Direct attention weighting may suppress original clinical measurements too aggressively, especially in small medical datasets. The residual form preserves the original feature values and only amplifies features selected by the learned attention vector. The value α=2.0 is used as an implementation-level scaling coefficient and is examined empirically in the experimental analysis.
+
+The scaled attention vector $a_i'$ is then applied to the original numerical input through residual feature weighting:
+
+\begin{equation}
+\tilde{x}_i^{\mathrm{num}}
+=
+x_i^{\mathrm{num}}
+\odot
+\left(1 + a_i'\right),
+\label{eq:residual_feature_weighting}
+\end{equation}
+
+where $\odot$ denotes element-wise multiplication. The residual term $1 + a_i'$ preserves the original numerical feature values while allowing the model to amplify selected features. Thus, the attention mechanism acts as a learned feature enhancement step rather than replacing the original input.
+
+\section{Feature Fusion}
+
+After residual feature weighting, the weighted numerical representation $\tilde{x}_i^{\mathrm{num}}$ is combined with the encoded categorical representation $e_i^{\mathrm{cat}}$. The fused feature-aware representation is defined as 
+$\tilde{x}_i = \operatorname{Concat}(\tilde{x}_i^{\mathrm{num}}, e_i^{\mathrm{cat}})$. This representation is then passed to the TabR encoder.
+
+The role of this step is to ensure that both numerical and categorical information are available to the TabR encoder. FiTabR modifies the numerical feature representation through attention, while categorical features are preserved through their encoded representation.
+
+\section{Integration with TabR Retrieval}
+
+After feature weighting and feature fusion, the resulting representation $\tilde{x}_i$ is passed into the original TabR architecture. The TabR encoder produces the latent representation $z_i = E(\tilde{x}_i)$, which is projected into the retrieval key space as $k_i = W_K z_i$, where $W_K$ is a learnable key projection matrix.
+
+For a target sample $q$, the similarity between the target representation and a candidate sample $i$ is computed using the negative squared Euclidean distance:
+
+\begin{equation}
+S(z_q, z_i)
+=
+-
+\left\|k_q - k_i\right\|_2^2.
+\label{eq:retrieval_similarity}
+\end{equation}
+
+Candidate samples with higher similarity scores are retrieved as contextual samples. FiTabR does not modify the similarity function, neighbor retrieval mechanism, contextual value construction, or prediction head of TabR. Instead, it changes the representation that enters the retrieval pipeline by applying feature-aware numerical weighting before encoding.
+
+For each retrieved candidate sample, the contextual value representation is computed as
+
+\begin{equation}
+V(z_q, z_i, y_i)
+=
+W_Y(y_i) + T(k_q - k_i),
+\label{eq:contextual_value}
+\end{equation}
+
+where $W_Y(y_i)$ denotes the label embedding of the retrieved candidate sample and $T(\cdot)$ is a learnable transformation of the difference between the target key and the candidate key. The retrieved contextual values are aggregated into $C_q$, and the prediction head produces the final output $\hat{y}_q = P(z_q, C_q)$.
+
+This design isolates the contribution of FiTabR to the feature-representation stage. As a result, any performance difference between TabR and FiTabR can be interpreted as the effect of adding feature-aware numerical weighting before retrieval.
+
+\section{Attention-Based Interpretability}
+
+FiTabR stores the attention vectors produced by the feature-attention module. Since each attention vector $a_i$ is computed for an individual sample, these values can be analyzed to understand which numerical features receive higher emphasis before retrieval.
+
+To summarize feature-attention behavior across the dataset, FiTabR computes the mean attention score 
+$\mu_a = \frac{1}{N}\sum_{i=1}^{N} a_i$. It also computes the standard deviation 
+$\sigma_a = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(a_i - \mu_a)^2}$. The mean attention score indicates the average attention assigned to each numerical feature, while the standard deviation shows how much attention varies across samples.
+
+These attention statistics provide an additional interpretability signal. However, they should not be interpreted as complete clinical explanations. Instead, they indicate which numerical features the model emphasizes before retrieval and should be analyzed together with predictive performance, retrieved-neighbor behavior, and medical domain knowledge.
+
+\section{Methodological Summary}
+
+FiTabR preserves the retrieval-based structure of TabR while introducing a feature-attention module before the retrieval stage. The proposed method first computes sample-specific attention scores for numerical features, then applies residual feature weighting to construct a feature-aware numerical representation. The weighted representation is then passed into the TabR retrieval architecture, where similar samples are retrieved and used as contextual information for prediction.
+
+This design allows FiTabR to preserve the original retrieval-augmented learning behavior of TabR while introducing a lightweight mechanism for feature-aware representation construction. As a result, the model can emphasize informative numerical variables before retrieval and provide attention statistics that support interpretation.
+
     
-    The class file is used to format your paper and style the text. All margins, column widths, line spaces, and text fonts are prescribed; please do not alter them. You may note peculiarities. For example, the head margin measures proportionately more than is customary. This measurement and others are deliberate, using specifications that anticipate your paper as one part of the entire proceedings, and not as an independent document. Please do not revise any of the current designations.
-    
-    
-    \chapter{Prepare Your Paper Before Styling}
-    Before you begin to format your paper, first write and save the content as a 
-    separate text file. Complete all content and organizational editing before 
-    formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
-    proofreading, spelling and grammar.
-    
-    Keep your text and graphic files separate until after the text has been 
-    formatted and styled. Do not number text heads---{\LaTeX} will do that 
-    for you.
-    
-    \section{Abbreviations and Acronyms}\label{AA}
-    Define abbreviations and acronyms the first time they are used in the text, 
-    even after they have been defined in the abstract. Abbreviations such as 
-    IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use 
-    abbreviations in the title or heads unless they are unavoidable.
-    
-    \section{Units}
-    \begin{itemize}
-    \item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
-    \item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
-    \item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
-    \item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.)
-    \end{itemize}
+\chapter{Experimental Setup}
+\addcontentsline{toc}{chapter}{Experimental Setup}
+\label{chap:experimental-setup}
+FiTabR was evaluated on three medical tabular binary-classification datasets. The experimental protocol covered data partitioning, preprocessing, baseline selection, hyperparameter optimisation, repeated training, and final test-set evaluation. All models were evaluated using the same data partitions and metric implementations. For the direct architectural comparison, FiTabR and the reference retrieval-based model additionally used the same candidate memory, retrieval configuration, optimisation objective, and random seeds. The implementation was developed using the experimental framework of the reference architecture~\cite{gorishniy2024tabr}.
+
+\section{Datasets}
+\label{sec:datasets}
+
+Experiments were conducted on the Heart Disease, Pima Indians Diabetes, and Stroke Prediction datasets~\cite{heartdataset,pimadataset,strokedataset}. The datasets represent different clinical prediction tasks and vary in sample size, feature composition, and class distribution. All tasks were formulated as supervised binary classification. For an observation $x_i$, the corresponding target was denoted by $y_i\in\{0,1\}$.
+
+\subsection{Heart Disease}
+
+The Heart Disease dataset contains 918 observations, six numerical features, and five categorical features. The objective is to predict the presence or absence of heart disease from demographic characteristics, symptoms, and clinical measurements. The processed data were divided into 642 training samples, 138 validation samples, and 138 test samples.
+
+\subsection{Pima Indians Diabetes}
+
+The Pima Indians Diabetes dataset contains 768 observations and eight numerical features. The prediction target indicates whether a patient has diabetes based on diagnostic measurements, including glucose concentration, blood pressure, body mass index, insulin level, age, and pregnancy history. The processed data were divided into 537 training samples, 115 validation samples, and 116 test samples.
+
+\subsection{Stroke Prediction}
+
+The Stroke Prediction dataset contains 5,110 observations, five numerical features, and five categorical features. The objective is to predict stroke occurrence from demographic information, medical history, lifestyle indicators, and physiological measurements. The processed data were divided into 3,577 training samples, 766 validation samples, and 767 test samples. Because the positive class is substantially less frequent than the negative class, threshold-independent and class-sensitive metrics were included in the evaluation.
+
+\begin{table}[t]
+\caption{Summary of the Medical Tabular Datasets}
+\label{tab:datasets}
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Dataset & Samples & Numerical & Categorical & Task \\
+\midrule
+Heart Disease & 918 & 6 & 5 & Binary \\
+Pima Diabetes & 768 & 8 & 0 & Binary \\
+Stroke Prediction & 5,110 & 5 & 5 & Binary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The selected datasets reflect common constraints in medical tabular learning, including limited sample size, heterogeneous variables, unequal feature scales, missing observations, and class imbalance. Evaluating the same architecture across the three datasets therefore provides evidence regarding the consistency of the proposed feature-aware representation mechanism under different clinical data conditions.
+
+\section{Preprocessing}
+\label{sec:preprocessing}
+
+A common preprocessing pipeline was applied to all models. Each preprocessing operation was fitted using only the training partition and was subsequently applied to the validation and test partitions without refitting. This procedure prevented validation or test information from influencing model training.
+
+Each dataset was divided into disjoint training, validation, and test subsets using an approximate ratio of 70:15:15. Stratified partitioning was used to preserve the class distribution across the subsets. The training subset was used to estimate model parameters, the validation subset was used for hyperparameter selection and early stopping, and the test subset was reserved for final evaluation.
+
+Numerical features were processed using quantile transformation. This operation reduced the effect of extreme values and differences in feature scale. The transformation was estimated from the training subset and then applied to the validation and test subsets. Categorical variables were integer encoded using mappings derived from the training data. The same mappings were retained for the remaining subsets.
+
+Missing numerical values were imputed using statistics calculated from the training subset. Missing categorical values were represented by a dedicated category or processed according to the categorical policy supported by the corresponding model. Validation- and test-set statistics were not used during imputation.
+
+Synthetic oversampling was not applied in the principal experiments. The original class distributions were preserved to avoid introducing artificial observations into the retrieval candidate memory. The effects of class imbalance were assessed using recall, F1-score, and receiver operating characteristic area under the curve (ROC--AUC), in addition to accuracy.
+
+For the retrieval-based models, the candidate memory contained only training observations. Validation and test observations were not inserted into the memory. During training, the current target observation was excluded from its own candidate context. These restrictions prevented self-retrieval and label leakage.
+
+\section{Baselines}
+\label{sec:baselines}
+
+FiTabR was compared with gradient-boosted decision trees, conventional neural networks, attention-based deep tabular models, and the original retrieval-based architecture. The selected baselines cover the principal model families commonly used for supervised tabular classification.
+
+\subsection{Gradient-Boosted Decision Trees}
+
+XGBoost~\cite{chen2016xgboost}, LightGBM~\cite{ke2017lightgbm}, and CatBoost~\cite{prokhorenkova2018catboost} were used as tree-based baselines. These methods provide strong non-deep-learning reference points for small and medium-sized tabular datasets. CatBoost was also included because the Heart Disease and Stroke Prediction datasets contain categorical variables.
+
+\subsection{Deep Tabular Models}
+
+A multilayer perceptron (MLP) was used as the basic neural-network baseline.\cite{gorishniy2021revisiting} The MLP processes each observation independently and does not use feature attention or retrieved training instances. FT-Transformer~\cite{fttransformer} represents individual features as tokens and applies self-attention to model interactions among features. SAINT~\cite{somepalli2021saint} provides an additional attention-based comparison for tabular representation learning.
+
+\subsection{Retrieval-Based Baseline}
+
+The original retrieval-based architecture TabR~\cite{gorishniy2024tabr} was used as the principal architectural baseline. FiTabR preserves its candidate retrieval, context aggregation, and prediction framework while modifying the input representation through feature attention, residual feature weighting, and feature fusion. This design supports a controlled assessment of whether the proposed representation module improves similarity learning and downstream classification.
+
+\section{Evaluation Metrics}
+\label{sec:metrics}
+
+Performance was evaluated using accuracy, precision, recall, F1-score, ROC--AUC, and binary cross-entropy. The first four metrics were computed from the classification decisions, whereas ROC--AUC and binary cross-entropy were computed from predicted probabilities.
+
+\subsection{Accuracy}
+
+Accuracy measures the proportion of correctly classified observations:
+\begin{equation}
+\mathrm{Accuracy}=
+\frac{TP+TN}{TP+TN+FP+FN},
+\label{eq:accuracy}
+\end{equation}
+where $TP$, $TN$, $FP$, and $FN$ denote true positives, true negatives, false positives, and false negatives, respectively.
+
+\subsection{Precision and Recall}
+
+Precision measures the proportion of positive predictions that are correct:
+\begin{equation}
+\mathrm{Precision}=\frac{TP}{TP+FP}.
+\label{eq:precision}
+\end{equation}
+Recall measures the proportion of positive observations correctly identified:
+\begin{equation}
+\mathrm{Recall}=\frac{TP}{TP+FN}.
+\label{eq:recall}
+\end{equation}
+Recall is particularly relevant to medical classification because false-negative predictions may cause affected patients to be missed.
+
+\subsection{F1-Score}
+
+The F1-score is the harmonic mean of precision and recall:
+\begin{equation}
+\mathrm{F1}=2\frac{\mathrm{Precision}\times\mathrm{Recall}}
+{\mathrm{Precision}+\mathrm{Recall}}.
+\label{eq:f1}
+\end{equation}
+It provides a balanced measure when both false-positive and false-negative errors are relevant.
+
+\subsection{ROC--AUC}
+
+ROC--AUC measures the ability of a model to rank positive observations above negative observations across classification thresholds. A value of 0.5 indicates random ranking, whereas a value of 1.0 indicates perfect class discrimination. This metric was included because it is less dependent on a single decision threshold than accuracy or F1-score.
+
+\subsection{Binary Cross-Entropy}
+
+Binary cross-entropy evaluates the quality of the predicted probabilities:
+\begin{equation}
+\mathcal{L}_{\mathrm{BCE}}=-\frac{1}{N}\sum_{i=1}^{N}
+\left[y_i\log(\hat{p}_i)+(1-y_i)\log(1-\hat{p}_i)\right],
+\label{eq:bce}
+\end{equation}
+where $y_i$ is the true label and $\hat{p}_i$ is the predicted probability of the positive class. Lower values indicate better probabilistic predictions.
+
+For the imbalanced Stroke Prediction dataset, ROC--AUC, recall, and F1-score were considered together with accuracy. This avoided drawing conclusions from majority-class performance alone.
+
+\section{Implementation Details}
+\label{sec:implementation-details}
+
+The models were implemented in Python using a shared experimental framework. Dataset processing and metric computation were based on scikit-learn~\cite{sklearn}. Hyperparameter optimisation was performed using Optuna with the Tree-structured Parzen Estimator sampler~\cite{optuna}. The repository configurations used 200 optimisation trials, including 20 initial startup trials. Hyperparameter selection was based exclusively on validation performance.
+
+For neural models, the search space included learning rate, weight decay, hidden representation dimension, number of processing blocks, batch size, and dropout. Attention-based models additionally included attention dropout and attention-specific representation parameters. For FiTabR, parameters associated with feature attention, residual scaling, and feature fusion were included in the optimisation procedure.
+
+For the tree-based baselines, the search space included learning rate, tree depth, number of boosting iterations, regularisation coefficients, bagging parameters, and leaf-estimation settings. Early stopping was applied using the validation subset.
+
+Neural models were trained by mini-batch gradient-based optimisation using binary cross-entropy as the objective function. The candidate memory for retrieval-based training consisted of the complete training partition. The retrieval configuration was kept fixed between FiTabR and the architectural baseline so that the primary experimental difference was the proposed feature-aware input representation.
+
+Each selected configuration was evaluated using 15 random seeds, numbered from 0 to 14. The trained models were divided into three groups:
+\begin{equation}
+\{0,1,2,3,4\},\quad
+\{5,6,7,8,9\},\quad
+\{10,11,12,13,14\}.
+\label{eq:seed-groups}
+\end{equation}
+Predicted probabilities were averaged within each group to form three five-model ensembles. For a metric $m$, the mean over $R$ runs was calculated as
+\begin{equation}
+\bar{m}=\frac{1}{R}\sum_{r=1}^{R}m_r,
+\label{eq:metric-mean}
+\end{equation}
+and the standard deviation was calculated as
+\begin{equation}
+s_m=\sqrt{\frac{1}{R-1}\sum_{r=1}^{R}(m_r-\bar{m})^2}.
+\label{eq:metric-std}
+\end{equation}
+
+The direct comparison between FiTabR and the architectural baseline used identical preprocessing, data partitions, candidate memory, retrieval settings, optimisation objective, early-stopping procedure, random seeds, and evaluation metrics. The principal difference was the feature-aware representation module introduced before the encoder.
+
+% Replace the bracketed fields below after verifying the final environment.
+All experiments were conducted using Python 3.9.16 and PyTorch 1.13.1
+on a system equipped with an Intel Core i7-7700K CPU operating at
+4.20 GHz, 32 GB of RAM, and an NVIDIA GeForce GTX 1050 GPU with
+2 GB of dedicated memory. The software environment included CUDA
+11.7.99, scikit-learn 1.2.2, XGBoost 1.7.4, LightGBM 3.3.5,
+CatBoost 1.1.1, and Optuna 3.1.0.
     
     \section{Equations}
     Number equations consecutively. To make your 
@@ -470,15 +1161,8 @@ colorlinks = true
 	\clearpage
 	\phantomsection	
  
-    \begin{thebibliography}{00}
-    \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-    \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-    \bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-    \bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-    \bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-    \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-    \bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-    \end{thebibliography}
+  \bibliographystyle{IEEEtran}
+  \bibliography{references}
 
   % \appendix
   % \makeAppendix
