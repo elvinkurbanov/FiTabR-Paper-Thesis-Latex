@@ -6,8 +6,8 @@
 \@input{abs-summary.aux}
 \HyPL@Entry{3<</S/r>>}
 \HyPL@Entry{5<</S/r>>}
-\@writefile{toc}{\contentsline {chapter}{List of Tables}{iii}{chapter*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Figures}{iv}{chapter*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Tables}{iv}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Figures}{v}{section*.6}\protected@file@percent }
 \citation{rajkomar2019mlmedicine}
 \citation{chen2016xgboost}
 \citation{ke2017lightgbm}
@@ -19,7 +19,7 @@
 \citation{qin2021rim}
 \citation{kossen2021selfattention}
 \citation{gorishniy2024tabr}
-\HyPL@Entry{9<</S/D>>}
+\HyPL@Entry{10<</S/D>>}
 \@writefile{lof}{\addvspace {10pt}}
 \@writefile{lot}{\addvspace {10pt}}
 \@writefile{toc}{\contentsline {chapter}{\chapternumberline {1}Introduction}{1}{chapter.1}\protected@file@percent }
@@ -135,20 +135,121 @@
 \newlabel{eq:seed-groups}{{4.6}{31}{Implementation Details}{equation.4.6}{}}
 \newlabel{eq:metric-mean}{{4.7}{31}{Implementation Details}{equation.4.7}{}}
 \newlabel{eq:metric-std}{{4.8}{31}{Implementation Details}{equation.4.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Equations}{31}{section.4.6}\protected@file@percent }
-\newlabel{eq}{{4.9}{32}{Equations}{equation.4.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.7}\LaTeX  -Specific Advice}{32}{section.4.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.8}Some Common Mistakes}{33}{section.4.8}\protected@file@percent }
-\newlabel{SCM}{{4.8}{33}{Some Common Mistakes}{section.4.8}{}}
+\citation{prokhorenkova2018catboost}
+\citation{chen2016xgboost}
+\citation{ke2017lightgbm}
+\citation{somepalli2021saint}
+\citation{gorishniy2021revisiting}
+\citation{gorishniy2024tabr}
+\@writefile{lof}{\addvspace {10pt}}
+\@writefile{lot}{\addvspace {10pt}}
+\@writefile{toc}{\contentsline {chapter}{\chapternumberline {5}Results and Discussion}{32}{chapter.5}\protected@file@percent }
+\newlabel{chap:results}{{5}{32}{Results and Discussion}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Overall Comparison With All Baselines}{32}{section.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Performance comparison on the Heart Disease dataset. Results are reported as mean $\pm $ standard deviation.  }}{32}{table.caption.9}\protected@file@percent }
+\newlabel{tab:heart_results}{{5.1}{32}{Performance comparison on the Heart Disease dataset. Results are reported as mean $\pm $ standard deviation. \\}{table.caption.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Performance comparison on the Pima Diabetes dataset. Results are reported as mean $\pm $ standard deviation. }}{33}{table.caption.10}\protected@file@percent }
+\newlabel{tab:pima_results}{{5.2}{33}{Performance comparison on the Pima Diabetes dataset. Results are reported as mean $\pm $ standard deviation.\\}{table.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Performance comparison on the Stroke Prediction dataset. Results are reported as mean $\pm $ standard deviation. }}{34}{table.caption.11}\protected@file@percent }
+\newlabel{tab:stroke_results}{{5.3}{34}{Performance comparison on the Stroke Prediction dataset. Results are reported as mean $\pm $ standard deviation.\\}{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Direct TabR--FiTabR Comparison}{34}{subsection.5.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Heart Disease Results}{35}{subsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Pima Diabetes Results}{36}{subsection.5.1.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Minority-class performance of TabR and FiTabR on the Stroke Prediction dataset. }}{37}{table.caption.12}\protected@file@percent }
+\newlabel{tab:stroke_minority}{{5.4}{37}{Minority-class performance of TabR and FiTabR on the Stroke Prediction dataset.\\}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Stroke Prediction and Minority-Class Behavior}{37}{subsection.5.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.5}Cross-Dataset Synthesis}{38}{subsection.5.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Ablation Study}{39}{section.5.2}\protected@file@percent }
+\newlabel{sec:ablation}{{5.2}{39}{Ablation Study}{section.5.2}{}}
+\newlabel{eq:ablation_scale}{{5.1}{39}{Ablation Study}{equation.5.1}{}}
+\newlabel{eq:ablation_fitabr}{{5.2}{39}{Ablation Study}{equation.5.2}{}}
+\newlabel{eq:ablation_variants}{{5.3}{40}{Ablation Study}{equation.5.3}{}}
+\newlabel{eq:ablation_uniform}{{5.4}{40}{Ablation Study}{equation.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Heart Disease}{40}{subsection.5.2.1}\protected@file@percent }
+\newlabel{subsec:heart_ablation}{{5.2.1}{40}{Heart Disease}{subsection.5.2.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Ablation study on the Heart Disease dataset. Results are reported as mean $\pm $ standard deviation across three five-model ensembles.  }}{41}{table.caption.13}\protected@file@percent }
+\newlabel{tab:heart_ablation}{{5.5}{41}{Ablation study on the Heart Disease dataset. Results are reported as mean $\pm $ standard deviation across three five-model ensembles.\\}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.6}{\ignorespaces Ablation study on the Pima Diabetes dataset. Results are reported as mean $\pm $ standard deviation across three five-model ensembles. }}{42}{table.caption.15}\protected@file@percent }
+\newlabel{tab:pima_ablation}{{5.6}{42}{Ablation study on the Pima Diabetes dataset. Results are reported as mean $\pm $ standard deviation across three five-model ensembles.\\}{table.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Ablation performance on the Heart Disease dataset. }}{42}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:heart_ablation_performance}{{5.1}{42}{Ablation performance on the Heart Disease dataset.\\}{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Pima Diabetes}{42}{subsection.5.2.2}\protected@file@percent }
+\newlabel{subsec:pima_ablation}{{5.2.2}{42}{Pima Diabetes}{subsection.5.2.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.7}{\ignorespaces Ablation study on the Stroke Prediction dataset. Results are reported as mean $\pm $ standard deviation across three five-model ensembles. }}{43}{table.caption.17}\protected@file@percent }
+\newlabel{tab:stroke_ablation}{{5.7}{43}{Ablation study on the Stroke Prediction dataset. Results are reported as mean $\pm $ standard deviation across three five-model ensembles.\\}{table.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Ablation performance on the Pima Diabetes dataset. }}{43}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:pima_ablation_performance}{{5.2}{43}{Ablation performance on the Pima Diabetes dataset.\\}{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Stroke Prediction}{43}{section.5.3}\protected@file@percent }
+\newlabel{subsec:stroke_ablation_performance}{{5.3}{43}{Stroke Prediction}{section.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Ablation performance on the Stroke Prediction dataset. }}{44}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:stroke_ablation_performance}{{5.3}{44}{Ablation performance on the Stroke Prediction dataset}{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Discussion}{45}{subsection.5.3.1}\protected@file@percent }
+\newlabel{subsec:ablation_discussion}{{5.3.1}{45}{Discussion}{subsection.5.3.1}{}}
+\citation{arik2021tabnet}
+\citation{jain2019attention}
+\citation{visseren2021}
+\citation{dagostino2008}
+\citation{score2_2021}
+\citation{ctt2012}
+\citation{erfc2010}
+\citation{ada2026diagnosis}
+\citation{bushnell2024}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Clinical Concordance of Learned Feature Attention}{46}{section.5.4}\protected@file@percent }
+\newlabel{sec:clinical_attention}{{5.4}{46}{Clinical Concordance of Learned Feature Attention}{section.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Heart Disease}{46}{subsection.5.4.1}\protected@file@percent }
+\newlabel{subsec:heart_attention}{{5.4.1}{46}{Heart Disease}{subsection.5.4.1}{}}
+\citation{ctt2012}
+\citation{visseren2021}
+\citation{dagostino2008}
+\citation{score2_2021}
+\citation{lewington2002}
+\citation{visseren2021}
+\citation{erfc2010}
+\citation{mark1991}
+\citation{lauer1996}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces FiTabR feature-attention distribution on the Heart Disease dataset. Learned bars show mean attention with $\pm 1$ standard deviation; uniform bars show the reference value $1/F$ for each numerical feature.}}{47}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:heart_attention}{{5.4}{47}{FiTabR feature-attention distribution on the Heart Disease dataset. Learned bars show mean attention with $\pm 1$ standard deviation; uniform bars show the reference value $1/F$ for each numerical feature}{figure.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.8}{\ignorespaces Comparison of FiTabR attention with established cardiovascular domain knowledge on the Heart Disease dataset. }}{47}{table.caption.20}\protected@file@percent }
+\newlabel{tab:heart_attention_domain}{{5.8}{47}{Comparison of FiTabR attention with established cardiovascular domain knowledge on the Heart Disease dataset.\\}{table.caption.20}{}}
+\citation{sosenko1993}
+\citation{ada2026obesity}
+\citation{defronzo2009}
+\citation{ada2026diagnosis}
+\citation{ada2026obesity}
+\citation{ada2026diagnosis}
+\citation{ada2026diagnosis}
+\citation{ada2026diagnosis}
+\citation{ada2026diagnosis}
+\citation{ada2026diagnosis}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Pima Diabetes}{48}{subsection.5.4.2}\protected@file@percent }
+\newlabel{subsec:pima_attention}{{5.4.2}{48}{Pima Diabetes}{subsection.5.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces FiTabR feature-attention distribution on the Pima Diabetes dataset. Learned bars show mean attention with $\pm 1$ standard deviation; uniform bars show the reference value $1/F$ for each numerical feature.}}{48}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:pima_attention}{{5.5}{48}{FiTabR feature-attention distribution on the Pima Diabetes dataset. Learned bars show mean attention with $\pm 1$ standard deviation; uniform bars show the reference value $1/F$ for each numerical feature}{figure.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.9}{\ignorespaces Comparison of FiTabR attention with established medical domain knowledge on the Pima Diabetes dataset. }}{49}{table.caption.22}\protected@file@percent }
+\newlabel{tab:pima_attention_domain}{{5.9}{49}{Comparison of FiTabR attention with established medical domain knowledge on the Pima Diabetes dataset.\\}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}Stroke Prediction}{49}{subsection.5.4.3}\protected@file@percent }
+\newlabel{subsec:stroke_attention}{{5.4.3}{49}{Stroke Prediction}{subsection.5.4.3}{}}
+\citation{erfc2010}
+\citation{bushnell2024}
+\citation{wolf1991}
+\citation{kannel1983}
+\citation{gbd2014}
+\citation{bushnell2024}
+\citation{lewington2002}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces FiTabR feature-attention distribution on the Stroke Prediction dataset. Learned bars show mean attention with $\pm 1$ standard deviation; uniform bars show the reference value $1/F$ for each numerical feature.}}{50}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:stroke_attention}{{5.6}{50}{FiTabR feature-attention distribution on the Stroke Prediction dataset. Learned bars show mean attention with $\pm 1$ standard deviation; uniform bars show the reference value $1/F$ for each numerical feature}{figure.caption.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.10}{\ignorespaces Comparison of FiTabR attention with established medical domain knowledge on the Stroke Prediction dataset. }}{50}{table.caption.24}\protected@file@percent }
+\newlabel{tab:stroke_attention_domain}{{5.10}{50}{Comparison of FiTabR attention with established medical domain knowledge on the Stroke Prediction dataset.\\}{table.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.4}Attention Analysis Summary}{50}{subsection.5.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Some Common Mistakes}{51}{section.5.5}\protected@file@percent }
+\newlabel{SCM}{{5.5}{51}{Some Common Mistakes}{section.5.5}{}}
 \citation{b7}
-\@writefile{toc}{\contentsline {section}{\numberline {4.9}Authors and Affiliations}{34}{section.4.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.10}Identify the Headings}{35}{section.4.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.11}Figures and Tables}{35}{section.4.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Positioning Figures and Tables}{35}{paragraph*.9}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Table Type Styles}}{36}{table.caption.10}\protected@file@percent }
-\newlabel{tab1}{{4.2}{36}{Table Type Styles}{table.caption.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a figure caption.}}{36}{figure.caption.11}\protected@file@percent }
-\newlabel{fig}{{4.1}{36}{Example of a figure caption}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Authors and Affiliations}{52}{section.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}Identify the Headings}{53}{section.5.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.8}Figures and Tables}{53}{section.5.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Positioning Figures and Tables}{53}{paragraph*.25}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.11}{\ignorespaces Table Type Styles}}{54}{table.caption.26}\protected@file@percent }
+\newlabel{tab1}{{5.11}{54}{Table Type Styles}{table.caption.26}{}}
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{rajkomar2019mlmedicine}{1}
@@ -159,7 +260,7 @@
 \bibcite{gorishniy2021revisiting}{6}
 \bibcite{gorishniy2022embeddings}{7}
 \bibcite{somepalli2021saint}{8}
-\@writefile{toc}{\contentsline {chapter}{References}{37}{chapter*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{References}{55}{chapter*.28}\protected@file@percent }
 \bibcite{qin2021rim}{9}
 \bibcite{kossen2021selfattention}{10}
 \bibcite{gorishniy2024tabr}{11}
@@ -179,9 +280,21 @@
 \bibcite{fttransformer}{25}
 \bibcite{sklearn}{26}
 \bibcite{optuna}{27}
+\bibcite{visseren2021}{28}
+\bibcite{dagostino2008}{29}
+\bibcite{score2_2021}{30}
+\bibcite{ctt2012}{31}
+\bibcite{erfc2010}{32}
+\bibcite{bushnell2024}{33}
+\bibcite{lewington2002}{34}
+\bibcite{mark1991}{35}
+\bibcite{lauer1996}{36}
+\bibcite{wolf1991}{37}
+\bibcite{kannel1983}{38}
+\bibcite{gbd2014}{39}
 \@input{abs-korean.aux}
 \@input{thanksto.aux}
 \ttl@finishall
-\memsetcounter{lastsheet}{51}
-\memsetcounter{lastpage}{42}
-\gdef \@abspage@last{51}
+\memsetcounter{lastsheet}{72}
+\memsetcounter{lastpage}{62}
+\gdef \@abspage@last{72}

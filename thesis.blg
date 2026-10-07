@@ -1,66 +1,66 @@
-This is BibTeX, Version 0.99e
+This is BibTeX, Version 0.99d (TeX Live 2025)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: thesis.aux
-Reallocating 'name_of_file' (item size: 1) to 16 items.
 A level-1 auxiliary file: abs-summary.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: IEEEtran.bst
-Reallocating 'name_of_file' (item size: 1) to 11 items.
-Reallocating 'name_of_file' (item size: 1) to 15 items.
 A level-1 auxiliary file: abs-korean.aux
-Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: thanksto.aux
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'wiz_functions' (item size: 4) to 6000 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: references.bib
+Warning--I didn't find a database entry for "jain2019attention"
+Warning--I didn't find a database entry for "ada2026diagnosis"
+Warning--I didn't find a database entry for "sosenko1993"
+Warning--I didn't find a database entry for "ada2026obesity"
+Warning--I didn't find a database entry for "defronzo2009"
 Warning--I didn't find a database entry for "b7"
 -- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 27 entries,
+You've used 39 entries,
             4087 wiz_defined-function locations,
-            951 strings with 11908 characters,
-and the built_in function-call counts, 19204 in all, are:
-= -- 1419
-> -- 537
-< -- 120
-+ -- 290
-- -- 110
-* -- 903
-:= -- 2762
-add.period$ -- 54
-call.type$ -- 27
-change.case$ -- 30
-chr.to.int$ -- 294
-cite$ -- 27
-duplicate$ -- 1410
-empty$ -- 1733
-format.name$ -- 128
-if$ -- 4513
+            1034 strings with 15135 characters,
+and the built_in function-call counts, 31869 in all, are:
+= -- 2478
+> -- 890
+< -- 266
++ -- 492
+- -- 169
+* -- 1535
+:= -- 4551
+add.period$ -- 78
+call.type$ -- 39
+change.case$ -- 43
+chr.to.int$ -- 624
+cite$ -- 39
+duplicate$ -- 2256
+empty$ -- 2583
+format.name$ -- 197
+if$ -- 7480
 int.to.chr$ -- 0
-int.to.str$ -- 27
-missing$ -- 278
-newline$ -- 104
-num.names$ -- 27
-pop$ -- 725
+int.to.str$ -- 39
+missing$ -- 422
+newline$ -- 140
+num.names$ -- 39
+pop$ -- 1007
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1495
+skip$ -- 2465
 stack$ -- 0
-substring$ -- 736
-swap$ -- 1042
-text.length$ -- 22
+substring$ -- 1520
+swap$ -- 1851
+text.length$ -- 58
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 27
+type$ -- 39
 warning$ -- 0
-while$ -- 67
-width$ -- 29
-write$ -- 260
-(There was 1 warning)
+while$ -- 127
+width$ -- 41
+write$ -- 393
+(There were 6 warnings)

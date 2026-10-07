@@ -156,4 +156,78 @@ T.~Akiba, S.~Sano, T.~Yanase, T.~Ohta, and M.~Koyama, ``Optuna: A
   next-generation hyperparameter optimization framework,'' in \emph{Proc. ACM
   SIGKDD Int. Conf. Knowledge Discovery and Data Mining}, 2019, pp. 2623--2631.
 
+\bibitem{visseren2021}
+F.~L.~J. Visseren, F.~Mach, Y.~M. Smulders \emph{et~al.}, ``2021 esc guidelines
+  on cardiovascular disease prevention in clinical practice,'' \emph{European
+  Heart Journal}, vol.~42, no.~34, pp. 3227--3337, 2021.
+
+\bibitem{dagostino2008}
+R.~B.~S. D'Agostino, R.~S. Vasan, M.~J. Pencina, P.~A. Wolf, M.~Cobain, J.~M.
+  Massaro, and W.~B. Kannel, ``General cardiovascular risk profile for use in
+  primary care: The framingham heart study,'' \emph{Circulation}, vol. 117,
+  no.~6, pp. 743--753, 2008.
+
+\bibitem{score2_2021}
+{SCORE2 Working Group and ESC Cardiovascular Risk Collaboration}, ``Score2 risk
+  prediction algorithms: New models to estimate 10-year risk of cardiovascular
+  disease in europe,'' \emph{European Heart Journal}, vol.~42, no.~25, pp.
+  2439--2454, 2021.
+
+\bibitem{ctt2012}
+{Cholesterol Treatment Trialists' (CTT) Collaborators}, ``The effects of
+  lowering ldl cholesterol with statin therapy in people at low risk of
+  vascular disease: Meta-analysis of individual data from 27 randomised
+  trials,'' \emph{The Lancet}, vol. 380, no. 9841, pp. 581--590, 2012.
+
+\bibitem{erfc2010}
+{Emerging Risk Factors Collaboration}, N.~Sarwar, P.~Gao, S.~R.
+  Kondapally~Seshasai \emph{et~al.}, ``Diabetes mellitus, fasting blood glucose
+  concentration, and risk of vascular disease: A collaborative meta-analysis of
+  102 prospective studies,'' \emph{The Lancet}, vol. 375, no. 9733, pp.
+  2215--2222, 2010.
+
+\bibitem{bushnell2024}
+C.~Bushnell, W.~N. Kernan, A.~Z. Sharrief, S.~Chaturvedi, J.~W. Cole, W.~K.~I.
+  Cornwell \emph{et~al.}, ``2024 guideline for the primary prevention of
+  stroke: A guideline from the american heart association/american stroke
+  association,'' \emph{Stroke}, vol.~55, no.~12, pp. e344--e424, 2024.
+
+\bibitem{lewington2002}
+S.~Lewington, R.~Clarke, N.~Qizilbash, R.~Peto, R.~Collins, and {Prospective
+  Studies Collaboration}, ``Age-specific relevance of usual blood pressure to
+  vascular mortality: A meta-analysis of individual data for one million adults
+  in 61 prospective studies,'' \emph{The Lancet}, vol. 360, no. 9349, pp.
+  1903--1913, 2002.
+
+\bibitem{mark1991}
+D.~B. Mark, L.~Shaw, F.~E.~J. Harrell, M.~A. Hlatky, K.~L. Lee, J.~R. Bengtson,
+  C.~B. McCants, R.~M. Califf, and D.~B. Pryor, ``Prognostic value of a
+  treadmill exercise score in outpatients with suspected coronary artery
+  disease,'' \emph{New England Journal of Medicine}, vol. 325, no.~12, pp.
+  849--853, 1991.
+
+\bibitem{lauer1996}
+M.~S. Lauer, P.~M. Okin, M.~G. Larson, J.~C. Evans, and D.~Levy, ``Impaired
+  heart rate response to graded exercise: Prognostic implications of
+  chronotropic incompetence in the framingham heart study,''
+  \emph{Circulation}, vol.~93, no.~8, pp. 1520--1526, 1996.
+
+\bibitem{wolf1991}
+P.~A. Wolf, R.~B. D'Agostino, A.~J. Belanger, and W.~B. Kannel, ``Probability
+  of stroke: A risk profile from the framingham study,'' \emph{Stroke},
+  vol.~22, no.~3, pp. 312--318, 1991.
+
+\bibitem{kannel1983}
+W.~B. Kannel, P.~A. Wolf, and J.~Verter, ``Manifestations of coronary disease
+  predisposing to stroke: The framingham study,'' \emph{JAMA}, vol. 250,
+  no.~21, pp. 2942--2946, 1983, pMID: 6227757.
+
+\bibitem{gbd2014}
+{Global Burden of Metabolic Risk Factors for Chronic Diseases Collaboration
+  (BMI Mediated Effects)}, Y.~Lu, K.~Hajifathalian, M.~Ezzati, M.~Woodward,
+  E.~B. Rimm, and G.~Danaei, ``Metabolic mediators of the effects of body-mass
+  index, overweight, and obesity on coronary heart disease and stroke: A pooled
+  analysis of 97 prospective cohorts with 1.8 million participants,'' \emph{The
+  Lancet}, vol. 383, no. 9921, pp. 970--983, 2014.
+
 \end{thebibliography}
