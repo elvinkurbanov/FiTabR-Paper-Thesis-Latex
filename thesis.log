@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.18)  29 SEP 2026 15:06
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.18)  21 OCT 2026 21:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,7 +1027,7 @@ Class memoir Warning: The titlesec package is not recommended with memoir.
 (memoir)              class. We provide our own interface to adjust how 
 (memoir)              sections and chapters should look like.
 (memoir)              See the manual sections 6.4 through 6.6 for details.  on 
-input line 38.
+input line 37.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2025/01/04 v2.17 Sectioning titles
@@ -1159,7 +1159,7 @@ Package: epsfig 2024/01/14 v1.7b (e)psfig emulation (SPQR)
 Class memoir Warning: The fancyhdr package is not recommended with memoir.
 (memoir)              We have our own well integrated interface to handle
 (memoir)              headers and footers. See the manual section 7.3
-(memoir)              onwards for details. on input line 90.
+(memoir)              onwards for details. on input line 89.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
@@ -1583,7 +1583,7 @@ Package: kotex 2015/04/19 v1.6 Korean TeX (ko.TeX)
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/kotex-utf/kotex.cfg))
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 220.
+h' as default language. on input line 219.
 
 
 LaTeX Warning: Unused global option(s):
@@ -1592,26 +1592,26 @@ LaTeX Warning: Unused global option(s):
 (./thesis.aux (./abs-summary.aux) (./abs-korean.aux) (./thanksto.aux))
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 220.
-LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 219.
+LaTeX Font Info:    ... okay on input line 219.
 
 Package pgfplots notification 'compat/show suggested version=true': you might b
 enefit from \pgfplotsset{compat=1.18} (current compat level: 1.16).
@@ -1623,57 +1623,57 @@ Package fontspec Info:
 
 \symlegacymaths=\mathgroup7
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 220.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 220.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 220.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 220.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 220.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 220.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 220.
-LaTeX Font Info:    Redeclaring math accent \check on input line 220.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 220.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 220.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 220.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 220.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 220.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 219.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 219.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 219.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 219.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 219.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 219.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 219.
+LaTeX Font Info:    Redeclaring math accent \check on input line 219.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 219.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 219.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 219.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 219.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 219.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 220.
+(Font)              `operators' in the math version `normal' on input line 219.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 220.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 219.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 220.
+(Font)              `operators' in the math version `bold' on input line 219.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 220.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 219.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 220.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 220.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 220.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 220.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 220.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 219.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 220.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 220.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 220.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 219.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 220.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 219.
 
 Package fontspec Info: 
 (fontspec)             Font family 'UnBatang.ttf(1)' created for font
@@ -1734,23 +1734,23 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 220.
-Package hyperref Info: Link coloring OFF on input line 220.
+or `english'. on input line 219.
+Package hyperref Info: Link coloring OFF on input line 219.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <14.4> not ava
 ilable
 (Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 243.
+line 242.
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--243
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 
  []
 
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <20.74> not av
 ailable
 (Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 243.
+line 242.
 
 
 [1
@@ -1758,19 +1758,19 @@ line 243.
 ]
 
 [2]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 253
+LaTeX Font Info:    Trying to load font information for U+msa on input line 252
 .
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 253
+LaTeX Font Info:    Trying to load font information for U+msb on input line 252
 .
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+stmry on input line 2
-53.
+52.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
 
@@ -1789,7 +1789,7 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 2
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <24.88> not av
 ailable
 (Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 283.
+line 282.
  (./thesis.toc
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <10.95> not av
 ailable
@@ -1837,7 +1837,7 @@ Disease dataset. Learned
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <17.28> not av
 ailable
 (Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 309.
+line 308.
 
 
 [1
@@ -1848,18 +1848,18 @@ line 309.
 [2]
 
 LaTeX Font Warning: Font shape `TU/UnBatang.ttf(1)/m/it' undefined
-(Font)              using `TU/UnBatang.ttf(1)/m/n' instead on input line 387.
+(Font)              using `TU/UnBatang.ttf(1)/m/n' instead on input line 386.
 
 
 
 [3]
-Overfull \hbox (5.1451pt too wide) in paragraph at lines 427--428
+Overfull \hbox (5.1451pt too wide) in paragraph at lines 426--427
 []\TU/lmr/m/it/10.95 Can sample-specific numerical feature modulation provide u
 seful improve-
  []
 
 
-Overfull \hbox (12.35005pt too wide) in paragraph at lines 436--445
+Overfull \hbox (12.35005pt too wide) in paragraph at lines 435--444
 \TU/lmr/m/n/10.95 sification tasks: Heart Disease, Pima Diabetes, and Stroke Pr
 ediction. These datasets
  []
@@ -1869,7 +1869,7 @@ ediction. These datasets
 [4]
 
 [5]
-Overfull \hbox (25.35901pt too wide) in paragraph at lines 490--496
+Overfull \hbox (25.35901pt too wide) in paragraph at lines 489--495
 []\TU/lmr/bx/n/10.95 Feature-aware extension of retrieval-augmented tabular lea
 rning. \TU/lmr/m/n/10.95 FiTabR
  []
@@ -1877,25 +1877,25 @@ rning. \TU/lmr/m/n/10.95 FiTabR
 
 
 [6]
-Overfull \hbox (22.01927pt too wide) in paragraph at lines 505--512
+Overfull \hbox (22.01927pt too wide) in paragraph at lines 504--511
 []\TU/lmr/bx/n/10.95 Component-level analysis through architectural ablation. \
 TU/lmr/m/n/10.95 Residual preser-
  []
 
 
-Overfull \hbox (16.14946pt too wide) in paragraph at lines 505--512
+Overfull \hbox (16.14946pt too wide) in paragraph at lines 504--511
 \TU/lmr/m/n/10.95 uniformly to all components and that residual preservation re
 ceives the strongest
  []
 
 
-Overfull \hbox (6.02072pt too wide) in paragraph at lines 521--529
+Overfull \hbox (6.02072pt too wide) in paragraph at lines 520--528
 \TU/lmr/m/n/10.95 only where the proposed representation mechanism provides ben
 efits, but also where
  []
 
 
-Overfull \hbox (5.40768pt too wide) in paragraph at lines 530--541
+Overfull \hbox (5.40768pt too wide) in paragraph at lines 529--540
 \TU/lmr/m/n/10.95 cal tabular learning, deep learning methods for structured da
 ta, retrieval-augmented
  []
@@ -1909,13 +1909,13 @@ ta, retrieval-augmented
 [9
 
 ]
-Overfull \hbox (4.08034pt too wide) in paragraph at lines 607--615
+Overfull \hbox (4.08034pt too wide) in paragraph at lines 606--614
 []\TU/lmr/m/n/10.95 Despite these developments, deep learning does not consiste
 ntly dominate tree-
  []
 
 
-Overfull \hbox (15.74446pt too wide) in paragraph at lines 607--615
+Overfull \hbox (15.74446pt too wide) in paragraph at lines 606--614
 \TU/lmr/m/n/10.95 based models retain important advantages on many medium-sized
  structured datasets,
  []
@@ -1925,13 +1925,13 @@ Overfull \hbox (15.74446pt too wide) in paragraph at lines 607--615
 [10]
 
 [11]
-Overfull \hbox (16.87965pt too wide) in paragraph at lines 642--651
+Overfull \hbox (16.87965pt too wide) in paragraph at lines 641--650
 []\TU/lmr/m/n/10.95 TabR provides a more direct and computationally efficient r
 ealization of retrieval-
  []
 
 
-Overfull \hbox (0.8709pt too wide) in paragraph at lines 652--659
+Overfull \hbox (0.8709pt too wide) in paragraph at lines 651--658
 []\TU/lmr/m/n/10.95 The TabR study demonstrated that retrieval can substantiall
 y strengthen tab-
  []
@@ -1939,7 +1939,7 @@ y strengthen tab-
 
 
 [12]
-Overfull \hbox (1.7505pt too wide) in paragraph at lines 685--694
+Overfull \hbox (1.7505pt too wide) in paragraph at lines 684--693
 \TU/lmr/m/n/10.95 internal model behavior. TabNet, for example, exposes feature
 -selection masks that
  []
@@ -1949,13 +1949,13 @@ Overfull \hbox (1.7505pt too wide) in paragraph at lines 685--694
 [13]
 
 [14]
-Overfull \hbox (0.41312pt too wide) in paragraph at lines 734--742
+Overfull \hbox (0.41312pt too wide) in paragraph at lines 733--741
 \TU/lmr/m/n/10.95 of numerical inputs before the TabR encoder while preserving 
 the original retrieval,
  []
 
 
-Overfull \hbox (41.49896pt too wide) in paragraph at lines 734--742
+Overfull \hbox (41.49896pt too wide) in paragraph at lines 733--741
 \TU/lmr/m/n/10.95 contextual aggregation, and prediction mechanisms. This desig
 n isolates the representation-
  []
@@ -1970,7 +1970,7 @@ File: graph.drawio.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (0.91815pt too wide) in paragraph at lines 771--772
+Overfull \hbox (0.91815pt too wide) in paragraph at lines 770--771
 \TU/lmr/m/n/10.95 this section focuses on the proposed feature-aware representa
 tion mechanism rather
  []
@@ -1982,7 +1982,7 @@ tion mechanism rather
 ]
 
 [17]
-Overfull \hbox (2.28706pt too wide) in paragraph at lines 780--781
+Overfull \hbox (2.28706pt too wide) in paragraph at lines 779--780
 \TU/lmr/m/n/10.95 a feature-aware preprocessing stage before representation lea
 rning and retrieval.The
  []
@@ -1993,7 +1993,7 @@ rning and retrieval.The
 Missing character: There is no α (U+03B1) in font [lmroman10-regular]:mapping=t
 ex-text;!
 
-Overfull \hbox (10.5975pt too wide) in paragraph at lines 801--802
+Overfull \hbox (10.5975pt too wide) in paragraph at lines 800--801
 \TU/lmr/m/n/10.95 lected by the learned attention vector. The value α=2.0 is us
 ed as an implementation-
  []
@@ -2001,7 +2001,7 @@ ed as an implementation-
 
 
 [19]
-Overfull \hbox (1.64981pt too wide) in paragraph at lines 818--820
+Overfull \hbox (1.64981pt too wide) in paragraph at lines 817--819
 \TU/lmr/m/n/10.95 combined with the encoded categorical representation $\OML/cm
 m/m/it/10.95 e[]$\TU/lmr/m/n/10.95 . The fused feature-aware
  []
@@ -2009,7 +2009,7 @@ m/m/it/10.95 e[]$\TU/lmr/m/n/10.95 . The fused feature-aware
 
 
 [20]
-Overfull \hbox (10.7402pt too wide) in paragraph at lines 837--838
+Overfull \hbox (10.7402pt too wide) in paragraph at lines 836--837
 \TU/lmr/m/n/10.95 anism, contextual value construction, or prediction head of T
 abR. Instead, it changes
  []
@@ -2017,13 +2017,13 @@ abR. Instead, it changes
 
 
 [21]
-Overfull \hbox (2.25175pt too wide) in paragraph at lines 864--865
+Overfull \hbox (2.25175pt too wide) in paragraph at lines 863--864
 \TU/lmr/m/n/10.95 FiTabR preserves the retrieval-based structure of TabR while 
 introducing a feature-
  []
 
 
-Overfull \hbox (1.81616pt too wide) in paragraph at lines 864--865
+Overfull \hbox (1.81616pt too wide) in paragraph at lines 863--864
 \TU/lmr/m/n/10.95 ture weighting to construct a feature-aware numerical represe
 ntation. The weighted
  []
@@ -2036,13 +2036,13 @@ ntation. The weighted
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <12> not avail
 able
 (Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 879.
+line 878.
 
 
 [24
 
 ]
-Overfull \hbox (2.62639pt too wide) in paragraph at lines 889--890
+Overfull \hbox (2.62639pt too wide) in paragraph at lines 888--889
 \TU/lmr/m/n/10.95 less frequent than the negative class, threshold-independent 
 and class-sensitive met-
  []
@@ -2058,13 +2058,13 @@ and class-sensitive met-
 [28]
 
 [29]
-Overfull \hbox (25.10692pt too wide) in paragraph at lines 1001--1002
+Overfull \hbox (25.10692pt too wide) in paragraph at lines 1000--1001
 \TU/lmr/m/n/10.95 dropout. Attention-based models additionally included attenti
 on dropout and attention-
  []
 
 
-Overfull \hbox (1.378pt too wide) in paragraph at lines 1005--1006
+Overfull \hbox (1.378pt too wide) in paragraph at lines 1004--1005
 \TU/lmr/m/n/10.95 binary cross-entropy as the objective function. The candidate
  memory for retrieval-
  []
@@ -2074,7 +2074,7 @@ Overfull \hbox (1.378pt too wide) in paragraph at lines 1005--1006
 [30]
 
 [31]
-Overfull \hbox (1.37538pt too wide) in paragraph at lines 1038--1052
+Overfull \hbox (1.37538pt too wide) in paragraph at lines 1037--1051
 \TU/lmr/m/n/10.95 GBM \TU/UnBatang.ttf(1)/m/it/10.95 [[], [], []], \TU/lmr/m/n/
 10.95 together with an MLP and the tabular deep-learning models SAINT
  []
@@ -2084,7 +2084,7 @@ Overfull \hbox (1.37538pt too wide) in paragraph at lines 1038--1052
 [32
 
 ]
-Overfull \hbox (5.94429pt too wide) in paragraph at lines 1239--1248
+Overfull \hbox (5.94429pt too wide) in paragraph at lines 1238--1247
 \TU/lmr/m/n/10.95 tectures differ primarily in the proposed feature-aware input
  representation. FiTabR
  []
@@ -2092,7 +2092,7 @@ Overfull \hbox (5.94429pt too wide) in paragraph at lines 1239--1248
 
 
 [33]
-Overfull \hbox (2.52332pt too wide) in paragraph at lines 1360--1368
+Overfull \hbox (2.52332pt too wide) in paragraph at lines 1359--1367
 []\TU/lmr/m/n/10.95 On Pima Diabetes, FiTabR improves accuracy from $\OT1/cmr/m
 /n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7529 \OMS/cmsy/m/n/10.95 ^^F 
 \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 0050$ \TU/lmr/m/n/1
@@ -2103,7 +2103,7 @@ cmsy/m/n/10.95 ^^F
 
 
 [34]
-Overfull \hbox (0.64381pt too wide) in paragraph at lines 1391--1398
+Overfull \hbox (0.64381pt too wide) in paragraph at lines 1390--1397
 []\TU/lmr/m/n/10.95 A clearer distinction appears in cross-entropy. FiTabR obta
 ins $\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 3038 \OMS/cmsy
 /m/n/10.95 ^^F \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 0097
@@ -2113,7 +2113,7 @@ $\TU/lmr/m/n/10.95 ,
 
 
 [35]
-Overfull \hbox (4.27893pt too wide) in paragraph at lines 1401--1407
+Overfull \hbox (4.27893pt too wide) in paragraph at lines 1400--1406
 \TU/lmr/m/n/10.95 Transformer obtains the highest mean accuracy \TU/UnBatang.tt
 f(1)/m/it/10.95 ($\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7
 701 \OMS/cmsy/m/n/10.95 ^^F \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m
@@ -2123,7 +2123,7 @@ f(1)/m/it/10.95 ($\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7
  []
 
 
-Overfull \hbox (1.55289pt too wide) in paragraph at lines 1401--1407
+Overfull \hbox (1.55289pt too wide) in paragraph at lines 1400--1406
 \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 0203$\TU/UnBatang.t
 tf(1)/m/it/10.95 ), \TU/lmr/m/n/10.95 recall \TU/UnBatang.ttf(1)/m/it/10.95 ($\
 OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7701 \OMS/cmsy/m/n/1
@@ -2139,7 +2139,7 @@ ang.ttf(1)/m/it/10.95 ($\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/1
 
 
 [36]
-Overfull \hbox (13.0592pt too wide) in paragraph at lines 1430--1432
+Overfull \hbox (13.0592pt too wide) in paragraph at lines 1429--1431
 []\TU/lmr/m/n/10.95 To examine this issue directly, Table []5.4[] reports posit
 ive-class and class-balanced
  []
@@ -2151,7 +2151,7 @@ ive-class and class-balanced
 [38]
 
 [39]
-Overfull \hbox (2.3637pt too wide) in paragraph at lines 1720--1726
+Overfull \hbox (2.3637pt too wide) in paragraph at lines 1719--1725
 \TU/lmr/m/n/10.95 retaining the original numerical representation while applyin
 g attention-based mod-
  []
@@ -2164,7 +2164,7 @@ File: figure/heart_ablation_performance.png Graphic file (type bmp)
 
 
 [41]
-Overfull \hbox (2.24284pt too wide) in paragraph at lines 1763--1765
+Overfull \hbox (2.24284pt too wide) in paragraph at lines 1762--1764
 \TU/lmr/m/n/10.95 Table []5.6[] presents the corresponding ablation results on 
 the Pima Diabetes dataset. 
  []
@@ -2175,7 +2175,7 @@ the Pima Diabetes dataset.
 File: figure/pima_ablation_performance.png Graphic file (type bmp)
 <figure/pima_ablation_performance.png>
 
-Overfull \hbox (8.50397pt too wide) in paragraph at lines 1955--1959
+Overfull \hbox (8.50397pt too wide) in paragraph at lines 1954--1958
 []\TU/lmr/m/n/10.95 The threshold-based metrics are identical across all config
 urations on the Stroke
  []
@@ -2183,14 +2183,14 @@ urations on the Stroke
 
 
 [43]
-Overfull \hbox (11.5338pt too wide) in paragraph at lines 1967--1971
+Overfull \hbox (11.5338pt too wide) in paragraph at lines 1966--1970
 []\TU/lmr/m/n/10.95 Complete FiTabR obtains the lowest mean cross-entropy, decr
 easing from $\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 1780$
  []
 
 
 LaTeX Warning: Reference `fig:figure/stroke_ablation_performance' on page 44 un
-defined on input line 1980.
+defined on input line 1979.
 
 File: figure/stroke_ablation_performance.png Graphic file (type bmp)
 <figure/stroke_ablation_performance.png>
@@ -2201,14 +2201,14 @@ File: figure/stroke_ablation_performance.png Graphic file (type bmp)
 [45]
 
 LaTeX Warning: Citation `jain2019attention' on page 46 undefined on input line 
-2039.
+2038.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 46 undefined on input line 2
-049.
+048.
 
 
-Overfull \hbox (12.0957pt too wide) in paragraph at lines 2045--2051
+Overfull \hbox (12.0957pt too wide) in paragraph at lines 2044--2050
 []\TU/lmr/m/n/10.95 The mean feature-attention values are compared with establi
 shed domain knowl-
  []
@@ -2225,59 +2225,59 @@ File: figure/pima_attention_analysis.png Graphic file (type bmp)
 <figure/pima_attention_analysis.png>
 
 
-LaTeX Warning: Citation `sosenko1993' on page 48 undefined on input line 2227.
+LaTeX Warning: Citation `sosenko1993' on page 48 undefined on input line 2226.
 
 
 LaTeX Warning: Citation `ada2026obesity' on page 48 undefined on input line 222
-7.
+6.
 
 
-LaTeX Warning: Citation `defronzo2009' on page 48 undefined on input line 2227.
+LaTeX Warning: Citation `defronzo2009' on page 48 undefined on input line 2226.
 
 
 
-Underfull \hbox (badness 1715) in paragraph at lines 2227--2227
+Underfull \hbox (badness 1715) in paragraph at lines 2226--2226
 []|\TU/lmr/m/n/10 Insulin resistance and $\OML/cmm/m/it/10 ^^L$\TU/lmr/m/n/10 -
 cell dysfunction are
  []
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-227.
+226.
 
 
 LaTeX Warning: Citation `ada2026obesity' on page 48 undefined on input line 222
-7.
+6.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-227.
+226.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-227.
+226.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-227.
+226.
 
 
-Underfull \hbox (badness 3088) in paragraph at lines 2227--2227
+Underfull \hbox (badness 3088) in paragraph at lines 2226--2226
 []|\TU/lmr/m/n/10 Glucose measurement is central to diabetes
  []
 
 
-Overfull \hbox (36.74767pt too wide) in paragraph at lines 2227--2227
+Overfull \hbox (36.74767pt too wide) in paragraph at lines 2226--2226
 []|\TU/lmr/m/n/10 DiabetesPedigreeFunction|  
  []
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-227.
+226.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-227.
+226.
 
 
 
@@ -2287,18 +2287,18 @@ LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
 File: figure/stroke_attention_analysis.png Graphic file (type bmp)
 <figure/stroke_attention_analysis.png>
 
-Underfull \hbox (badness 3803) in paragraph at lines 2258--2258
+Underfull \hbox (badness 3803) in paragraph at lines 2257--2257
 []\TU/lmr/m/n/10.95 Figure 5.6: |FiTabR feature-attention distribution on the S
 troke Prediction
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2308--2308
+Underfull \hbox (badness 10000) in paragraph at lines 2307--2307
 []|\TU/lmr/m/n/10 Diabetes and hyperglycemia are established
  []
 
 
-Underfull \hbox (badness 4036) in paragraph at lines 2308--2308
+Underfull \hbox (badness 4036) in paragraph at lines 2307--2307
 []|\TU/lmr/m/n/10 Cardiovascular disease is associated with in-
  []
 
@@ -2306,34 +2306,11 @@ Underfull \hbox (badness 4036) in paragraph at lines 2308--2308
 
 [50]
 
-[51]
-
-LaTeX Warning: Citation `b7' on page 52 undefined on input line 2343.
-
-
-
-[52]
-
-LaTeX Warning: Reference `fig' on page 53 undefined on input line 2370.
-
-
-LaTeX Font Warning: Font shape `TU/UnBatang.ttf(1)/bx/it' undefined
-(Font)              using `TU/UnBatang.ttf(1)/bx/n' instead on input line 2379.
-
-
-LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/it' in size <10.95> not a
-vailable
-(Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 2379.
-
-
-[53]
-
-[54] (./thesis.bbl
+[51] (./thesis.bbl
 bibitemlist
 
 
-[55
+[52
 
 
 ]
@@ -2350,9 +2327,9 @@ g.ttf(1)/m/it/10.95 ” \TU/lmr/m/it/10.95 arXiv preprint
 
 
 
-[56]
+[53]
 
-[57]
+[54]
 Underfull \hbox (badness 3919) in paragraph at lines 171--175
 []\TU/lmr/m/n/10.95 SCORE2 Working Group and ESC Cardiovascular Risk Collaborat
 ion,
@@ -2360,7 +2337,7 @@ ion,
 
 
 
-[58]
+[55]
 Underfull \hbox (badness 1360) in paragraph at lines 210--214
 []\TU/lmr/m/n/10.95 M. S. Lauer, P. M. Okin, M. G. Larson, J. C. Evans, and D. 
 Levy,
@@ -2368,21 +2345,21 @@ Levy,
 
 
 
-[59])
+[56])
 
-[60]
+[57]
 \openout2 = `abs-korean.aux'.
 
  (./abs-korean.tex
 
-[61
+[58
 
 ])
 \openout2 = `thanksto.aux'.
 
  (./thanksto.tex
 
-[62
+[59
 
 
 
@@ -2411,12 +2388,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 50963 strings out of 473832
- 1171855 string characters out of 5729480
- 1770115 words of memory out of 5000000
- 73184 multiletter control sequences out of 15000+600000
- 567216 words of font info for 125 fonts, out of 8000000 for 9000
+ 50946 strings out of 473832
+ 1171548 string characters out of 5729480
+ 1770016 words of memory out of 5000000
+ 73169 multiletter control sequences out of 15000+600000
+ 567208 words of font info for 124 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  112i,16n,131p,2364b,2783s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.pdf (72 pages).
+Output written on thesis.pdf (69 pages).

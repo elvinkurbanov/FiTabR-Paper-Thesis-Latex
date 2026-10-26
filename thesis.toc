@@ -53,12 +53,7 @@
 \contentsline {subsection}{\numberline {5.4.2}Pima Diabetes}{48}{subsection.5.4.2}%
 \contentsline {subsection}{\numberline {5.4.3}Stroke Prediction}{49}{subsection.5.4.3}%
 \contentsline {subsection}{\numberline {5.4.4}Attention Analysis Summary}{50}{subsection.5.4.4}%
-\contentsline {section}{\numberline {5.5}Some Common Mistakes}{51}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Authors and Affiliations}{52}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Identify the Headings}{53}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Figures and Tables}{53}{section.5.8}%
-\contentsline {paragraph}{Positioning Figures and Tables}{53}{paragraph*.25}%
-\contentsline {chapter}{References}{55}{chapter*.28}%
-\contentsline {chapter}{국문초록}{61}{section*.29}%
-\contentsline {chapter}{감사의 글}{62}{section*.30}%
+\contentsline {chapter}{References}{52}{chapter*.26}%
+\contentsline {chapter}{국문초록}{58}{section*.27}%
+\contentsline {chapter}{감사의 글}{59}{section*.28}%
 \contentsfinish 
