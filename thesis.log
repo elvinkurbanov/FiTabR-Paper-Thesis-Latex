@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.18)  21 OCT 2026 21:54
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.18)  26 OCT 2026 13:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1848,18 +1848,18 @@ line 308.
 [2]
 
 LaTeX Font Warning: Font shape `TU/UnBatang.ttf(1)/m/it' undefined
-(Font)              using `TU/UnBatang.ttf(1)/m/n' instead on input line 386.
+(Font)              using `TU/UnBatang.ttf(1)/m/n' instead on input line 385.
 
 
 
 [3]
-Overfull \hbox (5.1451pt too wide) in paragraph at lines 426--427
+Overfull \hbox (5.1451pt too wide) in paragraph at lines 425--426
 []\TU/lmr/m/it/10.95 Can sample-specific numerical feature modulation provide u
 seful improve-
  []
 
 
-Overfull \hbox (12.35005pt too wide) in paragraph at lines 435--444
+Overfull \hbox (12.35005pt too wide) in paragraph at lines 434--443
 \TU/lmr/m/n/10.95 sification tasks: Heart Disease, Pima Diabetes, and Stroke Pr
 ediction. These datasets
  []
@@ -1869,7 +1869,7 @@ ediction. These datasets
 [4]
 
 [5]
-Overfull \hbox (25.35901pt too wide) in paragraph at lines 489--495
+Overfull \hbox (25.35901pt too wide) in paragraph at lines 488--494
 []\TU/lmr/bx/n/10.95 Feature-aware extension of retrieval-augmented tabular lea
 rning. \TU/lmr/m/n/10.95 FiTabR
  []
@@ -1877,25 +1877,25 @@ rning. \TU/lmr/m/n/10.95 FiTabR
 
 
 [6]
-Overfull \hbox (22.01927pt too wide) in paragraph at lines 504--511
+Overfull \hbox (22.01927pt too wide) in paragraph at lines 503--510
 []\TU/lmr/bx/n/10.95 Component-level analysis through architectural ablation. \
 TU/lmr/m/n/10.95 Residual preser-
  []
 
 
-Overfull \hbox (16.14946pt too wide) in paragraph at lines 504--511
+Overfull \hbox (16.14946pt too wide) in paragraph at lines 503--510
 \TU/lmr/m/n/10.95 uniformly to all components and that residual preservation re
 ceives the strongest
  []
 
 
-Overfull \hbox (6.02072pt too wide) in paragraph at lines 520--528
+Overfull \hbox (6.02072pt too wide) in paragraph at lines 519--527
 \TU/lmr/m/n/10.95 only where the proposed representation mechanism provides ben
 efits, but also where
  []
 
 
-Overfull \hbox (5.40768pt too wide) in paragraph at lines 529--540
+Overfull \hbox (5.40768pt too wide) in paragraph at lines 528--539
 \TU/lmr/m/n/10.95 cal tabular learning, deep learning methods for structured da
 ta, retrieval-augmented
  []
@@ -1909,13 +1909,13 @@ ta, retrieval-augmented
 [9
 
 ]
-Overfull \hbox (4.08034pt too wide) in paragraph at lines 606--614
+Overfull \hbox (4.08034pt too wide) in paragraph at lines 605--613
 []\TU/lmr/m/n/10.95 Despite these developments, deep learning does not consiste
 ntly dominate tree-
  []
 
 
-Overfull \hbox (15.74446pt too wide) in paragraph at lines 606--614
+Overfull \hbox (15.74446pt too wide) in paragraph at lines 605--613
 \TU/lmr/m/n/10.95 based models retain important advantages on many medium-sized
  structured datasets,
  []
@@ -1925,13 +1925,13 @@ Overfull \hbox (15.74446pt too wide) in paragraph at lines 606--614
 [10]
 
 [11]
-Overfull \hbox (16.87965pt too wide) in paragraph at lines 641--650
+Overfull \hbox (16.87965pt too wide) in paragraph at lines 640--649
 []\TU/lmr/m/n/10.95 TabR provides a more direct and computationally efficient r
 ealization of retrieval-
  []
 
 
-Overfull \hbox (0.8709pt too wide) in paragraph at lines 651--658
+Overfull \hbox (0.8709pt too wide) in paragraph at lines 650--657
 []\TU/lmr/m/n/10.95 The TabR study demonstrated that retrieval can substantiall
 y strengthen tab-
  []
@@ -1939,7 +1939,7 @@ y strengthen tab-
 
 
 [12]
-Overfull \hbox (1.7505pt too wide) in paragraph at lines 684--693
+Overfull \hbox (1.7505pt too wide) in paragraph at lines 683--692
 \TU/lmr/m/n/10.95 internal model behavior. TabNet, for example, exposes feature
 -selection masks that
  []
@@ -1949,13 +1949,13 @@ Overfull \hbox (1.7505pt too wide) in paragraph at lines 684--693
 [13]
 
 [14]
-Overfull \hbox (0.41312pt too wide) in paragraph at lines 733--741
+Overfull \hbox (0.41312pt too wide) in paragraph at lines 732--740
 \TU/lmr/m/n/10.95 of numerical inputs before the TabR encoder while preserving 
 the original retrieval,
  []
 
 
-Overfull \hbox (41.49896pt too wide) in paragraph at lines 733--741
+Overfull \hbox (41.49896pt too wide) in paragraph at lines 732--740
 \TU/lmr/m/n/10.95 contextual aggregation, and prediction mechanisms. This desig
 n isolates the representation-
  []
@@ -1970,7 +1970,7 @@ File: graph.drawio.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (0.91815pt too wide) in paragraph at lines 770--771
+Overfull \hbox (0.91815pt too wide) in paragraph at lines 769--770
 \TU/lmr/m/n/10.95 this section focuses on the proposed feature-aware representa
 tion mechanism rather
  []
@@ -1982,7 +1982,7 @@ tion mechanism rather
 ]
 
 [17]
-Overfull \hbox (2.28706pt too wide) in paragraph at lines 779--780
+Overfull \hbox (2.28706pt too wide) in paragraph at lines 778--779
 \TU/lmr/m/n/10.95 a feature-aware preprocessing stage before representation lea
 rning and retrieval.The
  []
@@ -1993,7 +1993,7 @@ rning and retrieval.The
 Missing character: There is no α (U+03B1) in font [lmroman10-regular]:mapping=t
 ex-text;!
 
-Overfull \hbox (10.5975pt too wide) in paragraph at lines 800--801
+Overfull \hbox (10.5975pt too wide) in paragraph at lines 799--800
 \TU/lmr/m/n/10.95 lected by the learned attention vector. The value α=2.0 is us
 ed as an implementation-
  []
@@ -2001,7 +2001,7 @@ ed as an implementation-
 
 
 [19]
-Overfull \hbox (1.64981pt too wide) in paragraph at lines 817--819
+Overfull \hbox (1.64981pt too wide) in paragraph at lines 816--818
 \TU/lmr/m/n/10.95 combined with the encoded categorical representation $\OML/cm
 m/m/it/10.95 e[]$\TU/lmr/m/n/10.95 . The fused feature-aware
  []
@@ -2009,7 +2009,7 @@ m/m/it/10.95 e[]$\TU/lmr/m/n/10.95 . The fused feature-aware
 
 
 [20]
-Overfull \hbox (10.7402pt too wide) in paragraph at lines 836--837
+Overfull \hbox (10.7402pt too wide) in paragraph at lines 835--836
 \TU/lmr/m/n/10.95 anism, contextual value construction, or prediction head of T
 abR. Instead, it changes
  []
@@ -2017,13 +2017,13 @@ abR. Instead, it changes
 
 
 [21]
-Overfull \hbox (2.25175pt too wide) in paragraph at lines 863--864
+Overfull \hbox (2.25175pt too wide) in paragraph at lines 862--863
 \TU/lmr/m/n/10.95 FiTabR preserves the retrieval-based structure of TabR while 
 introducing a feature-
  []
 
 
-Overfull \hbox (1.81616pt too wide) in paragraph at lines 863--864
+Overfull \hbox (1.81616pt too wide) in paragraph at lines 862--863
 \TU/lmr/m/n/10.95 ture weighting to construct a feature-aware numerical represe
 ntation. The weighted
  []
@@ -2036,13 +2036,13 @@ ntation. The weighted
 LaTeX Font Info:    Font shape `TU/UnBatang.ttf(1)/bx/n' in size <12> not avail
 able
 (Font)              Font shape `TU/UnBatang.ttf(1)/b/n' tried instead on input 
-line 878.
+line 877.
 
 
 [24
 
 ]
-Overfull \hbox (2.62639pt too wide) in paragraph at lines 888--889
+Overfull \hbox (2.62639pt too wide) in paragraph at lines 887--888
 \TU/lmr/m/n/10.95 less frequent than the negative class, threshold-independent 
 and class-sensitive met-
  []
@@ -2058,13 +2058,13 @@ and class-sensitive met-
 [28]
 
 [29]
-Overfull \hbox (25.10692pt too wide) in paragraph at lines 1000--1001
+Overfull \hbox (25.10692pt too wide) in paragraph at lines 999--1000
 \TU/lmr/m/n/10.95 dropout. Attention-based models additionally included attenti
 on dropout and attention-
  []
 
 
-Overfull \hbox (1.378pt too wide) in paragraph at lines 1004--1005
+Overfull \hbox (1.378pt too wide) in paragraph at lines 1003--1004
 \TU/lmr/m/n/10.95 binary cross-entropy as the objective function. The candidate
  memory for retrieval-
  []
@@ -2074,7 +2074,7 @@ Overfull \hbox (1.378pt too wide) in paragraph at lines 1004--1005
 [30]
 
 [31]
-Overfull \hbox (1.37538pt too wide) in paragraph at lines 1037--1051
+Overfull \hbox (1.37538pt too wide) in paragraph at lines 1036--1050
 \TU/lmr/m/n/10.95 GBM \TU/UnBatang.ttf(1)/m/it/10.95 [[], [], []], \TU/lmr/m/n/
 10.95 together with an MLP and the tabular deep-learning models SAINT
  []
@@ -2084,7 +2084,7 @@ Overfull \hbox (1.37538pt too wide) in paragraph at lines 1037--1051
 [32
 
 ]
-Overfull \hbox (5.94429pt too wide) in paragraph at lines 1238--1247
+Overfull \hbox (5.94429pt too wide) in paragraph at lines 1237--1246
 \TU/lmr/m/n/10.95 tectures differ primarily in the proposed feature-aware input
  representation. FiTabR
  []
@@ -2092,7 +2092,7 @@ Overfull \hbox (5.94429pt too wide) in paragraph at lines 1238--1247
 
 
 [33]
-Overfull \hbox (2.52332pt too wide) in paragraph at lines 1359--1367
+Overfull \hbox (2.52332pt too wide) in paragraph at lines 1358--1366
 []\TU/lmr/m/n/10.95 On Pima Diabetes, FiTabR improves accuracy from $\OT1/cmr/m
 /n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7529 \OMS/cmsy/m/n/10.95 ^^F 
 \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 0050$ \TU/lmr/m/n/1
@@ -2103,7 +2103,7 @@ cmsy/m/n/10.95 ^^F
 
 
 [34]
-Overfull \hbox (0.64381pt too wide) in paragraph at lines 1390--1397
+Overfull \hbox (0.64381pt too wide) in paragraph at lines 1389--1396
 []\TU/lmr/m/n/10.95 A clearer distinction appears in cross-entropy. FiTabR obta
 ins $\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 3038 \OMS/cmsy
 /m/n/10.95 ^^F \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 0097
@@ -2113,7 +2113,7 @@ $\TU/lmr/m/n/10.95 ,
 
 
 [35]
-Overfull \hbox (4.27893pt too wide) in paragraph at lines 1400--1406
+Overfull \hbox (4.27893pt too wide) in paragraph at lines 1399--1405
 \TU/lmr/m/n/10.95 Transformer obtains the highest mean accuracy \TU/UnBatang.tt
 f(1)/m/it/10.95 ($\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7
 701 \OMS/cmsy/m/n/10.95 ^^F \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m
@@ -2123,7 +2123,7 @@ f(1)/m/it/10.95 ($\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7
  []
 
 
-Overfull \hbox (1.55289pt too wide) in paragraph at lines 1400--1406
+Overfull \hbox (1.55289pt too wide) in paragraph at lines 1399--1405
 \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 0203$\TU/UnBatang.t
 tf(1)/m/it/10.95 ), \TU/lmr/m/n/10.95 recall \TU/UnBatang.ttf(1)/m/it/10.95 ($\
 OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 7701 \OMS/cmsy/m/n/1
@@ -2139,7 +2139,7 @@ ang.ttf(1)/m/it/10.95 ($\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/1
 
 
 [36]
-Overfull \hbox (13.0592pt too wide) in paragraph at lines 1429--1431
+Overfull \hbox (13.0592pt too wide) in paragraph at lines 1428--1430
 []\TU/lmr/m/n/10.95 To examine this issue directly, Table []5.4[] reports posit
 ive-class and class-balanced
  []
@@ -2151,7 +2151,7 @@ ive-class and class-balanced
 [38]
 
 [39]
-Overfull \hbox (2.3637pt too wide) in paragraph at lines 1719--1725
+Overfull \hbox (2.3637pt too wide) in paragraph at lines 1718--1724
 \TU/lmr/m/n/10.95 retaining the original numerical representation while applyin
 g attention-based mod-
  []
@@ -2164,7 +2164,7 @@ File: figure/heart_ablation_performance.png Graphic file (type bmp)
 
 
 [41]
-Overfull \hbox (2.24284pt too wide) in paragraph at lines 1762--1764
+Overfull \hbox (2.24284pt too wide) in paragraph at lines 1761--1763
 \TU/lmr/m/n/10.95 Table []5.6[] presents the corresponding ablation results on 
 the Pima Diabetes dataset. 
  []
@@ -2175,7 +2175,7 @@ the Pima Diabetes dataset.
 File: figure/pima_ablation_performance.png Graphic file (type bmp)
 <figure/pima_ablation_performance.png>
 
-Overfull \hbox (8.50397pt too wide) in paragraph at lines 1954--1958
+Overfull \hbox (8.50397pt too wide) in paragraph at lines 1953--1957
 []\TU/lmr/m/n/10.95 The threshold-based metrics are identical across all config
 urations on the Stroke
  []
@@ -2183,14 +2183,14 @@ urations on the Stroke
 
 
 [43]
-Overfull \hbox (11.5338pt too wide) in paragraph at lines 1966--1970
+Overfull \hbox (11.5338pt too wide) in paragraph at lines 1965--1969
 []\TU/lmr/m/n/10.95 Complete FiTabR obtains the lowest mean cross-entropy, decr
 easing from $\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 1780$
  []
 
 
 LaTeX Warning: Reference `fig:figure/stroke_ablation_performance' on page 44 un
-defined on input line 1979.
+defined on input line 1978.
 
 File: figure/stroke_ablation_performance.png Graphic file (type bmp)
 <figure/stroke_ablation_performance.png>
@@ -2201,14 +2201,14 @@ File: figure/stroke_ablation_performance.png Graphic file (type bmp)
 [45]
 
 LaTeX Warning: Citation `jain2019attention' on page 46 undefined on input line 
-2038.
+2037.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 46 undefined on input line 2
-048.
+047.
 
 
-Overfull \hbox (12.0957pt too wide) in paragraph at lines 2044--2050
+Overfull \hbox (12.0957pt too wide) in paragraph at lines 2043--2049
 []\TU/lmr/m/n/10.95 The mean feature-attention values are compared with establi
 shed domain knowl-
  []
@@ -2225,59 +2225,59 @@ File: figure/pima_attention_analysis.png Graphic file (type bmp)
 <figure/pima_attention_analysis.png>
 
 
-LaTeX Warning: Citation `sosenko1993' on page 48 undefined on input line 2226.
+LaTeX Warning: Citation `sosenko1993' on page 48 undefined on input line 2225.
 
 
 LaTeX Warning: Citation `ada2026obesity' on page 48 undefined on input line 222
-6.
+5.
 
 
-LaTeX Warning: Citation `defronzo2009' on page 48 undefined on input line 2226.
+LaTeX Warning: Citation `defronzo2009' on page 48 undefined on input line 2225.
 
 
 
-Underfull \hbox (badness 1715) in paragraph at lines 2226--2226
+Underfull \hbox (badness 1715) in paragraph at lines 2225--2225
 []|\TU/lmr/m/n/10 Insulin resistance and $\OML/cmm/m/it/10 ^^L$\TU/lmr/m/n/10 -
 cell dysfunction are
  []
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-226.
+225.
 
 
 LaTeX Warning: Citation `ada2026obesity' on page 48 undefined on input line 222
-6.
+5.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-226.
+225.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-226.
+225.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-226.
+225.
 
 
-Underfull \hbox (badness 3088) in paragraph at lines 2226--2226
+Underfull \hbox (badness 3088) in paragraph at lines 2225--2225
 []|\TU/lmr/m/n/10 Glucose measurement is central to diabetes
  []
 
 
-Overfull \hbox (36.74767pt too wide) in paragraph at lines 2226--2226
+Overfull \hbox (36.74767pt too wide) in paragraph at lines 2225--2225
 []|\TU/lmr/m/n/10 DiabetesPedigreeFunction|  
  []
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-226.
+225.
 
 
 LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
-226.
+225.
 
 
 
@@ -2287,18 +2287,18 @@ LaTeX Warning: Citation `ada2026diagnosis' on page 48 undefined on input line 2
 File: figure/stroke_attention_analysis.png Graphic file (type bmp)
 <figure/stroke_attention_analysis.png>
 
-Underfull \hbox (badness 3803) in paragraph at lines 2257--2257
+Underfull \hbox (badness 3803) in paragraph at lines 2256--2256
 []\TU/lmr/m/n/10.95 Figure 5.6: |FiTabR feature-attention distribution on the S
 troke Prediction
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2307--2307
+Underfull \hbox (badness 10000) in paragraph at lines 2306--2306
 []|\TU/lmr/m/n/10 Diabetes and hyperglycemia are established
  []
 
 
-Underfull \hbox (badness 4036) in paragraph at lines 2307--2307
+Underfull \hbox (badness 4036) in paragraph at lines 2306--2306
 []|\TU/lmr/m/n/10 Cardiovascular disease is associated with in-
  []
 
@@ -2390,7 +2390,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  50946 strings out of 473832
  1171548 string characters out of 5729480
- 1770016 words of memory out of 5000000
+ 1769016 words of memory out of 5000000
  73169 multiletter control sequences out of 15000+600000
  567208 words of font info for 124 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
