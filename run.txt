@@ -1,0 +1,12 @@
+xelatex -synctex=1 -interaction=nonstopmode thesis.tex
+bibtex thesis
+xelatex -synctex=1 -interaction=nonstopmode thesis.tex
+xelatex -synctex=1 -interaction=nonstopmode thesis.tex
+
+
+double-click
+Ctrl + Alt + J
+Alt + Z
+Option + Z
+
+Medical tabular datasets are typically small, contain mixed numerical and categorical variables, and are often class-imbalanced, which makes it difficult to learn how strongly each measurement should influence a prediction. Retrieval-augmented models such as TabR predict from a target sample together with similar training samples, but they encode numerical features without sample-specific weighting before retrieval. This thesis proposes FiTabR, an extension of TabR that places a lightweight attention module before the encoder. For each sample, the module produces a weight for every numerical feature and applies it through residual modulation, leaving TabR's retrieval, aggregation, and prediction components unchanged. FiTabR was evaluated on three binary medical classification datasets, Heart Disease (918 samples), Pima Indians Diabetes (768), and Stroke Prediction (5,110), and compared with TabR, CatBoost, XGBoost, LightGBM, an MLP, SAINT, and FT-Transformer. The gains were limited to Heart Disease, where FiTabR reduced cross-entropy from 0.359 to 0.304 and raised accuracy from 0.884 to 0.894 while ROC-AUC remained 0.951; cross-entropy was lower than TabR's in 13 of 15 paired runs. On Pima Diabetes, differences from TabR were within run-to-run variation, and on the highly imbalanced Stroke dataset FiTabR gave no improvement, with all models failing to identify positive cases at the default decision threshold. Ablation experiments showed that preserving the original features through the residual form was the most important component, while uniform weights performed comparably to learned attention on Heart Disease, so the benefit of sample-specific weighting was not established. The learned attention agreed with clinical knowledge for some features but not for others, and it is interpreted as model behavior rather than clinical importance. These results indicate that feature-aware numerical representation can improve probability estimation in retrieval-augmented models on some small medical datasets, but not consistently, and not under severe class imbalance.

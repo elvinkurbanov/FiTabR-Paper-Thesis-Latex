@@ -218,23 +218,23 @@ colorlinks = true
   
 \begin{document}
   %% 정보
-  \EnglishTitle{Feature-Aware Numerical Representation for Retrieval-Augmented Medical Tabular Classification (FiTabr)}
+  \EnglishTitle{Feature-Aware Numerical Representation for Retrieval-Augmented Medical Tabular Classification (FiTabR)}
   %% 본문이 영문일 경우, 국문 제목은 빈칸으로 둘 것
   \KoreanTitle{}
   \AuthorKoreanName{엘빈}
   \AuthorEnglishName{Kurbanov Elvin Vagibovich}
   \KoreanNameofDegree{공학 석사}
   
-  \EnglishNameofDegree{Master of Science}
+  \EnglishNameofDegree{Master of Computer Science}
   \EnglishNameofPaper{Master Thesis}
 
   \GraduateDate{2027년 2월}
   \GraduateDateEnglish{February 2027}
   \EnglishDepartmentName{Department of Computer Science and Engineering}
-  \KoreanDepartmentName{학과 한글 이름}
+  \KoreanDepartmentName{ 컴퓨터공학과}
   \RefereeChief{Taesoo Kwon}
-  \RefereeSecond{Sohn Illsoo}
-  \RefereeThird{Park Laihyuk}
+  \RefereeSecond{Illsoo Sohn}
+  \RefereeThird{Laihyuk Park}
   \AdvisorKoreanName{권태수}
   \AdvisorEnglishName{Taesoo Kwon}
 
@@ -262,15 +262,8 @@ colorlinks = true
 
 \include{abs-summary}
     
-\pagenumbering{gobble}
- 
-    
-
 \cedp
   
-  %% 본문 이전의 쪽들
-\frontmatter 
-
   %% TOC/ LOF / LOT 끝의 * 지우면 안됨. ( 목차에서 명단 삭제 필요 )
 
 \pagestyle{plain}%
@@ -284,13 +277,15 @@ colorlinks = true
 
 \clearpage
 \phantomsection
-\listoftables*
 \addcontentsline{toc}{chapter}{List of Tables}
+\listoftables*
+
 
 \clearpage
 \phantomsection
-\listoffigures*
 \addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures*
+
         
   %%% 본문 시작
   \mainmatter
@@ -307,7 +302,7 @@ colorlinks = true
 
     \chapter{Introduction}
 
-clinical information is progressively collected and stored in structured
+Clinical information is progressively collected and stored in structured
 digital form. Many clinical prediction problems are naturally represented as
 tabular data composed of demographic characteristics, physiological
 measurements, laboratory values, medical history, and other patient-related
@@ -344,7 +339,7 @@ process. This idea connects representation learning with local information from
 the available data and has motivated several retrieval-based approaches for
 tabular prediction
 \cite{qin2021rim,kossen2021selfattention,gorishniy2024tabr}.
-
+   
 TabR is a recent retrieval-augmented deep learning model for tabular data that
 combines a feed-forward architecture with a nearest-neighbor-like retrieval
 mechanism \cite{gorishniy2024tabr}. The model first constructs a learned
@@ -531,11 +526,12 @@ retrieval-augmented tabular learning, the TabR architecture, and feature
 attention approaches relevant to this work. Chapter III presents the proposed
 FiTabR architecture, including the problem formulation, feature-attention
 module, residual feature modulation, and integration with the TabR retrieval
-framework. Chapter IV describes the datasets, baseline models, experimental
-protocol, main comparative results, ablation experiments, attention analysis,
-and discussion of the observed behavior. Finally, Chapter V summarizes the
-main findings, discusses the limitations of the study, and outlines directions
-for future research.
+framework. Chapter IV describes the experimental setup, including the
+datasets, preprocessing, baseline models, evaluation metrics, and
+implementation details. Chapter V presents the main comparative results, the
+ablation experiments, the attention analysis, and a discussion of the observed
+behavior. Finally, Chapter VI summarizes the main findings, discusses the
+limitations of the study, and outlines directions for future research.
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % II. RESEARCH BACKGROUND / RELATED WORK
@@ -865,7 +861,6 @@ This design allows FiTabR to preserve the original retrieval-augmented learning 
 
     
 \chapter{Experimental Setup}
-\addcontentsline{toc}{chapter}{Experimental Setup}
 \label{chap:experimental-setup}
 FiTabR was evaluated on three medical tabular binary-classification datasets. The experimental protocol covered data partitioning, preprocessing, baseline selection, hyperparameter optimisation, repeated training, and final test-set evaluation. All models were evaluated using the same data partitions and metric implementations. For the direct architectural comparison, FiTabR and the reference retrieval-based model additionally used the same candidate memory, retrieval configuration, optimisation objective, and random seeds. The implementation was developed using the experimental framework of the reference architecture~\cite{gorishniy2024tabr}.
 
