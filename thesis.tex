@@ -172,6 +172,7 @@ colorlinks = true
 \usepackage{subcaption}
 \usepackage{siunitx}
 \usepackage{tabularx}
+\usepackage{float}
 \usepackage{enumitem}
 
 \usepackage{amsthm}
@@ -925,7 +926,7 @@ XGBoost~\cite{chen2016xgboost}, LightGBM~\cite{ke2017lightgbm}, and CatBoost~\ci
 
 \subsection{Deep Tabular Models}
 
-A multilayer perceptron (MLP) was used as the basic neural-network baseline.\cite{gorishniy2021revisiting} The MLP processes each observation independently and does not use feature attention or retrieved training instances. FT-Transformer~\cite{fttransformer} represents individual features as tokens and applies self-attention to model interactions among features. SAINT~\cite{somepalli2021saint} provides an additional attention-based comparison for tabular representation learning.
+A multilayer perceptron (MLP)~\cite{rumelhart1986learning} was used as the basic neural-network baseline. The MLP processes each observation independently and does not use feature attention or retrieved training instances. FT-Transformer~\cite{gorishniy2021revisiting} represents individual features as tokens and applies self-attention to model interactions among features. SAINT~\cite{somepalli2021saint} provides an additional attention-based comparison for tabular representation learning.
 
 \subsection{Retrieval-Based Baseline}
 
@@ -989,7 +990,7 @@ For the imbalanced Stroke Prediction dataset, ROC--AUC, recall, and F1-score wer
 \section{Implementation Details}
 \label{sec:implementation-details}
 
-The models were implemented in Python using a shared experimental framework. Dataset processing and metric computation were based on scikit-learn~\cite{sklearn}. Hyperparameter optimisation was performed using Optuna with the Tree-structured Parzen Estimator sampler~\cite{optuna}. The repository configurations used 200 optimisation trials, including 20 initial startup trials. Hyperparameter selection was based exclusively on validation performance.
+The models were implemented in Python using a shared experimental framework. Dataset processing and metric computation were based on scikit-learn~\cite{sklearn}. Hyperparameter optimisation was performed using Optuna with the Tree-structured Parzen Estimator sampler~\cite{optuna}. The repository configurations used 100 optimisation trials, hyperparameter selection was based exclusively on validation performance.
 
 For neural models, the search space included learning rate, weight decay, hidden representation dimension, number of processing blocks, batch size, and dropout. Attention-based models additionally included attention dropout and attention-specific representation parameters. For FiTabR, parameters associated with feature attention, residual scaling, and feature fusion were included in the optimisation procedure.
 
@@ -1132,7 +1133,7 @@ $\mathbf{0.3038 \pm 0.0097}$ \\
 \end{tabular}%
 }
 \end{table}
-On the Heart Disease dataset Table~\ref{tab:heart_results} , ModernNCA achieves the highest mean accuracy ($0.9058 \pm 0.0072$), precision, recall, F1-score, and ROC-AUC($0.9527 \pm 0.0016$) 
+On the Heart Disease dataset as shown in Table~\ref{tab:heart_results}, ModernNCA achieves the highest mean accuracy ($0.9058 \pm 0.0072$), precision, recall, F1-score, and ROC-AUC($0.9527 \pm 0.0016$) 
 among the evaluated models. FiTabR ranks second on the
 threshold-dependent metrics, with an accuracy of $0.8937 \pm 0.0042$ and an
 F1-score of $0.8940 \pm 0.0042$, and outperforms all gradient-boosted and
@@ -1245,18 +1246,17 @@ corresponding standard deviations and should be regarded as modest. The
 ROC-AUC of FiTabR ($0.7953$) remains close to, but slightly below, that of
 TabR ($0.7963$), and below most of the remaining baselines.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \caption{Performance comparison on the Stroke Prediction dataset. Results are
 reported as mean $\pm$ standard deviation.}
 \label{tab:stroke_results}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccc}
 \hline
 \textbf{Model} &
 \textbf{Accuracy} &
 \textbf{Precision} &
-\textbf{Recall} &
 \textbf{F1-score} &
 \textbf{ROC-AUC} &
 \textbf{Cross-Entropy} \\
@@ -1264,7 +1264,6 @@ reported as mean $\pm$ standard deviation.}
 CatBoost &
 $0.9500 \pm 0.0008$ &
 $0.9033 \pm 0.0000$ &
-$0.9500 \pm 0.0008$ &
 $0.9261 \pm 0.0004$ &
 $0.8294 \pm 0.0168$ &
 $0.3105 \pm 0.0525$ \\
@@ -1272,7 +1271,6 @@ $0.3105 \pm 0.0525$ \\
 XGBoost &
 $0.9513 \pm 0.0008$ &
 $\mathbf{0.9407 \pm 0.0125}$ &
-$0.9513 \pm 0.0008$ &
 $\mathbf{0.9300 \pm 0.0016}$ &
 $0.8201 \pm 0.0024$ &
 $0.2259 \pm 0.0678$ \\
@@ -1280,7 +1278,6 @@ $0.2259 \pm 0.0678$ \\
 LightGBM &
 $\mathbf{0.9518 \pm 0.0013}$ &
 $0.9376 \pm 0.0296$ &
-$\mathbf{0.9518 \pm 0.0013}$ &
 $0.9294 \pm 0.0031$ &
 $0.8199 \pm 0.0023$ &
 $\mathbf{0.1640 \pm 0.0007}$ \\
@@ -1288,7 +1285,6 @@ $\mathbf{0.1640 \pm 0.0007}$ \\
 MLP &
 $0.9505 \pm 0.0000$ &
 $0.9034 \pm 0.0000$ &
-$0.9505 \pm 0.0000$ &
 $0.9263 \pm 0.0000$ &
 $0.8220 \pm 0.0087$ &
 $0.1738 \pm 0.0129$ \\
@@ -1296,7 +1292,6 @@ $0.1738 \pm 0.0129$ \\
 SAINT &
 $0.9505 \pm 0.0000$ &
 $0.9034 \pm 0.0000$ &
-$0.9505 \pm 0.0000$ &
 $0.9263 \pm 0.0000$ &
 $0.7368 \pm 0.0528$ &
 $0.2042 \pm 0.0067$ \\
@@ -1304,7 +1299,6 @@ $0.2042 \pm 0.0067$ \\
 FT-Transformer &
 $0.9505 \pm 0.0000$ &
 $0.9034 \pm 0.0000$ &
-$0.9505 \pm 0.0000$ &
 $0.9263 \pm 0.0000$ &
 $\mathbf{0.8328 \pm 0.0036}$ &
 $0.1663 \pm 0.0049$ \\
@@ -1312,7 +1306,6 @@ $0.1663 \pm 0.0049$ \\
 TabR &
 $0.9505 \pm 0.0000$ &
 $0.9034 \pm 0.0000$ &
-$0.9505 \pm 0.0000$ &
 $0.9263 \pm 0.0000$ &
 $0.8136 \pm 0.0078$ &
 $0.1780 \pm 0.0050$ \\
@@ -1320,7 +1313,6 @@ $0.1780 \pm 0.0050$ \\
 ModernNCA &
 $0.9505 \pm 0.0000$ &
 $0.9034 \pm 0.0000$ &
-$0.9505 \pm 0.0000$ &
 $0.9263 \pm 0.0000$ &
 $0.7808 \pm 0.0203$ &
 $0.1712 \pm 0.0029$ \\
@@ -1328,7 +1320,6 @@ $0.1712 \pm 0.0029$ \\
 FiTabR &
 $0.9505 \pm 0.0000$ &
 $0.9034 \pm 0.0000$ &
-$0.9505 \pm 0.0000$ &
 $0.9263 \pm 0.0000$ &
 $0.8095 \pm 0.0126$ &
 $0.1750 \pm 0.0091$ \\
@@ -1337,16 +1328,26 @@ $0.1750 \pm 0.0091$ \\
 }
 \end{table}
 
-
-On Stroke Prediction, the aggregate accuracy of almost all models is close
-to 0.95. LightGBM achieves the highest mean accuracy and recall, XGBoost
-obtains the highest precision and F1-score, and FT-Transformer provides the
-highest ROC-AUC. FiTabR and TabR obtain identical accuracy, precision,
-recall, and F1-score, while FiTabR slightly reduces cross-entropy from
-$0.1780$ to $0.1750$. In contrast, the mean ROC-AUC decreases from
-$0.8136$ for TabR to $0.8095$ for FiTabR. The high aggregate accuracy,
-however, requires further analysis because the Stroke dataset is strongly
-imbalanced.
+On Stroke Prediction dataset Table~\ref{tab:stroke_results}, the aggregate accuracy of all models is close to
+0.95. This value must be interpreted against the class distribution of the
+test set, in which 729 of 767 observations (95.05\%) belong to the negative
+class. MLP, SAINT, FT-Transformer, TabR, ModernNCA, and FiTabR all obtain
+exactly this accuracy with zero variance, together with identical weighted
+precision ($0.9034$) and F1-score ($0.9263$), which is consistent with
+predicting every test observation as negative. Only LightGBM
+($0.9518 \pm 0.0013$) and XGBoost ($0.9513 \pm 0.0008$) exceed this level;
+LightGBM obtains the highest accuracy and the lowest cross-entropy
+($0.1640 \pm 0.0007$), while XGBoost obtains the highest precision and
+F1-score. FT-Transformer provides the highest ROC-AUC
+($0.8328 \pm 0.0036$), followed by CatBoost ($0.8294 \pm 0.0168$). Relative
+to TabR, FiTabR slightly reduces cross-entropy from $0.1780$ to $0.1750$,
+whereas its mean ROC-AUC decreases from $0.8136$ to $0.8095$; both
+differences are smaller than the corresponding standard deviations. FiTabR
+therefore ranks in the lower half of the evaluated models in ROC-AUC on this
+dataset. Because the threshold-dependent metrics in
+Table~\ref{tab:stroke_results} largely reflect the dominant negative class,
+the minority-class behavior is examined separately in the following
+subsection.
 
 \subsection{Direct TabR--FiTabR Comparison}
 
@@ -1439,7 +1440,7 @@ not describe the ability of the models to detect Stroke cases.
 To examine this issue directly, Table~\ref{tab:stroke_minority} reports
 positive-class and class-balanced metrics for the two retrieval models.
 
-\begin{table}[t]
+\begin{table}[H] 
 \centering
 \caption{Minority-class performance of TabR and FiTabR on the Stroke
 Prediction dataset.\\}
@@ -1879,7 +1880,7 @@ comparison for Pima Diabetes.
 % ============================================================
 % Stroke Prediction
 % ============================================================
-\section{Stroke Prediction}
+\subsection{Stroke Prediction}
 \label{subsec:stroke_ablation_performance}
 
 Table~\ref{tab:stroke_ablation} reports the ablation results on the
@@ -1978,16 +1979,11 @@ $0.1780$ for TabR to $0.1750$. However, this improvement in
 probabilistic fit does not correspond to an improvement in ROC-AUC or
 threshold-based classification performance.
 
-Thus, unlike Heart Disease, the Stroke Prediction experiment does not
+Thus, unlike Heart Disease, the Stroke Prediction Figure~\ref{fig:stroke_ablation_performance} experiment does not
 provide evidence that feature-aware weighting improves overall
 discrimination. The result also illustrates that weighted
 threshold-based metrics can conceal differences between models on a
 strongly imbalanced dataset.
-
-
-
-Figure~\ref{fig:figure/stroke_ablation_performance} visualizes the ablation results on the
-Stroke Prediction dataset.
 
 \begin{figure}[H]
     \centering
