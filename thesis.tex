@@ -610,7 +610,7 @@ and retrieval of information from other observations.
 
 
 \section{Retrieval-Augmented Tabular Learning}
-
+\label{sec:retrieval-augmented}
 Retrieval-augmented learning extends conventional predictive models by allowing
 information from other training observations to participate directly in the
 prediction of a target sample. The underlying idea is related to local and
@@ -652,8 +652,24 @@ numerical representation and retrieval as distinct but interacting components
 of tabular deep learning, suggesting that the representation on which
 similarity is computed is itself an important architectural consideration.
 
-FiTabR builds directly on this observation. Rather than modifying candidate
-selection, contextual aggregation, or the prediction mechanism, FiTabR changes
+ModernNCA revisited Neighbourhood Components Analysis (NCA) as a deep
+baseline for tabular data \cite{ye2025modernnca}. The method learned a
+nonlinear mapping of the input features into an embedding space and predicted
+the label of a target observation as a weighted average of the labels of
+training observations, with weights given by a softmax over negative Euclidean
+distances in that space. During training, each mini-batch used only a random
+subset of the training set as candidate neighbors, which reduced computation
+and added stochasticity; at inference, the full training set was used. Unlike
+TabR, ModernNCA did not use an attention-like context module and predicted
+directly from the weighted neighbor labels. On a benchmark of 300 datasets, it
+obtained a better average rank than TabR while requiring approximately half of
+its training time and memory \cite{ye2025modernnca}. ModernNCA therefore
+improved retrieval-based prediction by learning the representation in which
+neighbors are compared, rather than by making the retrieval step more complex.
+
+FiTabR builds on the same observation but changes the representation in a
+different way. Whereas ModernNCA learns a complete embedding for the neighbor
+search, FiTabR keeps the TabR encoder , retrieval and changes
 the numerical representation supplied to the TabR encoder. A lightweight
 attention network generates a sample-specific distribution over numerical
 variables, and these values are used for residual modulation before encoding.
@@ -704,7 +720,52 @@ samples. The resulting patterns are subsequently compared with established
 medical knowledge as a behavioral analysis of the model rather than as a
 causal explanation.
 
+\section{Recent Tabular Methods and Baseline Selection}
+\label{sec:recent-methods}
+Recent tabular learning methods were considered as additional baselines:
+TabM, ModernNCA, TabPFN, TabICL, and TabICLv2. They were assessed against
+three criteria derived from the research question of this thesis. First, a
+baseline had to be trained and tuned on each dataset under the same protocol
+as FiTabR, so that differences in results reflect the models rather than the
+training regime. Second, it had to be directly comparable with a
+retrieval-augmented architecture whose modification concerns the
+representation used for retrieval. Third, a public implementation had to be
+available.
 
+TabM is a multilayer perceptron that imitates an ensemble of multilayer
+perceptrons whose members share most of their weights, and its authors
+reported it as the strongest deep tabular model in their benchmark
+\cite{gorishniy2025tabm}. TabM does not retrieve training observations. Its
+improvement comes from parameter-efficient ensembling, a technique that could
+also be applied to other architectures, including retrieval-based ones. A
+comparison with TabM would therefore mainly measure the effect of ensembling
+rather than the effect of modifying the representation before retrieval, and
+TabM was not included.
+
+TabPFN \cite{hollmann2025tabpfn}, TabICL \cite{qu2025tabicl}, and TabICLv2
+\cite{qu2026tabiclv2} are tabular foundation models. They were pretrained on
+large collections of synthetic datasets and make predictions for a new dataset
+in a single forward pass, using its training observations as context without
+updating their parameters. TabPFN was designed for datasets with up to 10,000
+samples, a range that includes the three datasets of this thesis, whereas
+TabICL and TabICLv2 were designed to scale to hundreds of thousands and
+millions of samples. Because these models are not trained on the target
+dataset, they cannot be tuned under the protocol described in
+Section~\ref{sec:implementation-details}, and the proposed feature-attention
+module cannot be inserted into them. A comparison would contrast large-scale
+pretraining with per-dataset training rather than address the design question
+of this thesis. They were therefore not used as baselines, and a comparison
+with foundation models is left for future work
+(Section~\ref{sec:future-work}).
+
+ModernNCA \cite{ye2025modernnca}, described in
+Section~\ref{sec:retrieval-augmented}, met all three criteria and was
+selected. It is trained and tuned on each dataset, predicts from the labels of
+retrieved training observations, and, like FiTabR, obtains its improvement by
+changing the representation in which neighbors are compared. It was also
+proposed as a simpler alternative to TabR. ModernNCA therefore provides the
+most direct test of whether the feature reweighting of FiTabR adds value
+beyond the most recent retrieval-based method.
 \section{Research Gap and Positioning of FiTabR}
 
 Existing work has therefore addressed several complementary aspects of tabular
@@ -715,7 +776,7 @@ interaction modeling
 \cite{huang2020tabtransformer,arik2021tabnet,somepalli2021saint}; and
 retrieval-augmented approaches incorporate information from other training
 observations
-\cite{qin2021rim,kossen2021selfattention,gorishniy2024tabr}.
+\cite{qin2021rim,kossen2021selfattention,gorishniy2024tabr,ye2025modernnca}.
 
 Within the methods considered in this thesis, however, the effect of explicitly
 introducing sample-specific modulation of numerical variables before the TabR
@@ -918,7 +979,9 @@ For the retrieval-based models, the candidate memory contained only training obs
 \section{Baselines}
 \label{sec:baselines}
 
-FiTabR was compared with gradient-boosted decision trees, conventional neural networks, attention-based deep tabular models, and the original retrieval-based architecture. The selected baselines cover the principal model families commonly used for supervised tabular classification.
+FiTabR was compared with gradient-boosted decision trees, conventional neural
+networks, attention-based deep tabular models, and two retrieval-based models,
+TabR and ModernNCA.
 
 \subsection{Gradient-Boosted Decision Trees}
 
@@ -927,10 +990,11 @@ XGBoost~\cite{chen2016xgboost}, LightGBM~\cite{ke2017lightgbm}, and CatBoost~\ci
 \subsection{Deep Tabular Models}
 
 A multilayer perceptron (MLP)~\cite{rumelhart1986learning} was used as the basic neural-network baseline. The MLP processes each observation independently and does not use feature attention or retrieved training instances. FT-Transformer~\cite{gorishniy2021revisiting} represents individual features as tokens and applies self-attention to model interactions among features. SAINT~\cite{somepalli2021saint} provides an additional attention-based comparison for tabular representation learning.
-
-\subsection{Retrieval-Based Baseline}
+\subsection{Retrieval-Based Baselines}
 
 The original retrieval-based architecture TabR~\cite{gorishniy2024tabr} was used as the principal architectural baseline. FiTabR preserves its candidate retrieval, context aggregation, and prediction framework while modifying the input representation through feature attention, residual feature weighting, and feature fusion. This design supports a controlled assessment of whether the proposed representation module improves similarity learning and downstream classification.
+
+ModernNCA~\cite{ye2025modernnca} was used as a second retrieval-based baseline. It learns an embedding of the input features and predicts from the distance-weighted labels of training observations, without the context module of TabR. It therefore provides a recent retrieval-based reference that improves the representation used for the neighbor search rather than the retrieval step itself; the reasons for its selection are given in Section~\ref{sec:recent-methods}.
 
 \section{Evaluation Metrics}
 \label{sec:metrics}
@@ -992,7 +1056,7 @@ For the imbalanced Stroke Prediction dataset, ROC--AUC, recall, and F1-score wer
 
 The models were implemented in Python using a shared experimental framework. Dataset processing and metric computation were based on scikit-learn~\cite{sklearn}. Hyperparameter optimisation was performed using Optuna with the Tree-structured Parzen Estimator sampler~\cite{optuna}. The repository configurations used 100 optimisation trials, hyperparameter selection was based exclusively on validation performance.
 
-For neural models, the search space included learning rate, weight decay, hidden representation dimension, number of processing blocks, batch size, and dropout. Attention-based models additionally included attention dropout and attention-specific representation parameters. For FiTabR, parameters associated with feature attention, residual scaling, and feature fusion were included in the optimisation procedure.
+For neural models, the search space included learning rate, weight decay, hidden representation dimension, number of processing blocks, batch size, and dropout. Attention-based models additionally included attention dropout and attention-specific representation parameters. For FiTabR, parameters associated with feature attention, residual scaling, and feature fusion were included in the optimisation procedure. For ModernNCA, the search space also included the fraction of training observations sampled as candidate neighbors in each mini-batch, and the AdamW optimizer was used instead of the stochastic gradient descent of the original study.
 
 For the tree-based baselines, the search space included learning rate, tree depth, number of boosting iterations, regularisation coefficients, bagging parameters, and leaf-estimation settings. Early stopping was applied using the validation subset.
 
@@ -2455,7 +2519,7 @@ attribution-based test was performed to verify that features with higher
 attention have a larger effect on the output.
 
 \section{Future Work}
-
+\label{sec:future-work}
 The limitations suggest several directions for further research.
 
 \textbf{Imbalanced prediction.} Model selection based on ROC-AUC or the area
