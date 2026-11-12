@@ -935,26 +935,26 @@ Experiments were conducted on the Heart Disease, Pima Indians Diabetes, and Stro
 
 The Heart Disease dataset contains 918 observations, six numerical features, and five categorical features. The objective is to predict the presence or absence of heart disease from demographic characteristics, symptoms, and clinical measurements. The processed data were divided into 642 training samples, 138 validation samples, and 138 test samples.
 
-\subsection{Pima Indians Diabetes}
+\subsection{Pima Diabetes}
 
-The Pima Indians Diabetes dataset contains 768 observations and eight numerical features. The prediction target indicates whether a patient has diabetes based on diagnostic measurements, including glucose concentration, blood pressure, body mass index, insulin level, age, and pregnancy history. The processed data were divided into 537 training samples, 115 validation samples, and 116 test samples.
+The Pima Diabetes dataset contains 768 observations and eight numerical features. The prediction target indicates whether a patient has diabetes based on diagnostic measurements, including glucose concentration, blood pressure, body mass index, insulin level, age, and pregnancy history. The processed data were divided into 537 training samples, 115 validation samples, and 116 test samples.
 
 \subsection{Stroke Prediction}
 
 The Stroke Prediction dataset contains 5,110 observations, five numerical features, and five categorical features. The objective is to predict stroke occurrence from demographic information, medical history, lifestyle indicators, and physiological measurements. The processed data were divided into 3,577 training samples, 766 validation samples, and 767 test samples. Because the positive class is substantially less frequent than the negative class, threshold-independent and class-sensitive metrics were included in the evaluation.
 
 \begin{table}[t]
-\caption{Summary of the Medical Tabular Datasets.}
+\caption{Summary of the medical tabular datasets.}
 \label{tab:datasets}
 \centering
 \small
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrcccl}
 \toprule
-Dataset & Samples & Numerical & Categorical & Task \\
+Dataset & Samples & Numerical & Categorical & Positive class & Task \\
 \midrule
-Heart Disease & 918 & 6 & 5 & Binary \\
-Pima Diabetes & 768 & 8 & 0 & Binary \\
-Stroke Prediction & 5,110 & 5 & 5 & Binary \\
+Heart Disease     &   918 & 6 & 5 & 55.3\% & Binary \\
+Pima Diabetes     &   768 & 8 & 0 & 34.9\% & Binary \\
+Stroke Prediction & 5,110 & 5 & 5 &  4.9\% & Binary \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1198,6 +1198,7 @@ $\mathbf{0.3038 \pm 0.0097}$ \\
 \end{tabular}%
 }
 \end{table}
+
 On the Heart Disease dataset as shown in Table~\ref{tab:heart_results}, ModernNCA ~\cite{ye2025modernnca} achieves the highest mean accuracy ($0.9058 \pm 0.0072$), precision, recall, F1-score, and ROC-AUC($0.9527 \pm 0.0016$) 
 among the evaluated models. FiTabR ranks second on the
 threshold-dependent metrics, with an accuracy of $0.8937 \pm 0.0042$ and an
