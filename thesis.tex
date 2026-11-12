@@ -819,7 +819,7 @@ Medical tabular datasets often contain limited samples, heterogeneous feature ty
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{graph.drawio.pdf}
-\caption{Architecture of the proposed FiTabR model. FiTabR applies feature attention, attention scaling, and residual feature weighting to numerical features before feature fusion and the original TabR retrieval and prediction pipeline.}
+\caption[Architecture of the proposed FiTabR model.]{Architecture of the proposed FiTabR model. FiTabR applies feature attention, attention scaling, and residual feature weighting to numerical features before feature fusion and the original TabR retrieval and prediction pipeline.}
 \label{fig:fitabr_architecture}
 \end{figure}
 \section{Base Retrieval Model}
@@ -944,7 +944,7 @@ The Pima Indians Diabetes dataset contains 768 observations and eight numerical 
 The Stroke Prediction dataset contains 5,110 observations, five numerical features, and five categorical features. The objective is to predict stroke occurrence from demographic information, medical history, lifestyle indicators, and physiological measurements. The processed data were divided into 3,577 training samples, 766 validation samples, and 767 test samples. Because the positive class is substantially less frequent than the negative class, threshold-independent and class-sensitive metrics were included in the evaluation.
 
 \begin{table}[t]
-\caption{Summary of the Medical Tabular Datasets}
+\caption{Summary of the Medical Tabular Datasets.}
 \label{tab:datasets}
 \centering
 \small
@@ -1118,7 +1118,8 @@ while FiTabR is most competitive on the Heart Disease dataset.
 
 \begin{table}[H]
 \centering
-\caption{Performance comparison on the Heart Disease dataset. Results are
+\caption[Performance comparison on the Heart Disease Dataset.]
+{Performance comparison on the Heart Disease Dataset. Results are
 reported as mean $\pm$ standard deviation.}
 \label{tab:heart_results}
 \resizebox{\textwidth}{!}{%
@@ -1213,7 +1214,7 @@ by ModernNCA.
 
 \begin{table}[H]
 \centering
-\caption{Performance comparison on the Pima Diabetes dataset. Results are
+\caption[Performance comparison on the Pima Diabetes Dataset.]{Performance comparison on the Pima Diabetes Dataset. Results are
 reported as mean $\pm$ standard deviation.}
 \label{tab:pima_results}
 \resizebox{\textwidth}{!}{%
@@ -1312,7 +1313,7 @@ TabR ($0.7963$), and below most of the remaining baselines.
 
 \begin{table}[H]
 \centering
-\caption{Performance comparison on the Stroke Prediction dataset. Results are
+\caption [Performance comparison on the Stroke Prediction Dataset.]{Performance comparison on the Stroke Prediction Dataset. Results are
 reported as mean $\pm$ standard deviation.}
 \label{tab:stroke_results}
 \resizebox{\textwidth}{!}{%
@@ -1506,8 +1507,9 @@ positive-class and class-balanced metrics for the two retrieval models.
 
 \begin{table}[H] 
 \centering
-\caption{Minority-class performance of TabR and FiTabR on the Stroke
-Prediction dataset.\\}
+\caption[Minority-class performance on the Stroke
+Prediction Dataset.]{Minority-class performance of TabR and FiTabR on the Stroke
+Prediction Dataset.\\}
 \label{tab:stroke_minority}
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{lcccccc}
@@ -1539,7 +1541,7 @@ $0.8095 \pm 0.0126$ \\
 \end{tabular}}
 \end{table}
 
-The minority-class results reveal that both TabR and FiTabR fail to predict
+The minority-class results Table~\ref{tab:stroke_minority} reveal that both TabR and FiTabR fail to predict
 positive Stroke cases at the default classification threshold. Positive
 precision, recall, and F1-score are all zero, while balanced accuracy is
 exactly 0.5000 and macro F1-score is 0.4873. Consequently, the approximately
@@ -1710,7 +1712,7 @@ complete FiTabR representation are retained in each configuration.
 
 \begin{table}[t]
 \centering
-\caption{Ablation study on the Heart Disease dataset. Results are
+\caption[Ablation study on the Heart Disease Dataset.]{Ablation study on the Heart Disease Dataset. Results are
 reported as mean $\pm$ standard deviation across three five-model
 ensembles.\\
 }
@@ -1821,7 +1823,7 @@ main Heart Disease ablation results.
     \centering
     \includegraphics[width=0.80\textwidth]
     {figure/heart_ablation_performance.png}
-    \caption{Ablation performance on the Heart Disease dataset.\\}
+    \caption{Ablation performance on the Heart Disease Dataset.\\}
     \label{fig:heart_ablation_performance}
 \end{figure}
 
@@ -1839,7 +1841,7 @@ results on the Pima Diabetes dataset.
 
 \begin{table}[t]
 \centering
-\caption{Ablation study on the Pima Diabetes dataset. Results are
+\caption[Ablation study on the Pima Diabetes Dataset.]{Ablation study on the Pima Diabetes Dataset. Results are
 reported as mean $\pm$ standard deviation across three five-model
 ensembles.\\}
 \label{tab:pima_ablation}
@@ -1937,7 +1939,7 @@ comparison for Pima Diabetes.
     \centering
     \includegraphics[width=0.90\textwidth]
     {figure/pima_ablation_performance.png}
-    \caption{Ablation performance on the Pima Diabetes dataset.\\}
+    \caption{Ablation performance on the Pima Diabetes Dataset.\\}
     \label{fig:pima_ablation_performance}
 \end{figure}
 
@@ -1952,7 +1954,7 @@ Stroke Prediction dataset.
 
 \begin{table}[t]
 \centering
-\caption{Ablation study on the Stroke Prediction dataset. Results are
+\caption[Ablation study on the Stroke Prediction Dataset.]{Ablation study on the Stroke Prediction Dataset. Results are
 reported as mean $\pm$ standard deviation across three five-model
 ensembles.\\}
 \label{tab:stroke_ablation}
@@ -2053,7 +2055,7 @@ strongly imbalanced dataset.
     \centering
     \includegraphics[width=0.80\textwidth]
     {figure/stroke_ablation_performance.png}
-    \caption{Ablation performance on the Stroke Prediction dataset. }
+    \caption{Ablation performance on the Stroke Prediction Dataset. }
     \label{fig:stroke_ablation_performance}
 \end{figure}
 
@@ -2139,16 +2141,15 @@ mean attention values with the uniform-attention reference.
     \centering
     \includegraphics[width=0.92\textwidth]
     {figure/heart_attention_analysis.png}
-    \caption{FiTabR feature-attention distribution on the Heart Disease
-    dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
+    \caption[FiTabR feature-attention distribution on the Heart Disease Dataset.]{FiTabR feature-attention distribution on the Heart Disease Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
     uniform bars show the reference value $1/F$ for each numerical feature.}
     \label{fig:heart_attention}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Comparison of FiTabR attention with established cardiovascular
-domain knowledge on the Heart Disease dataset.\\}
+\caption[Comparison of FiTabR attention on the Heart Disease Dataset.]{Comparison of FiTabR attention with established medical
+domain knowledge on the Heart Disease Dataset.\\}
 \label{tab:heart_attention_domain}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\tabcolsep}{5pt}
@@ -2225,16 +2226,15 @@ against the corresponding uniform reference.
     \centering
     \includegraphics[width=0.92\textwidth]
     {figure/pima_attention_analysis.png}
-    \caption{FiTabR feature-attention distribution on the Pima Diabetes
-    dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
+    \caption[FiTabR feature-attention distribution on the Pima Diabetes Dataset.]{FiTabR feature-attention distribution on the Pima Diabetes Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
     uniform bars show the reference value $1/F$ for each numerical feature.}
     \label{fig:pima_attention}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Comparison of FiTabR attention with established medical
-domain knowledge on the Pima Diabetes dataset.\\}
+\caption[Comparison of FiTabR attention on the Pima Diabetes Dataset.]{Comparison of FiTabR attention with established medical
+domain knowledge on the Pima Diabetes Dataset.\\}
 \label{tab:pima_attention_domain}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\tabcolsep}{5pt}
@@ -2322,16 +2322,17 @@ visualizes this feature-emphasis pattern.
     \centering
     \includegraphics[width=0.92\textwidth]
     {figure/stroke_attention_analysis.png}
-    \caption{FiTabR feature-attention distribution on the Stroke Prediction
-    dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
+    \caption[FiTabR feature-attention distribution on the Stroke Prediction
+    Dataset.]{FiTabR feature-attention distribution on the Stroke Prediction
+    Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
     uniform bars show the reference value $1/F$ for each numerical feature.}
     \label{fig:stroke_attention}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Comparison of FiTabR attention with established medical
-domain knowledge on the Stroke Prediction dataset.\\}
+\caption[Comparison of FiTabR attention on the Stroke Prediction Dataset.]{Comparison of FiTabR attention with established medical
+domain knowledge on the Stroke Prediction Dataset.\\}
 \label{tab:stroke_attention_domain}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\tabcolsep}{5pt}
@@ -2577,12 +2578,12 @@ for each prediction task rather than assumed.
   
   % \cedp
  
-  %% 초록https://www.instagram.com/reel/DfEkuVWoZlN/?fbclid=IwZXh0bgNhZW0CMTAAcGRvZgVicmlkETFSR3o3aXdVWktMekQzdU9tc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABH5ef0vksyrLiQ8gqbK_s40ky3RXMIBLs_mYMcJ0X4-BwxlylxN3UxBS36xAc_aem_5M66-XApNqgMmOB3L-t62g
-  \include{abs-korean}	
+  %% 초록
+  %\include{abs-korean}	
   \cedp
   
   % 감사의 글
-  \include{thanksto}
+  %\include{thanksto}
   \cedp
   
 
