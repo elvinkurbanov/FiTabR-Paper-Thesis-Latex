@@ -318,15 +318,15 @@ predictive structure across clinical tasks.
 
 Traditional machine learning methods, particularly tree-based models, remain
 strong approaches for tabular prediction. Gradient-boosted decision trees such
-as XGBoost, LightGBM, and CatBoost have demonstrated competitive performance
+as XGBoost, LightGBM, and CatBoost demonstrated competitive performance
 across a wide range of structured-data problems
 \cite{chen2016xgboost,ke2017lightgbm,prokhorenkova2018catboost}. In contrast,
 the advantages of deep learning on conventional tabular datasets have been less
-consistent than in image, text, and speech applications. Previous studies have
-shown that carefully tuned tree-based models frequently remain competitive with
+consistent than in image, text, and speech applications. Previous studies
+showed that carefully tuned tree-based models frequently remain competitive with
 or outperform deep neural networks on typical tabular benchmarks
 \cite{grinsztajn2022tree}. Nevertheless, recent advances in tabular deep
-learning have introduced architectures designed specifically to improve the
+learning introduced architectures designed specifically to improve the
 representation of numerical and categorical variables and to model interactions
 between features and observations
 \cite{gorishniy2021revisiting,gorishniy2022embeddings,somepalli2021saint}.
@@ -340,20 +340,14 @@ process. This idea connects representation learning with local information from
 the available data and has motivated several retrieval-based approaches for
 tabular prediction
 \cite{qin2021rim,kossen2021selfattention,gorishniy2024tabr}.
-   
+
 TabR is a recent retrieval-augmented deep learning model for tabular data that
 combines a feed-forward architecture with a nearest-neighbor-like retrieval
-mechanism \cite{gorishniy2024tabr}. The model first constructs a learned
-representation of the target observation and candidate training observations.
-Candidate samples are then retrieved according to similarity in the learned
-representation space, and information from the retrieved observations is
-incorporated through a contextual aggregation mechanism before the final
-prediction is produced. TabR demonstrated that an appropriately designed
-retrieval mechanism can substantially improve the competitiveness of deep
-learning for tabular prediction. At the same time, the original TabR study
-also showed that retrieval is not uniformly beneficial for every dataset,
-highlighting the importance of dataset characteristics in determining the
-effectiveness of retrieval-based learning.
+mechanism operating in a learned representation space \cite{gorishniy2024tabr}.
+TabR demonstrated that an appropriately designed retrieval mechanism can
+substantially improve the competitiveness of deep learning for tabular
+prediction, but the original study also showed that retrieval is not uniformly
+beneficial for every dataset.
 
 The behavior of a retrieval-augmented model depends not only on how candidate
 observations are retrieved, but also on the representation from which
@@ -378,37 +372,15 @@ mechanism will consistently improve predictive performance. The effect of such
 a modification must therefore be evaluated empirically and separated from
 changes to the retrieval architecture itself.
 
-To investigate this problem, this thesis proposes \textit{FiTabR}, a
-feature-aware extension of TabR for medical tabular classification. FiTabR
-introduces a lightweight attention network that operates on numerical features
-before the TabR encoder. For each input sample, the attention module produces
-a distribution over the numerical variables. These values are then used to
-modulate the numerical input through residual feature reweighting. The
-resulting representation is subsequently processed by the original TabR
-encoder and retrieval pipeline.
-
-For a numerical feature vector $\mathbf{x}_i$, the FiTabR representation is
-defined as
-
-\begin{equation}
-    \tilde{\mathbf{x}}_i
-    =
-    \mathbf{x}_i
-    \odot
-    \left(
-        1 + \alpha \mathbf{a}_i
-    \right),
-    \label{eq:fitabr_intro}
-\end{equation}
-
-where $\mathbf{a}_i$ denotes the sample-specific attention distribution,
-$\alpha$ is the attention scaling coefficient, and $\odot$ denotes
-element-wise multiplication. The residual term preserves the original
-numerical input while allowing the learned attention mechanism to modify its
-magnitude before encoding. Importantly, FiTabR does not replace the retrieval
-mechanism of TabR. Candidate retrieval, contextual aggregation, and the final
-prediction mechanism are retained. The architectural change is therefore
-localized to the numerical representation supplied to the TabR encoder.
+To investigate this problem, this thesis proposes FiTabR, a feature-aware
+extension of TabR for medical tabular classification. FiTabR introduces a
+lightweight attention network that operates on numerical features before the
+TabR encoder. For each input sample, the attention module produces a
+distribution over the numerical variables. These values are then used to
+modulate the numerical input through residual feature reweighting, which
+preserves the original feature values and only increases the emphasis on
+selected features. The resulting representation is subsequently processed by
+the original TabR encoder and retrieval pipeline.
 
 This controlled design makes it possible to examine whether changes in
 pre-retrieval numerical representation can affect the behavior of a
@@ -416,65 +388,41 @@ retrieval-augmented model without simultaneously redesigning its retrieval
 mechanism. Accordingly, the primary research question of this thesis is:
 
 \begin{quote}
-\textit{Can sample-specific numerical feature modulation provide useful
-improvements to retrieval-augmented tabular classification while preserving
-the underlying TabR retrieval framework?}
+Can sample-specific numerical feature modulation provide useful improvements
+to retrieval-augmented tabular classification while preserving the underlying
+TabR retrieval framework?
 \end{quote}
-
 Two additional questions follow from this objective. First, if differences in
 performance are observed, which components of the proposed representation
 mechanism are responsible for them? Second, does the learned feature-attention
 mechanism provide meaningful information about how the model emphasizes
 numerical clinical variables across different observations?
 
-To address these questions, FiTabR is evaluated on three medical binary
+To address these questions, FiTabR was evaluated on three medical binary
 classification tasks: Heart Disease, Pima Diabetes, and Stroke Prediction.
 These datasets provide different experimental conditions in terms of sample
-size, feature composition, and class distribution. FiTabR is compared directly
+size, feature composition, and class distribution. FiTabR was compared directly
 with the original TabR architecture and with conventional machine learning and
-deep tabular learning baselines. The purpose of the cross-dataset evaluation
-is not to assume that feature-aware representation will improve every medical
-prediction task, but to determine whether its effect is consistent and to
-identify the conditions under which the proposed mechanism is beneficial.
+deep tabular learning baselines.
 
 The experimental findings provide partial rather than universal support for
-the initial hypothesis. FiTabR shows its clearest improvement relative to TabR
-on the Heart Disease dataset, whereas the differences observed on Pima Diabetes
-are more modest. On the severely imbalanced Stroke Prediction dataset, the
-proposed representation mechanism does not improve threshold-based
-minority-class prediction. These results indicate that explicit feature-aware
+the initial hypothesis. FiTabR showed its clearest improvement relative to TabR
+on the Heart Disease dataset, where accuracy increased from 0.8841 to 0.8937
+and cross-entropy decreased from 0.3586 to 0.3038, while ROC-AUC remained at
+0.9510. On Pima Diabetes, the difference (0.7529 versus 0.7586) was within the
+variation across ensembles. On the imbalanced Stroke Prediction
+dataset, TabR and FiTabR did not predict any positive case at the default
+decision threshold, because hyperparameters were selected by validation
+accuracy. FiTabR was also not the strongest model overall: ModernNCA achieved
+the highest accuracy on Heart Disease (0.9058). A component-level ablation
+study showed that the components did not contribute equally across datasets.
+Residual feature preservation received the clearest empirical support, since
+removing it reduced accuracy on Heart Disease to 0.8647, whereas fixed
+attention scaling and learned nonuniform feature weighting showed more
+dataset-dependent effects. These results indicate that explicit feature-aware
 numerical representation can influence retrieval-augmented tabular learning,
 but that its effectiveness depends on the characteristics of the underlying
-dataset. In particular, modifying feature representation alone is not
-sufficient to address learning problems dominated by severe class imbalance.
-
-Predictive comparison between TabR and FiTabR alone is insufficient to
-determine why the proposed method behaves differently. For this reason, the
-thesis additionally conducts a component-level ablation study. Three
-architectural variants are examined: a model without residual feature
-preservation, a model without the explicit attention-scaling factor, and a
-model in which learned feature attention is replaced by uniform weighting.
-These experiments distinguish the contribution of residual preservation,
-numerical modulation, and sample-specific nonuniform weighting. The ablation
-results show that the components do not contribute equally across datasets.
-Residual feature preservation receives the clearest empirical support,
-particularly on Heart Disease, whereas fixed attention scaling and learned
-nonuniform feature weighting exhibit more dataset-dependent effects.
-
-The feature-attention mechanism also provides an explicit internal signal that
-can be examined independently of overall predictive performance. Attention
-values are therefore analyzed across samples using their mean and standard
-deviation. The mean attention assigned to a feature describes its average
-model-assigned emphasis across the dataset, while the standard deviation
-characterizes how strongly this emphasis varies between individual samples.
-These patterns are compared with established medical domain knowledge to
-examine whether the representation learned by FiTabR exhibits clinically
-plausible correspondence. Attention-based tabular models have previously been
-used to expose feature-selection and interaction behavior
-\cite{arik2021tabnet}; however, attention values should not automatically be
-interpreted as causal explanations. Accordingly, the analysis in this thesis
-treats FiTabR attention as evidence of internal model behavior rather than as a
-direct estimate of clinical risk or causal feature importance.
+dataset.
 
 Based on this design and experimental analysis, the principal contributions of
 this thesis are summarized as follows:
@@ -484,45 +432,28 @@ this thesis are summarized as follows:
     learning.}
     FiTabR introduces sample-specific residual modulation of numerical features
     before the TabR encoder while retaining the original candidate retrieval,
-    contextual aggregation, and prediction mechanisms. This provides a
-    controlled framework for studying feature-aware representation without
-    redesigning the retrieval architecture.
+    contextual aggregation, and prediction mechanisms.
 
     \item \textbf{Cross-dataset empirical evaluation of the proposed
     representation mechanism.}
-    FiTabR is evaluated across three medical tabular classification tasks and
-    compared with TabR, conventional machine learning models, and deep tabular
-    baselines. The results identify both conditions in which feature-aware
-    representation provides measurable benefit and conditions in which its
-    contribution is limited.
+    FiTabR was compared with TabR, ModernNCA, gradient-boosted decision trees,
+    and deep tabular baselines on three medical datasets, which identified
+    conditions in which feature-aware representation helped and conditions in
+    which it did not.
 
     \item \textbf{Component-level analysis through architectural ablation.}
     Residual preservation, attention scaling, and learned nonuniform weighting
-    are evaluated separately to determine how each component contributes to
-    the observed behavior. The analysis shows that the benefit of FiTabR
-    cannot be attributed uniformly to all components and that residual
-    preservation receives the strongest empirical support in the clearest
-    positive case.
+    were evaluated separately, and residual preservation received the strongest
+    empirical support.
 
     \item \textbf{Analysis of sample-specific feature emphasis.}
-    The learned attention distributions are examined through their mean and
-    standard deviation and compared with established medical knowledge. This
-    analysis characterizes both population-level feature emphasis and
-    sample-dependent variation while maintaining a distinction between
-    model-assigned attention and clinical importance.
+    The learned attention distributions were summarized by their mean and
+    standard deviation across samples and compared with established medical
+    knowledge.
 \end{enumerate}
 
-These contributions position FiTabR as a controlled investigation of
-feature-aware representation within retrieval-augmented tabular learning rather
-than as a universally superior replacement for TabR. The results are used to
-identify not only where the proposed representation mechanism provides
-benefits, but also where its assumptions and capabilities are insufficient.
-Such analysis is particularly important for medical tabular learning, where
-dataset size, class distribution, and feature structure can vary substantially
-between prediction problems.
-
-The remainder of this thesis is organized as follows. Chapter II reviews
-medical tabular learning, deep learning methods for structured data,
+The content of this thesis is organized as follows. Chapter II reviews
+tree-based tabular learning, deep learning methods for structured data,
 retrieval-augmented tabular learning, the TabR architecture, and feature
 attention approaches relevant to this work. Chapter III presents the proposed
 FiTabR architecture, including the problem formulation, feature-attention
@@ -533,7 +464,6 @@ implementation details. Chapter V presents the main comparative results, the
 ablation experiments, the attention analysis, and a discussion of the observed
 behavior. Finally, Chapter VI summarizes the main findings, discusses the
 limitations of the study, and outlines directions for future research.
-    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % II. RESEARCH BACKGROUND / RELATED WORK
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -582,7 +512,7 @@ performance on structured data through architectures specifically designed for
 tabular inputs. Gorishniy et al. revisited commonly used deep learning models
 for tabular prediction and demonstrated that carefully configured multilayer
 perceptrons and Transformer-based architectures can serve as competitive neural
-baselines \cite{gorishniy2021revisiting}. Subsequent work has also emphasized
+baselines \cite{gorishniy2021revisiting}. Subsequent work also emphasized
 the importance of numerical feature representation, showing that the manner in
 which continuous variables are embedded can substantially affect the
 performance of tabular neural networks \cite{gorishniy2022embeddings}.
@@ -590,12 +520,12 @@ performance of tabular neural networks \cite{gorishniy2022embeddings}.
 Attention mechanisms have been applied to tabular learning in several forms.
 TabTransformer uses contextual representations of categorical variables to
 model relationships among features \cite{huang2020tabtransformer}. TabNet
-introduces sequential attentive feature selection, allowing the model to focus
+introduced sequential attentive feature selection, allowing the model to focus
 on subsets of variables at different decision steps
-\cite{arik2021tabnet}. SAINT extends attention beyond feature interactions by
+\cite{arik2021tabnet}. SAINT extended attention beyond feature interactions by
 applying attention across both rows and columns and combining this mechanism
 with contrastive pre-training \cite{somepalli2021saint}. These methods
-demonstrate that attention can be used to adapt representations to the
+demonstrated that attention can be used to adapt representations to the
 structure of tabular data rather than treating the input only through a
 standard feed-forward transformation.
 
@@ -603,7 +533,7 @@ Despite these developments, deep learning does not consistently dominate
 tree-based methods on typical tabular datasets. Grinsztajn et al. showed that
 tree-based models retain important advantages on many medium-sized structured
 datasets, particularly under conditions commonly encountered in practical
-tabular learning \cite{grinsztajn2022tree}. Consequently, recent research has
+tabular learning \cite{grinsztajn2022tree}. Consequently, recent research
 explored mechanisms beyond conventional feed-forward representation learning,
 including improved numerical embeddings, attention-based feature interaction,
 and retrieval of information from other observations.
@@ -620,17 +550,17 @@ on predefined distances in the original input space, these methods learn a
 representation in which relevant observations can be identified and their
 information subsequently incorporated into prediction.
 
-Several approaches have investigated interactions among observations for
+Several approaches investigated interactions among observations for
 tabular prediction. The Retrieval and Interaction Machine (RIM) combines
 retrieval with interaction mechanisms to exploit information from related
-training instances \cite{qin2021rim}. Other work has investigated
+training instances \cite{qin2021rim}. Other work investigated
 neighborhood-based representation propagation as a means of enriching the
 representation of tabular observations using information from nearby samples
-\cite{du2022neighborhood}. Self-attention between datapoints has also been
+\cite{du2022neighborhood}. Self-attention between datapoints was also
 proposed as an alternative to architectures that process each observation
 independently, demonstrating that relationships among samples can provide
 additional predictive information \cite{kossen2021selfattention}. Related
-memory-based approaches, including Hopular, further demonstrate the potential
+memory-based approaches, including Hopular, further demonstrated the potential
 of associating tabular observations with information stored in the training
 data \cite{schafl2022hopular,ramsauer2021hopfield}.
 
@@ -716,9 +646,8 @@ as indicators of the internal allocation of emphasis within the FiTabR
 representation mechanism. Mean attention values are used to characterize the
 average emphasis assigned to individual numerical variables, while their
 standard deviations are used to examine how that emphasis varies across
-samples. The resulting patterns are subsequently compared with established
-medical knowledge as a behavioral analysis of the model rather than as a
-causal explanation.
+samples. The results were compared with established
+medical knowledge as a behavioral analysis of the model.
 
 \section{Recent Tabular Methods and Baseline Selection}
 \label{sec:recent-methods}
@@ -798,9 +727,9 @@ the learned feature emphasis behaves across medical datasets.
 
 The contribution is therefore not based on the assumption that feature-aware
 modulation is universally superior to the original TabR representation.
-Instead, FiTabR is evaluated as a controlled architectural extension whose
+Instead, FiTabR was evaluated as a controlled architectural extension whose
 effectiveness may depend on the characteristics of the dataset. Ablation
-experiments and attention analysis are subsequently used to determine the
+experiments and attention analysis were used to determine the
 conditions under which the proposed representation mechanism provides
 measurable value and to identify its limitations.
     
@@ -818,7 +747,7 @@ $x_i = (x_i^{\mathrm{num}}, x_i^{\mathrm{cat}})$. Here, $x_i^{\mathrm{num}}$ den
 Medical tabular datasets often contain limited samples, heterogeneous feature types, and variables with different levels of clinical relevance. Therefore, the model should not only produce accurate predictions but also construct meaningful representations for retrieval-based reasoning.
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{graph.drawio.pdf}
+\includegraphics[width=\textwidth]{figure/FiTabR_Architecture.pdf}
 \caption[Architecture of the proposed FiTabR model.]{Architecture of the proposed FiTabR model. FiTabR applies feature attention, attention scaling, and residual feature weighting to numerical features before feature fusion and the original TabR retrieval and prediction pipeline.}
 \label{fig:fitabr_architecture}
 \end{figure}
@@ -929,7 +858,7 @@ FiTabR was evaluated on three medical tabular binary-classification datasets. Th
 \section{Datasets}
 \label{sec:datasets}
 
-Experiments were conducted on the Heart Disease, Pima Indians Diabetes, and Stroke Prediction datasets~\cite{heartdataset,pimadataset,strokedataset}. The datasets represent different clinical prediction tasks and vary in sample size, feature composition, and class distribution. All tasks were formulated as supervised binary classification. For an observation $x_i$, the corresponding target was denoted by $y_i\in\{0,1\}$.
+Experiments were conducted on the Heart Disease, Pima Indians Diabetes, and Stroke Prediction datasets~\cite{heartdataset,pimadataset,strokedataset}. The datasets represent different clinical prediction tasks and vary in sample size, feature composition, and class distribution. All tasks were formulated as supervised binary classification. For an observation $x_i$, the corresponding target is denoted by $y_i\in\{0,1\}$.
 
 \subsection{Heart Disease}
 
@@ -1780,7 +1709,7 @@ mean attention values with the uniform-attention reference.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]
-    {figure/heart_attention_analysis.png}
+    {figure/heart_attention_analysis.pdf}
     \caption[FiTabR feature-attention distribution on the Heart Disease Dataset.]{FiTabR feature-attention distribution on the Heart Disease Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
     uniform bars show the reference value $1/F$ for each numerical feature.}
     \label{fig:heart_attention}
@@ -1865,7 +1794,7 @@ against the corresponding uniform reference.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]
-    {figure/pima_attention_analysis.png}
+    {figure/pima_attention_analysis.pdf}
     \caption[FiTabR feature-attention distribution on the Pima Diabetes Dataset.]{FiTabR feature-attention distribution on the Pima Diabetes Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
     uniform bars show the reference value $1/F$ for each numerical feature.}
     \label{fig:pima_attention}
@@ -1961,7 +1890,7 @@ visualizes this feature-emphasis pattern.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]
-    {figure/stroke_attention_analysis.png}
+    {figure/stroke_attention_analysis.pdf}
     \caption[FiTabR feature-attention distribution on the Stroke Prediction
     Dataset.]{FiTabR feature-attention distribution on the Stroke Prediction
     Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
@@ -2046,7 +1975,7 @@ attention network assigns a softmax-normalized weight to each numerical
 variable of an input sample, and the numerical input is then rescaled through
 the residual form $x \odot (1 + \alpha a)$ before it reaches the TabR encoder.
 Candidate retrieval, contextual aggregation, and the prediction mechanism of
-TabR were left unchanged, so that differences between the two models could be
+TabR remain unchanged, so that differences between the two models could be
 attributed to the input representation. FiTabR was evaluated on the Heart
 Disease, Pima Diabetes, and Stroke Prediction datasets against TabR, ModernNCA,
 gradient-boosted decision trees, and deep tabular baselines. Each model was
@@ -2063,7 +1992,7 @@ retrieval-augmented tabular classification. The answer depends on the dataset.
 On Heart Disease, FiTabR increased accuracy from 0.8841 to 0.8937 and reduced
 cross-entropy from 0.3586 to 0.3038 relative to TabR, while ROC-AUC remained
 0.9510 for both models. Because the ranking of patients did not change, the
-improvement lies mainly in the quality of the predicted probabilities. On Pima
+improvement was mainly in the quality of the predicted probabilities. On Pima
 Diabetes, FiTabR reached an accuracy of 0.7586 compared with 0.7529 for TabR,
 which corresponds to at most one additional correctly classified patient per
 ensemble on the 116-sample test set. On Stroke Prediction, neither TabR nor
@@ -2073,8 +2002,8 @@ FiTabR obtained a slightly lower ROC-AUC (0.8095 versus 0.8136).
 FiTabR was also not the strongest model overall. ModernNCA achieved the
 highest accuracy on Heart Disease (0.9058), and FT-Transformer achieved the
 highest accuracy on Pima Diabetes (0.7701) and the highest ROC-AUC on Stroke
-Prediction (0.8328). The proposed module therefore improves its base model
-under some conditions, but it does not establish a new best result on these
+Prediction (0.8328). The proposed module therefore improved its base model
+under some conditions, but it did not establish a new best result on these
 datasets.
 
 \subsection{Contribution of the Architectural Components}
@@ -2091,9 +2020,9 @@ uniform weighting reached similar accuracy (0.8913) at a higher cross-entropy
 (0.3240). On Pima Diabetes, the variant without the residual term obtained a
 higher ROC-AUC (0.7994) and a lower cross-entropy (0.5254) than the full model.
 On Stroke Prediction, uniform weighting produced the lowest ROC-AUC among the
-variants (0.7727). The components therefore do not contribute consistently
+variants (0.7727). The components therefore did not contribute consistently
 across datasets, and the benefit of learned nonuniform weighting in particular
-is not supported by every metric.
+was not supported by every metric.
 
 \subsection{Behavior of the Learned Feature Attention}
 
@@ -2107,7 +2036,7 @@ Exercise-induced ST-segment depression and maximum heart rate received the
 lowest attention on Heart Disease despite their prognostic value, glucose
 received low attention on Pima Diabetes (0.0688) despite its central
 diagnostic role, and hypertension received the lowest attention on Stroke
-Prediction (0.1121). The standard deviations show that the emphasis varies
+Prediction (0.1121). The standard deviations showed that the emphasis varied
 between patients, for example for cholesterol on Heart Disease (0.1155). These
 results support interpreting FiTabR attention as model-specific emphasis
 rather than as a measure of clinical importance.
@@ -2126,14 +2055,14 @@ validation on data from a different institution was performed.
 \textbf{Missing values.} In the processed data, missing measurements are
 recorded as zeros. Cholesterol is zero for 172 of 918 Heart Disease patients,
 and Insulin and SkinThickness are zero for 374 and 227 of 768 Pima Diabetes
-patients. The features with the most zero values are also among those with the
-highest mean attention, so part of the learned emphasis may reflect
+patients. The features with the most zero values were also among those that received 
+the highest mean attention, so part of the learned emphasis may reflect
 missingness rather than the clinical value of the measurement.
 
 \textbf{Model selection and decision threshold.} Hyperparameters and early
 stopping were selected by validation accuracy, and predictions were evaluated
 at the default threshold of 0.5. On the severely imbalanced Stroke Prediction
-dataset, this protocol favors models that predict only the majority class. The
+dataset, this protocol favored models that predicted only the majority class. The
 zero positive-class recall therefore reflects the selection and threshold
 protocol as much as the architecture.
 
@@ -2192,7 +2121,7 @@ benchmark datasets generalize to clinical practice.
 
 \section{Concluding Remarks}
 
-FiTabR shows that changing only the numerical representation supplied to a
+FiTabR showed that changing only the numerical representation supplied to a
 retrieval-augmented model can change its behavior: on Heart Disease the
 modification improved accuracy and probability estimates, and residual
 preservation was the component that mattered most. The same modification
