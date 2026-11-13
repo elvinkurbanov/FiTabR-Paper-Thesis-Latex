@@ -1115,88 +1115,28 @@ dominates across all datasets and evaluation criteria. The relative
 performance of tree-based and deep-learning methods varies across datasets,
 while FiTabR is most competitive on the Heart Disease dataset.
 
-
 \begin{table}[H]
 \centering
 \caption[Performance comparison on the Heart Disease Dataset.]
 {Performance comparison on the Heart Disease Dataset. Results are
-reported as mean $\pm$ standard deviation.}
+reported as mean over 15 random seeds.}
 \label{tab:heart_results}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lcccccc}
+\small
+\begin{tabular}{lccccc}
 \hline
-\textbf{Model} &
-\textbf{Accuracy} &
-\textbf{Precision} &
-\textbf{F1-score} &
-\textbf{ROC-AUC} &
-\textbf{Cross-Entropy} \\
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Cross-Entropy} \\
 \hline
-CatBoost &
-$0.8889 \pm 0.0042$ &
-$0.8896 \pm 0.0043$ &
-$0.8890 \pm 0.0042$ &
-$0.9334 \pm 0.0001$ &
-$0.3390 \pm 0.0060$ \\
-
-XGBoost &
-$0.8841 \pm 0.0000$ &
-$0.8856 \pm 0.0008$ &
-$0.8843 \pm 0.0001$ &
-$0.9341 \pm 0.0030$ &
-$0.3481 \pm 0.0146$ \\
-
-LightGBM &
-$0.8841 \pm 0.0000$ &
-$0.8847 \pm 0.0000$ &
-$0.8842 \pm 0.0000$ &
-$0.9428 \pm 0.0005$ &
-$0.3281 \pm 0.0086$ \\
-
-MLP &
-$0.8720 \pm 0.0042$ &
-$0.8729 \pm 0.0045$ &
-$0.8722 \pm 0.0042$ &
-$0.9351 \pm 0.0007$ &
-$0.3350 \pm 0.0031$ \\
-
-SAINT &
-$0.8792 \pm 0.0221$ &
-$0.8814 \pm 0.0205$ &
-$0.8795 \pm 0.0220$ &
-$0.9390 \pm 0.0011$ &
-$0.3322 \pm 0.0186$ \\
-
-FT-Transformer &
-$0.8696 \pm 0.0072$ &
-$0.8716 \pm 0.0064$ &
-$0.8698 \pm 0.0072$ &
-$0.9344 \pm 0.0037$ &
-$0.3582 \pm 0.0098$ \\
-
-TabR &
-$0.8841 \pm 0.0000$ &
-$0.8880 \pm 0.0000$ &
-$0.8844 \pm 0.0000$ &
-$0.9510 \pm 0.0006$ &
-$0.3586 \pm 0.0267$ \\
-
-ModernNCA &
-$\mathbf{0.9058 \pm 0.0072}$ &
-$\mathbf{0.9070 \pm 0.0079}$ &
-$\mathbf{0.9060 \pm 0.0073}$ &
-$\mathbf{0.9527 \pm 0.0016}$ &
-$0.3039 \pm 0.0140$ \\
-
-FiTabR &
-$0.8937 \pm 0.0042$ &
-$0.8977 \pm 0.0043$ &
-$0.8940 \pm 0.0042$ &
-$0.9510 \pm 0.0009$ &
-$\mathbf{0.3038 \pm 0.0097}$ \\
+CatBoost       & 0.8889 & 0.8896 & 0.8890 & 0.9334 & 0.3390 \\
+XGBoost        & 0.8841 & 0.8856 & 0.8843 & 0.9341 & 0.3481 \\
+LightGBM       & 0.8841 & 0.8847 & 0.8842 & 0.9428 & 0.3281 \\
+MLP            & 0.8720 & 0.8729 & 0.8722 & 0.9351 & 0.3350 \\
+SAINT          & 0.8792 & 0.8814 & 0.8795 & 0.9390 & 0.3322 \\
+FT-Transformer & 0.8696 & 0.8716 & 0.8698 & 0.9344 & 0.3582 \\
+TabR           & 0.8841 & 0.8880 & 0.8844 & 0.9510 & 0.3586 \\
+ModernNCA      & \textbf{0.9058} & \textbf{0.9070} & \textbf{0.9060} & \textbf{0.9527} & 0.3039 \\
+FiTabR         & 0.8937 & 0.8977 & 0.8940 & 0.9510 & \textbf{0.3038} \\
 \hline
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 On the Heart Disease dataset as shown in Table~\ref{tab:heart_results}, ModernNCA ~\cite{ye2025modernnca} achieves the highest mean accuracy ($0.9058 \pm 0.0072$), precision, recall, F1-score, and ROC-AUC($0.9527 \pm 0.0016$) 
@@ -1215,84 +1155,26 @@ by ModernNCA.
 
 \begin{table}[H]
 \centering
-\caption[Performance comparison on the Pima Diabetes Dataset.]{Performance comparison on the Pima Diabetes Dataset. Results are
-reported as mean $\pm$ standard deviation.}
+\caption[Performance comparison on the Pima Diabetes Dataset.]
+{Performance comparison on the Pima Diabetes Dataset. Results are
+reported as mean over 15 random seeds.}
 \label{tab:pima_results}
-\resizebox{\textwidth}{!}{%
+\small
 \begin{tabular}{lccccc}
 \hline
-\textbf{Model} &
-\textbf{Accuracy} &
-\textbf{Precision} &
-\textbf{F1-score} &
-\textbf{ROC-AUC} &
-\textbf{Cross-Entropy} \\
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Cross-Entropy} \\
 \hline
-CatBoost &
-$0.7586 \pm 0.0086$ &
-$0.7550 \pm 0.0083$ &
-$0.7554 \pm 0.0080$ &
-$0.7918 \pm 0.0035$ &
-$0.6831 \pm 0.0029$ \\
-
-XGBoost &
-$0.7672 \pm 0.0000$ &
-$0.7636 \pm 0.0002$ &
-$0.7610 \pm 0.0011$ &
-$0.8078 \pm 0.0034$ &
-$0.5895 \pm 0.0236$ \\
-
-LightGBM &
-$0.7500 \pm 0.0149$ &
-$0.7467 \pm 0.0159$ &
-$0.7437 \pm 0.0132$ &
-$0.8086 \pm 0.0060$ &
-$\mathbf{0.5253 \pm 0.0023}$ \\
-
-MLP &
-$0.7644 \pm 0.0050$ &
-$0.7633 \pm 0.0071$ &
-$0.7635 \pm 0.0065$ &
-$0.7918 \pm 0.0054$ &
-$0.5659 \pm 0.0185$ \\
-
-SAINT &
-$0.7529 \pm 0.0100$ &
-$0.7638 \pm 0.0073$ &
-$0.7558 \pm 0.0095$ &
-$0.8054 \pm 0.0003$ &
-$0.5339 \pm 0.0048$ \\
-
-FT-Transformer &
-$\mathbf{0.7701 \pm 0.0263}$ &
-$\mathbf{0.7774 \pm 0.0203}$ &
-$\mathbf{0.7722 \pm 0.0250}$ &
-$\mathbf{0.8135 \pm 0.0071}$ &
-$0.5337 \pm 0.0223$ \\
-
-TabR &
-$0.7529 \pm 0.0050$ &
-$0.7515 \pm 0.0062$ &
-$0.7520 \pm 0.0058$ &
-$0.7963 \pm 0.0072$ &
-$0.5511 \pm 0.0120$ \\
-
-ModernNCA &
-$0.7356 \pm 0.0199$ &
-$0.7380 \pm 0.0162$ &
-$0.7364 \pm 0.0182$ &
-$0.8021 \pm 0.0186$ &
-$0.5584 \pm 0.0580$ \\
-
-FiTabR &
-$0.7586 \pm 0.0086$ &
-$0.7595 \pm 0.0099$ &
-$0.7589 \pm 0.0092$ &
-$0.7953 \pm 0.0047$ &
-$0.5474 \pm 0.0044$ \\
+CatBoost       & 0.7586 & 0.7550 & 0.7554 & 0.7918 & 0.6831 \\
+XGBoost        & 0.7672 & 0.7636 & 0.7610 & 0.8078 & 0.5895 \\
+LightGBM       & 0.7500 & 0.7467 & 0.7437 & 0.8086 & \textbf{0.5253} \\
+MLP            & 0.7644 & 0.7633 & 0.7635 & 0.7918 & 0.5659 \\
+SAINT          & 0.7529 & 0.7638 & 0.7558 & 0.8054 & 0.5339 \\
+FT-Transformer & \textbf{0.7701} & \textbf{0.7774} & \textbf{0.7722} & \textbf{0.8135} & 0.5337 \\
+TabR           & 0.7529 & 0.7515 & 0.7520 & 0.7963 & 0.5511 \\
+ModernNCA      & 0.7356 & 0.7380 & 0.7364 & 0.8021 & 0.5584 \\
+FiTabR         & 0.7586 & 0.7595 & 0.7589 & 0.7953 & 0.5474 \\
 \hline
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 The Pima Diabetes dataset Table~\ref{tab:pima_results} produces a more competitive ordering among the
@@ -1314,84 +1196,26 @@ TabR ($0.7963$), and below most of the remaining baselines.
 
 \begin{table}[H]
 \centering
-\caption [Performance comparison on the Stroke Prediction Dataset.]{Performance comparison on the Stroke Prediction Dataset. Results are
-reported as mean $\pm$ standard deviation.}
+\caption[Performance comparison on the Stroke Prediction Dataset.]
+{Performance comparison on the Stroke Prediction Dataset. Results are
+reported as mean over 15 random seeds.}
 \label{tab:stroke_results}
-\resizebox{\textwidth}{!}{%
+\small
 \begin{tabular}{lccccc}
 \hline
-\textbf{Model} &
-\textbf{Accuracy} &
-\textbf{Precision} &
-\textbf{F1-score} &
-\textbf{ROC-AUC} &
-\textbf{Cross-Entropy} \\
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Cross-Entropy} \\
 \hline
-CatBoost &
-$0.9500 \pm 0.0008$ &
-$0.9033 \pm 0.0000$ &
-$0.9261 \pm 0.0004$ &
-$0.8294 \pm 0.0168$ &
-$0.3105 \pm 0.0525$ \\
-
-XGBoost &
-$0.9513 \pm 0.0008$ &
-$\mathbf{0.9407 \pm 0.0125}$ &
-$\mathbf{0.9300 \pm 0.0016}$ &
-$0.8201 \pm 0.0024$ &
-$0.2259 \pm 0.0678$ \\
-
-LightGBM &
-$\mathbf{0.9518 \pm 0.0013}$ &
-$0.9376 \pm 0.0296$ &
-$0.9294 \pm 0.0031$ &
-$0.8199 \pm 0.0023$ &
-$\mathbf{0.1640 \pm 0.0007}$ \\
-
-MLP &
-$0.9505 \pm 0.0000$ &
-$0.9034 \pm 0.0000$ &
-$0.9263 \pm 0.0000$ &
-$0.8220 \pm 0.0087$ &
-$0.1738 \pm 0.0129$ \\
-
-SAINT &
-$0.9505 \pm 0.0000$ &
-$0.9034 \pm 0.0000$ &
-$0.9263 \pm 0.0000$ &
-$0.7368 \pm 0.0528$ &
-$0.2042 \pm 0.0067$ \\
-
-FT-Transformer &
-$0.9505 \pm 0.0000$ &
-$0.9034 \pm 0.0000$ &
-$0.9263 \pm 0.0000$ &
-$\mathbf{0.8328 \pm 0.0036}$ &
-$0.1663 \pm 0.0049$ \\
-
-TabR &
-$0.9505 \pm 0.0000$ &
-$0.9034 \pm 0.0000$ &
-$0.9263 \pm 0.0000$ &
-$0.8136 \pm 0.0078$ &
-$0.1780 \pm 0.0050$ \\
-
-ModernNCA &
-$0.9505 \pm 0.0000$ &
-$0.9034 \pm 0.0000$ &
-$0.9263 \pm 0.0000$ &
-$0.7808 \pm 0.0203$ &
-$0.1712 \pm 0.0029$ \\
-
-FiTabR &
-$0.9505 \pm 0.0000$ &
-$0.9034 \pm 0.0000$ &
-$0.9263 \pm 0.0000$ &
-$0.8095 \pm 0.0126$ &
-$0.1750 \pm 0.0091$ \\
+CatBoost       & 0.9500 & 0.9033 & 0.9261 & 0.8294 & 0.3105 \\
+XGBoost        & 0.9513 & \textbf{0.9407} & \textbf{0.9300} & 0.8201 & 0.2259 \\
+LightGBM       & \textbf{0.9518} & 0.9376 & 0.9294 & 0.8199 & \textbf{0.1640} \\
+MLP            & 0.9505 & 0.9034 & 0.9263 & 0.8220 & 0.1738 \\
+SAINT          & 0.9505 & 0.9034 & 0.9263 & 0.7368 & 0.2042 \\
+FT-Transformer & 0.9505 & 0.9034 & 0.9263 & \textbf{0.8328} & 0.1663 \\
+TabR           & 0.9505 & 0.9034 & 0.9263 & 0.8136 & 0.1780 \\
+ModernNCA      & 0.9505 & 0.9034 & 0.9263 & 0.7808 & 0.1712 \\
+FiTabR         & 0.9505 & 0.9034 & 0.9263 & 0.8095 & 0.1750 \\
 \hline
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 On Stroke Prediction dataset Table~\ref{tab:stroke_results}, the aggregate accuracy of all models is close to
@@ -1506,40 +1330,23 @@ not describe the ability of the models to detect Stroke cases.
 To examine this issue directly, Table~\ref{tab:stroke_minority} reports
 positive-class and class-balanced metrics for the two retrieval models.
 
-\begin{table}[H] 
+\begin{table}[H]
 \centering
-\caption[Minority-class performance on the Stroke
-Prediction Dataset.]{Minority-class performance of TabR and FiTabR on the Stroke
-Prediction Dataset.\\}
+\caption[Minority-class performance on the Stroke Prediction Dataset.]
+{Minority-class performance of the retrieval-based models on the Stroke
+Prediction Dataset. Results are reported as mean over 15 random seeds.
+Positive precision is reported as 0 when a model made no positive predictions.}
 \label{tab:stroke_minority}
-\resizebox{\columnwidth}{!}{
+\small
 \begin{tabular}{lcccccc}
 \hline
-\textbf{Model} &
-\textbf{Pos. Prec.} &
-\textbf{Pos. Rec.} &
-\textbf{Pos. F1} &
-\textbf{Macro F1} &
-\textbf{Bal. Acc.} &
-\textbf{ROC-AUC} \\
+\textbf{Model} & \textbf{Pos. Prec.} & \textbf{Pos. Rec.} & \textbf{Pos. F1} & \textbf{Macro F1} & \textbf{Bal. Acc.} & \textbf{ROC-AUC} \\
 \hline
-TabR &
-$0.0000 \pm 0.0000$ &
-$0.0000 \pm 0.0000$ &
-$0.0000 \pm 0.0000$ &
-$0.4873 \pm 0.0000$ &
-$0.5000 \pm 0.0000$ &
-$0.8136 \pm 0.0078$ \\
-
-FiTabR &
-$0.0000 \pm 0.0000$ &
-$0.0000 \pm 0.0000$ &
-$0.0000 \pm 0.0000$ &
-$0.4873 \pm 0.0000$ &
-$0.5000 \pm 0.0000$ &
-$0.8095 \pm 0.0126$ \\
+TabR      & 0.0000 & 0.0000 & 0.0000 & 0.4873 & 0.5000 & 0.8136 \\
+ModernNCA & 0.0000 & 0.0000 & 0.0000 & 0.4873 & 0.5000 & 0.7808 \\
+FiTabR    & 0.0000 & 0.0000 & 0.0000 & 0.4873 & 0.5000 & 0.8095 \\
 \hline
-\end{tabular}}
+\end{tabular}
 \end{table}
 
 The minority-class results Table~\ref{tab:stroke_minority} reveal that both TabR and FiTabR fail to predict
