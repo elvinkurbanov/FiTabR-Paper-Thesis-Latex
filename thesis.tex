@@ -470,7 +470,7 @@ limitations of the study, and outlines directions for future research.
 
 \chapter{Research Background}
 
-\section{Classical Machine Learning for Medical Tabular Data}
+\section{Classical Machine Learning for Tabular Data}
 
 Classical machine learning methods remain strong baselines for structured
 tabular prediction. In particular, gradient-boosted decision tree (GBDT)
@@ -505,7 +505,7 @@ combine learned representations with information obtained from selected
 training samples.
 
 
-\section{Deep Learning for Tabular Prediction}
+\section{Deep Learning for Tabular Data}
 
 Recent research has investigated whether neural networks can achieve stronger
 performance on structured data through architectures specifically designed for
@@ -853,24 +853,27 @@ This design allows FiTabR to preserve the original retrieval-augmented learning 
     
 \chapter{Experimental Setup}
 \label{chap:experimental-setup}
-FiTabR was evaluated on three medical tabular binary-classification datasets. The experimental protocol covered data partitioning, preprocessing, baseline selection, hyperparameter optimisation, repeated training, and final test-set evaluation. All models were evaluated using the same data partitions and metric implementations. For the direct architectural comparison, FiTabR and the reference retrieval-based model additionally used the same candidate memory, retrieval configuration, optimisation objective, and random seeds. The implementation was developed using the experimental framework of the reference architecture~\cite{gorishniy2024tabr}.
+FiTabR was evaluated on three medical binary-classification datasets. This chapter describes
+the datasets, preprocessing, baselines, evaluation metrics, and implementation details. All models
+used the same data partitions, preprocessing, and metric implementations. The implementation
+was built on the experimental framework of TabR~\cite{gorishniy2024tabr}.
 
 \section{Datasets}
 \label{sec:datasets}
 
-Experiments were conducted on the Heart Disease, Pima Indians Diabetes, and Stroke Prediction datasets~\cite{heartdataset,pimadataset,strokedataset}. The datasets represent different clinical prediction tasks and vary in sample size, feature composition, and class distribution. All tasks were formulated as supervised binary classification. For an observation $x_i$, the corresponding target is denoted by $y_i\in\{0,1\}$.
+Experiments were conducted on the Heart Disease, Pima Indians Diabetes, 
+and Stroke Prediction datasets~\cite{heartdataset,pimadataset,strokedataset}, summarized in
+Table~\ref{tab:datasets}.All three tasks were formulated as supervised binary
+classification with target $y_i\in\{0,1\}$. The Heart Disease task is to
+predict the presence of heart disease from demographic characteristics,
+symptoms, and clinical measurements. The Pima Diabetes task is to predict
+diabetes from diagnostic measurements, including glucose concentration, blood
+pressure, body mass index, insulin level, age, and pregnancy history. The
+Stroke Prediction task is to predict stroke occurrence from demographic
+information, medical history, lifestyle indicators, and physiological
+measurements; its positive class is much less frequent than the negative class.
 
-\subsection{Heart Disease}
 
-The Heart Disease dataset contains 918 observations, six numerical features, and five categorical features. The objective is to predict the presence or absence of heart disease from demographic characteristics, symptoms, and clinical measurements. The processed data were divided into 642 training samples, 138 validation samples, and 138 test samples.
-
-\subsection{Pima Diabetes}
-
-The Pima Diabetes dataset contains 768 observations and eight numerical features. The prediction target indicates whether a patient has diabetes based on diagnostic measurements, including glucose concentration, blood pressure, body mass index, insulin level, age, and pregnancy history. The processed data were divided into 537 training samples, 115 validation samples, and 116 test samples.
-
-\subsection{Stroke Prediction}
-
-The Stroke Prediction dataset contains 5,110 observations, five numerical features, and five categorical features. The objective is to predict stroke occurrence from demographic information, medical history, lifestyle indicators, and physiological measurements. The processed data were divided into 3,577 training samples, 766 validation samples, and 767 test samples. Because the positive class is substantially less frequent than the negative class, threshold-independent and class-sensitive metrics were included in the evaluation.
 
 \begin{table}[t]
 \caption{Summary of the medical tabular datasets.}
@@ -899,9 +902,9 @@ Each dataset was divided into disjoint training, validation, and test subsets us
 
 Numerical features were processed using quantile transformation. This operation reduced the effect of extreme values and differences in feature scale. The transformation was estimated from the training subset and then applied to the validation and test subsets. Categorical variables were integer encoded using mappings derived from the training data. The same mappings were retained for the remaining subsets.
 
-Missing numerical values were imputed using statistics calculated from the training subset. Missing categorical values were represented by a dedicated category or processed according to the categorical policy supported by the corresponding model. Validation- and test-set statistics were not used during imputation.
+Missing numerical values were imputed with the median of the corresponding feature, calculated from the training subset. Unmeasured values are recorded as zero in the original data (for example, cholesterol, insulin, and skin thickness); these zero values were kept as recorded and not treated as missing. Missing categorical values were represented by a dedicated category or processed according to the categorical policy supported by the corresponding model. Validation- and test-set statistics were not used during imputation.
 
-Synthetic oversampling was not applied in the principal experiments. The original class distributions were preserved to avoid introducing artificial observations into the retrieval candidate memory. The effects of class imbalance were assessed using recall, F1-score, and receiver operating characteristic area under the curve (ROC--AUC), in addition to accuracy.
+Synthetic oversampling was not applied in the principal experiments. The original class distributions were preserved to avoid introducing artificial observations into the retrieval candidate memory. The effects of class imbalance were assessed using recall, F1-score, and receiver operating characteristic area under the curve (ROC-AUC), in addition to accuracy.
 
 For the retrieval-based models, the candidate memory contained only training observations. Validation and test observations were not inserted into the memory. During training, the current target observation was excluded from its own candidate context. These restrictions prevented self-retrieval and label leakage.
 
@@ -914,23 +917,23 @@ TabR and ModernNCA.
 
 \subsection{Gradient-Boosted Decision Trees}
 
-XGBoost~\cite{chen2016xgboost}, LightGBM~\cite{ke2017lightgbm}, and CatBoost~\cite{prokhorenkova2018catboost} were used as tree-based baselines. These methods provide strong non-deep-learning reference points for small and medium-sized tabular datasets. CatBoost was also included because the Heart Disease and Stroke Prediction datasets contain categorical variables.
+XGBoost~\cite{chen2016xgboost}, LightGBM~\cite{ke2017lightgbm}, and CatBoost~\cite{prokhorenkova2018catboost} were used as tree-based baselines, as they provide strong non-neural reference points for small and medium-sized tabular datasets. CatBoost was also included because Heart Disease and Stroke Prediction contain categorical variables.
 
 \subsection{Deep Tabular Models}
 
-A multilayer perceptron (MLP)~\cite{rumelhart1986learning} was used as the basic neural-network baseline. The MLP processes each observation independently and does not use feature attention or retrieved training instances. FT-Transformer~\cite{gorishniy2021revisiting} represents individual features as tokens and applies self-attention to model interactions among features. SAINT~\cite{somepalli2021saint} provides an additional attention-based comparison for tabular representation learning.
+A multilayer perceptron (MLP)~\cite{rumelhart1986learning} served as the basic neural baseline; it processes each observation independently, without feature attention or retrieval. FT-Transformer~\cite{gorishniy2021revisiting} represents each feature as a token and applies self-attention to model interactions among features, and SAINT~\cite{somepalli2021saint} provides an additional attention-based comparison.
+
 \subsection{Retrieval-Based Baselines}
 
-The original retrieval-based architecture TabR~\cite{gorishniy2024tabr} was used as the principal architectural baseline. FiTabR preserves its candidate retrieval, context aggregation, and prediction framework while modifying the input representation through feature attention, residual feature weighting, and feature fusion. This design supports a controlled assessment of whether the proposed representation module improves similarity learning and downstream classification.
+TabR~\cite{gorishniy2024tabr} was used as the principal baseline. FiTabR differs from it only in the representation module described in Chapter~3, so the comparison shows whether this module changes classification performance.
 
 ModernNCA~\cite{ye2025modernnca} was used as a second retrieval-based baseline. It learns an embedding of the input features and predicts from the distance-weighted labels of training observations, without the context module of TabR. It therefore provides a recent retrieval-based reference that improves the representation used for the neighbor search rather than the retrieval step itself; the reasons for its selection are given in Section~\ref{sec:recent-methods}.
+
 
 \section{Evaluation Metrics}
 \label{sec:metrics}
 
-Performance was evaluated using accuracy, precision, recall, F1-score, ROC--AUC, and binary cross-entropy. The first four metrics were computed from the classification decisions, whereas ROC--AUC and binary cross-entropy were computed from predicted probabilities.
-
-\subsection{Accuracy}
+Performance was evaluated using accuracy, precision, recall, F1-score, ROC-AUC, and binary cross-entropy. The first four metrics were computed from the classification decisions, whereas ROC-AUC and binary cross-entropy were computed from predicted probabilities.
 
 Accuracy measures the proportion of correctly classified observations:
 \begin{equation}
@@ -940,21 +943,19 @@ Accuracy measures the proportion of correctly classified observations:
 \end{equation}
 where $TP$, $TN$, $FP$, and $FN$ denote true positives, true negatives, false positives, and false negatives, respectively.
 
-\subsection{Precision and Recall}
-
 Precision measures the proportion of positive predictions that are correct:
 \begin{equation}
 \mathrm{Precision}=\frac{TP}{TP+FP}.
 \label{eq:precision}
 \end{equation}
+
 Recall measures the proportion of positive observations correctly identified:
 \begin{equation}
 \mathrm{Recall}=\frac{TP}{TP+FN}.
 \label{eq:recall}
 \end{equation}
-Recall is particularly relevant to medical classification because false-negative predictions may cause affected patients to be missed.
+Recall is particularly relevant to medical classification because false-negative predictions may cause affected patients to be missed. Recall is reported for the positive class, whereas precision and F1-score are reported as weighted averages over the two classes.
 
-\subsection{F1-Score}
 
 The F1-score is the harmonic mean of precision and recall:
 \begin{equation}
@@ -964,11 +965,10 @@ The F1-score is the harmonic mean of precision and recall:
 \end{equation}
 It provides a balanced measure when both false-positive and false-negative errors are relevant.
 
-\subsection{ROC--AUC}
 
-ROC--AUC measures the ability of a model to rank positive observations above negative observations across classification thresholds. A value of 0.5 indicates random ranking, whereas a value of 1.0 indicates perfect class discrimination. This metric was included because it is less dependent on a single decision threshold than accuracy or F1-score.
 
-\subsection{Binary Cross-Entropy}
+ROC-AUC measures the ability of a model to rank positive observations above negative observations across classification thresholds. A value of 0.5 indicates random ranking, whereas a value of 1.0 indicates perfect class discrimination. This metric was included because it is less dependent on a single decision threshold than accuracy or F1-score.
+
 
 Binary cross-entropy evaluates the quality of the predicted probabilities:
 \begin{equation}
@@ -978,47 +978,41 @@ Binary cross-entropy evaluates the quality of the predicted probabilities:
 \end{equation}
 where $y_i$ is the true label and $\hat{p}_i$ is the predicted probability of the positive class. Lower values indicate better probabilistic predictions.
 
-For the imbalanced Stroke Prediction dataset, ROC--AUC, recall, and F1-score were considered together with accuracy. This avoided drawing conclusions from majority-class performance alone.
+For the imbalanced Stroke Prediction dataset, ROC-AUC, cross-entropy, and recall were considered together with accuracy. This avoided drawing conclusions from majority-class performance alone.
+
 
 \section{Implementation Details}
 \label{sec:implementation-details}
 
-The models were implemented in Python using a shared experimental framework. Dataset processing and metric computation were based on scikit-learn~\cite{sklearn}. Hyperparameter optimisation was performed using Optuna with the Tree-structured Parzen Estimator sampler~\cite{optuna}. The repository configurations used 100 optimisation trials, hyperparameter selection was based exclusively on validation performance.
+The models were implemented in Python within a shared experimental framework, with dataset processing and metric computation based on scikit-learn~\cite{sklearn}. Hyperparameters were optimized with Optuna using the Tree-structured Parzen Estimator sampler~\cite{optuna}. The repository configurations used 100 optimization trials, and hyperparameters were selected exclusively on validation performance.
 
-For neural models, the search space included learning rate, weight decay, hidden representation dimension, number of processing blocks, batch size, and dropout. Attention-based models additionally included attention dropout and attention-specific representation parameters. For FiTabR, parameters associated with feature attention, residual scaling, and feature fusion were included in the optimisation procedure. For ModernNCA, the search space also included the fraction of training observations sampled as candidate neighbors in each mini-batch, and the AdamW optimizer was used instead of the stochastic gradient descent of the original study.
+For the neural models, the search space included the learning rate, weight decay, hidden representation dimension, and dropout, as well as the number of blocks for the MLP, FT-Transformer, SAINT, and ModernNCA; the batch size was fixed at 256. The attention-based models additionally included attention dropout and attention-specific representation parameters. FiTabR used the same search space as TabR; the feature-attention module added no tuned hyperparameters, and $\alpha$ was fixed at 2.0. For ModernNCA, the search space further included the fraction of training observations sampled as candidate neighbors in each mini-batch, and the AdamW optimizer was used instead of the stochastic gradient descent of the original study.
 
-For the tree-based baselines, the search space included learning rate, tree depth, number of boosting iterations, regularisation coefficients, bagging parameters, and leaf-estimation settings. Early stopping was applied using the validation subset.
+For the tree-based baselines, the search space included the learning rate, tree depth, number of boosting iterations, regularization coefficients, bagging parameters, and leaf-estimation settings. Early stopping was applied on the validation subset.
 
-Neural models were trained by mini-batch gradient-based optimisation using binary cross-entropy as the objective function. The candidate memory for retrieval-based training consisted of the complete training partition. The retrieval configuration was kept fixed between FiTabR and the architectural baseline so that the primary experimental difference was the proposed feature-aware input representation.
+All neural models were trained by mini-batch gradient-based optimization with binary cross-entropy as the objective. For the retrieval-based models, the candidate memory consisted of the complete training partition.
 
-Each selected configuration was evaluated using 15 random seeds, numbered from 0 to 14. The trained models were divided into three groups:
+Each selected configuration was trained with 15 random seeds (0--14), which were divided into three groups:
 \begin{equation}
 \{0,1,2,3,4\},\quad
 \{5,6,7,8,9\},\quad
 \{10,11,12,13,14\}.
 \label{eq:seed-groups}
 \end{equation}
-Predicted probabilities were averaged within each group to form three five-model ensembles. For a metric $m$, the mean over $R$ runs was calculated as
+Predicted probabilities were averaged within each group to form three five-model ensembles. For a metric $m$, the mean over the $R=3$ ensembles was calculated as
 \begin{equation}
 \bar{m}=\frac{1}{R}\sum_{r=1}^{R}m_r,
 \label{eq:metric-mean}
 \end{equation}
-and the standard deviation was calculated as
+and the sample standard deviation as
 \begin{equation}
 s_m=\sqrt{\frac{1}{R-1}\sum_{r=1}^{R}(m_r-\bar{m})^2}.
 \label{eq:metric-std}
 \end{equation}
 
-The direct comparison between FiTabR and the architectural baseline used identical preprocessing, data partitions, candidate memory, retrieval settings, optimisation objective, early-stopping procedure, random seeds, and evaluation metrics. The principal difference was the feature-aware representation module introduced before the encoder.
+The direct comparison between FiTabR and TabR used identical preprocessing, data partitions, candidate memory, retrieval settings, optimization objective, early-stopping procedure, random seeds, and evaluation metrics. The principal difference between the two models was therefore the feature-aware representation module introduced before the encoder.
 
-% Replace the bracketed fields below after verifying the final environment.
-All experiments were conducted using Python 3.9.16 and PyTorch 1.13.1
-on a system equipped with an Intel Core i7-7700K CPU operating at
-4.20 GHz, 32 GB of RAM, and an NVIDIA GeForce GTX 1050 GPU with
-2 GB of dedicated memory. The software environment included CUDA
-11.7.99, scikit-learn 1.2.2, XGBoost 1.7.4, LightGBM 3.3.5,
-CatBoost 1.1.1, and Optuna 3.1.0.
-
+All experiments were conducted using Python 3.9.16 and PyTorch 1.13.1 on a system equipped with an Intel Core i7-7700K CPU operating at 4.20 GHz, 32 GB of RAM, and an NVIDIA GeForce GTX 1050 GPU with 2 GB of dedicated memory. The software environment included CUDA 11.7.99, scikit-learn 1.2.2, XGBoost 1.7.4, LightGBM 3.3.5, CatBoost 1.1.1, and Optuna 3.1.0.
 \chapter{Results and Discussion}
 \label{chap:results}
 
@@ -1028,21 +1022,11 @@ deep-learning baselines on the Heart Disease, Pima Diabetes, and Stroke
 Prediction datasets. The baselines include the gradient-boosted tree methods CatBoost, XGBoost,
 and LightGBM \cite{prokhorenkova2018catboost,chen2016xgboost,ke2017lightgbm},
 together with an MLP and the tabular deep-learning models SAINT and
-FT-Transformer \cite{somepalli2021saint,gorishniy2021revisiting}. TabR is
-included as the direct retrieval-augmented architectural baseline
-\cite{gorishniy2024tabr}. The reported values correspond to ensemble
-evaluation and are expressed as mean $\pm$ standard deviation. Precision,
+FT-Transformer \cite{somepalli2021saint,gorishniy2021revisiting}. TabR and ModernNCA
+are included as the retrieval architecture baselines
+\cite{gorishniy2024tabr,ye2025modernnca}. The reported values correspond to ensemble
+evaluation and are expressed as mean. Precision,
 recall, and F1-score in the aggregate comparison are weighted averages. 
-
-
-
-\section{Overall Comparison With All Baselines}
-
-Tables~\ref{tab:heart_results}--\ref{tab:stroke_results} summarize the
-performance of the evaluated models. The results show that no single model
-dominates across all datasets and evaluation criteria. The relative
-performance of tree-based and deep-learning methods varies across datasets,
-while FiTabR is most competitive on the Heart Disease dataset.
 
 \begin{table}[H]
 \centering
@@ -1068,20 +1052,33 @@ FiTabR         & 0.8937 & 0.8977 & 0.8940 & 0.9510 & \textbf{0.3038} \\
 \end{tabular}
 \end{table}
 
-On the Heart Disease dataset as shown in Table~\ref{tab:heart_results}, ModernNCA ~\cite{ye2025modernnca} achieves the highest mean accuracy ($0.9058 \pm 0.0072$), precision, recall, F1-score, and ROC-AUC($0.9527 \pm 0.0016$) 
-among the evaluated models. FiTabR ranks second on the
-threshold-dependent metrics, with an accuracy of $0.8937 \pm 0.0042$ and an
-F1-score of $0.8940 \pm 0.0042$, and outperforms all gradient-boosted and
-deep tabular baselines as well as its direct TabR baseline. Its ROC-AUC is
-effectively tied with TabR at approximately 0.951. FiTabR also records the
-lowest mean cross-entropy ($0.3038 \pm 0.0097$), although this value is
-practically indistinguishable from that of ModernNCA ($0.3039 \pm 0.0140$).
-CatBoost is the closest conventional baseline in terms of accuracy, whereas
-LightGBM obtains the strongest ROC-AUC among the non-retrieval models. These
-results indicate that the proposed feature-aware representation is effective
-on this dataset, while the strongest retrieval-based performance is obtained
-by ModernNCA.
+\section{Heart Disease}
+\label{sec:heart_results}
 
+On the Heart Disease dataset (Table~\ref{tab:heart_results}), ModernNCA~\cite{ye2025modernnca}
+achieved the highest mean accuracy (0.9058), precision, F1-score, and ROC-AUC
+(0.9527). FiTabR ranked second on the threshold-dependent metrics, with an
+accuracy of 0.8937 and an F1-score of 0.8940. It exceeded TabR, the
+gradient-boosted models (CatBoost, XGBoost, and LightGBM), and the deep tabular
+baselines (MLP, SAINT, and FT-Transformer) on accuracy, precision, and
+F1-score. CatBoost was the closest of these baselines, with an F1-score of
+0.8890. Its gap to FiTabR is about one standard deviation and corresponds to
+fewer than one patient on the 138-sample test set.
+
+Relative to its direct TabR baseline, FiTabR increased accuracy from 0.8841 to
+0.8937, an absolute gain of 0.96 percentage points. Precision and F1-score
+changed in the same direction. The two models obtained the same mean ROC-AUC
+(0.9510), so the feature-attention module did not improve how TabR ranks
+positive and negative patients. The clearer change appeared in cross-entropy,
+which decreased from 0.3586 to 0.3038, a difference larger than either standard
+deviation. This was the lowest mean cross-entropy in the comparison, although
+ModernNCA was practically identical (0.3039). Among the non-retrieval models,
+LightGBM obtained both the strongest ROC-AUC (0.9428) and the lowest
+cross-entropy (0.3281). An unchanged ROC-AUC together with a lower
+cross-entropy indicates that feature reweighting mainly improved FiTabR's
+probability estimates, not its ranking of patients. Heart Disease therefore
+provides the clearest evidence of FiTabR improving on TabR. ModernNCA, however,
+remained the best-performing model on this dataset.
 \begin{table}[H]
 \centering
 \caption[Performance comparison on the Pima Diabetes Dataset.]
@@ -1105,24 +1102,27 @@ FiTabR         & 0.7586 & 0.7595 & 0.7589 & 0.7953 & 0.5474 \\
 \hline
 \end{tabular}
 \end{table}
+\section{Pima Diabetes}
+\label{sec:pima_results}
+On the Pima Diabetes dataset (Table~\ref{tab:pima_results}) FT-Transformer achieved the highest
+mean accuracy (0.7701), precision (0.7774), F1-score (0.7722), and ROC-AUC
+(0.8135). Its accuracy lead over XGBoost (0.7672) was much smaller than its own
+standard deviation across ensembles, so the top of the ranking was not stable.
+LightGBM obtained the lowest cross-entropy (0.5253). ModernNCA, the best model
+on Heart Disease, had the lowest accuracy on this dataset (0.7356).
 
-The Pima Diabetes dataset Table~\ref{tab:pima_results} produces a more competitive ordering among the
-model families. FT-Transformer achieves the highest mean accuracy
-($0.7701 \pm 0.0263$), precision ($0.7774 \pm 0.0203$), F1-score
-($0.7722 \pm 0.0250$), and ROC-AUC ($0.8135 \pm 0.0071$), although its
-relatively large standard deviation indicates that its advantage in the
-threshold-dependent metrics is not stable across ensembles. LightGBM obtains
-the lowest cross-entropy ($0.5253 \pm 0.0023$). XGBoost and the MLP also
-exceed FiTabR in accuracy and F1-score, while FiTabR matches CatBoost in
-accuracy. FiTabR therefore does not provide the best absolute performance
-on this dataset. Relative to its direct TabR baseline, however, FiTabR
-increases accuracy from $0.7529$ to $0.7586$, precision from $0.7515$ to
-$0.7595$, and F1-score from $0.7520$ to $0.7589$, and reduces cross-entropy
-from $0.5511$ to $0.5474$. These differences are smaller than the
-corresponding standard deviations and should be regarded as modest. The
-ROC-AUC of FiTabR ($0.7953$) remains close to, but slightly below, that of
-TabR ($0.7963$), and below most of the remaining baselines.
-
+FiTabR did not provide the best absolute performance on Pima Diabetes. Its
+accuracy (0.7586) matched CatBoost but remained below FT-Transformer, XGBoost,
+and the MLP, and its ROC-AUC (0.7953) was below six of the eight other models.
+The comparison with TabR is still informative because the two models differ
+primarily in the feature-attention module. Relative to TabR, FiTabR increased
+accuracy from 0.7529 to 0.7586, precision from 0.7515 to 0.7595, and F1-score
+from 0.7520 to 0.7589, and reduced cross-entropy from 0.5511 to 0.5474. Each of
+these differences was about one standard deviation or less. The accuracy gain
+corresponds to fewer than one patient on the 116-sample test set. The ROC-AUC
+difference was small and favored TabR (0.7963 versus 0.7953). On Pima Diabetes,
+FiTabR therefore improved slightly on TabR in the threshold-dependent metrics,
+within the variation across ensembles, and did not improve ranking performance.
 \begin{table}[H]
 \centering
 \caption[Performance comparison on the Stroke Prediction Dataset.]
@@ -1147,182 +1147,42 @@ FiTabR         & 0.9505 & 0.9034 & 0.9263 & 0.8095 & 0.1750 \\
 \end{tabular}
 \end{table}
 
-On Stroke Prediction dataset Table~\ref{tab:stroke_results}, the aggregate accuracy of all models is close to
-0.95. This value must be interpreted against the class distribution of the
-test set, in which 729 of 767 observations (95.05\%) belong to the negative
-class. MLP, SAINT, FT-Transformer, TabR, ModernNCA, and FiTabR all obtain
-exactly this accuracy with zero variance, together with identical weighted
-precision ($0.9034$) and F1-score ($0.9263$), which is consistent with
-predicting every test observation as negative. Only LightGBM
-($0.9518 \pm 0.0013$) and XGBoost ($0.9513 \pm 0.0008$) exceed this level;
-LightGBM obtains the highest accuracy and the lowest cross-entropy
-($0.1640 \pm 0.0007$), while XGBoost obtains the highest precision and
-F1-score. FT-Transformer provides the highest ROC-AUC
-($0.8328 \pm 0.0036$), followed by CatBoost ($0.8294 \pm 0.0168$). Relative
-to TabR, FiTabR slightly reduces cross-entropy from $0.1780$ to $0.1750$,
-whereas its mean ROC-AUC decreases from $0.8136$ to $0.8095$; both
-differences are smaller than the corresponding standard deviations. FiTabR
-therefore ranks in the lower half of the evaluated models in ROC-AUC on this
-dataset. Because the threshold-dependent metrics in
-Table~\ref{tab:stroke_results} largely reflect the dominant negative class,
-the minority-class behavior is examined separately in the following
-subsection.
+\section{Stroke Prediction}
+\label{sec:stroke_results}
+On the Stroke Prediction dataset (Table~\ref{tab:stroke_results}), almost all
+models obtained an accuracy close to 0.95. This value must be read against the
+class distribution of the test set, in which 729 of 767 observations
+(95.05\%) belong to the negative class. MLP, SAINT, FT-Transformer, TabR,
+ModernNCA, and FiTabR all obtained exactly this accuracy with zero variance,
+together with identical precision (0.9034) and F1-score (0.9263), which
+indicates that they predicted every test observation as negative. These models,
+including TabR and FiTabR, therefore failed to identify any of the 38 positive
+stroke cases at the default threshold of 0.5, and their high accuracy reflects
+the dominant negative class rather than successful stroke detection. Only
+LightGBM (0.9518) and XGBoost (0.9513) exceeded this level. LightGBM also
+obtained the lowest cross-entropy (0.1640), whereas XGBoost obtained the
+highest precision (0.9407) and F1-score (0.9300). FT-Transformer achieved the
+highest ROC-AUC (0.8328), followed by CatBoost (0.8294).
 
-\subsection{Direct TabR--FiTabR Comparison}
+Relative to TabR, FiTabR reduced cross-entropy slightly from 0.1780 to 0.1750,
+whereas its ROC-AUC decreased from 0.8136 to 0.8095. Both differences were
+smaller than the corresponding standard deviations, and FiTabR ranked seventh
+of the nine models in ROC-AUC. Stroke Prediction is accordingly the dataset on
+which FiTabR provided no measurable benefit over TabR.
+\subsection{Summary of the Comparison}
 
-Since FiTabR is constructed as an extension of TabR, the direct comparison
-between these two models provides the most controlled evaluation of the
-proposed feature-aware representation. The retrieval, aggregation, and
-prediction framework is retained, while FiTabR introduces feature-dependent
-representation learning before the TabR encoder.
-
-On Heart Disease, FiTabR improves accuracy from
-$0.8841 \pm 0.0000$ to $0.8937 \pm 0.0042$, corresponding to an absolute
-increase of approximately 0.96 percentage points. Precision increases from
-0.8880 to 0.8977, recall from 0.8841 to 0.8937, and F1-score from 0.8844 to
-0.8940. The two models obtain essentially identical mean ROC-AUC
-($0.9510$), whereas FiTabR reduces cross-entropy from
-$0.3586 \pm 0.0267$ to $0.3038 \pm 0.0097$. Thus, the principal improvement
-on Heart Disease occurs in final classification behavior and probabilistic
-prediction rather than in ranking performance.
-
-On Pima Diabetes, FiTabR improves accuracy from
-$0.7529 \pm 0.0050$ to $0.7586 \pm 0.0086$ and F1-score from
-$0.7520 \pm 0.0058$ to $0.7589 \pm 0.0092$. Precision and recall exhibit the
-same direction of change, and cross-entropy decreases from 0.5511 to 0.5474.
-The ROC-AUC difference is small and favors TabR, with mean values of 0.7963
-and 0.7953, respectively. Therefore, the feature-aware representation
-provides modest gains in threshold-dependent metrics but does not improve
-ranking performance on Pima Diabetes.
-
-On Stroke Prediction, the two retrieval models obtain identical mean
-accuracy, precision, recall, and F1-score. FiTabR produces a small reduction
-in cross-entropy but a lower mean ROC-AUC. The direct comparison therefore
-shows that the benefit of feature-aware representation is dataset-dependent,
-with the clearest improvement occurring on Heart Disease.
-
-\subsection{Heart Disease Results}
-
-The Heart Disease dataset provides the strongest quantitative support for
-FiTabR. The proposed model achieves an accuracy of
-$0.8937 \pm 0.0042$, exceeding TabR, CatBoost, XGBoost, LightGBM, MLP,
-SAINT, and FT-Transformer. The same ordering is observed for precision,
-recall, and F1-score. In particular, FiTabR obtains an F1-score of
-$0.8940 \pm 0.0042$, compared with $0.8890 \pm 0.0042$ for CatBoost and
-$0.8844 \pm 0.0000$ for TabR.
-
-The ROC-AUC comparison is more conservative. FiTabR and TabR both obtain a
-mean value of approximately 0.9510, considerably above the remaining
-baselines, but the difference between the two retrieval models is
-negligible. Accordingly, the results do not support a claim that FiTabR
-improves the ranking capability of TabR on Heart Disease.
-
-A clearer distinction appears in cross-entropy. FiTabR obtains
-$0.3038 \pm 0.0097$, compared with $0.3586 \pm 0.0267$ for TabR and
-$0.3281 \pm 0.0086$ for LightGBM. This is the lowest mean cross-entropy in
-the comparison. Taken together, the Heart Disease results indicate that
-feature-aware representation improves the classification output and
-probabilistic quality of the retrieval-based model while preserving the
-strong ROC-AUC performance of TabR.
-
-\subsection{Pima Diabetes Results}
-
-Performance on Pima Diabetes is less concentrated around a single model.
-FT-Transformer obtains the highest mean accuracy
-($0.7701 \pm 0.0263$), precision ($0.7774 \pm 0.0203$), recall
-($0.7701 \pm 0.0263$), F1-score ($0.7722 \pm 0.0250$), and ROC-AUC
-($0.8135 \pm 0.0071$). LightGBM achieves the lowest cross-entropy at
-$0.5253 \pm 0.0023$.
-
-FiTabR is therefore not the strongest model in absolute terms on this
-dataset. Nevertheless, it improves its direct TabR baseline on four
-classification metrics. Accuracy increases from $0.7529$ to $0.7586$,
-precision from $0.7515$ to $0.7595$, recall from $0.7529$ to $0.7586$, and
-F1-score from $0.7520$ to $0.7589$. Cross-entropy is also reduced from
-0.5511 to 0.5474.
-
-The mean ROC-AUC changes from $0.7963 \pm 0.0072$ for TabR to
-$0.7953 \pm 0.0047$ for FiTabR. Given both the small magnitude of the
-difference and the reported variability, the results should be interpreted
-as showing no meaningful improvement in ranking performance. Thus, on Pima
-Diabetes, FiTabR provides a modest improvement in threshold-based
-classification behavior but remains behind the strongest alternative
-baselines.
-
-\subsection{Stroke Prediction and Minority-Class Behavior}
-
-The Stroke Prediction dataset presents a substantially different evaluation
-scenario because of its severe class imbalance. Although the aggregate
-accuracy is approximately 0.95 for TabR and FiTabR, this value alone does
-not describe the ability of the models to detect Stroke cases.
-
-To examine this issue directly, Table~\ref{tab:stroke_minority} reports
-positive-class and class-balanced metrics for the two retrieval models.
-
-\begin{table}[H]
-\centering
-\caption[Minority-class performance on the Stroke Prediction Dataset.]
-{Minority-class performance of the retrieval-based models on the Stroke
-Prediction Dataset. Results are reported as mean over 15 random seeds.
-Positive precision is reported as 0 when a model made no positive predictions.}
-\label{tab:stroke_minority}
-\small
-\begin{tabular}{lcccccc}
-\hline
-\textbf{Model} & \textbf{Pos. Prec.} & \textbf{Pos. Rec.} & \textbf{Pos. F1} & \textbf{Macro F1} & \textbf{Bal. Acc.} & \textbf{ROC-AUC} \\
-\hline
-TabR      & 0.0000 & 0.0000 & 0.0000 & 0.4873 & 0.5000 & 0.8136 \\
-ModernNCA & 0.0000 & 0.0000 & 0.0000 & 0.4873 & 0.5000 & 0.7808 \\
-FiTabR    & 0.0000 & 0.0000 & 0.0000 & 0.4873 & 0.5000 & 0.8095 \\
-\hline
-\end{tabular}
-\end{table}
-
-The minority-class results Table~\ref{tab:stroke_minority} reveal that both TabR and FiTabR fail to predict
-positive Stroke cases at the default classification threshold. Positive
-precision, recall, and F1-score are all zero, while balanced accuracy is
-exactly 0.5000 and macro F1-score is 0.4873. Consequently, the approximately
-95\% aggregate accuracy of both models is driven by correct prediction of
-the dominant negative class rather than successful discrimination of both
-classes.
-
-This distinction is important when interpreting Table~\ref{tab:stroke_results}.
-The identical aggregate accuracy and F1-score of TabR and FiTabR should not
-be interpreted as evidence of strong clinical classification performance.
-FiTabR slightly improves cross-entropy, decreasing it from
-$0.1780 \pm 0.0050$ to $0.1750 \pm 0.0091$, but does not resolve the
-minority-class detection failure. Its mean ROC-AUC is also slightly lower
-than TabR. Therefore, the Stroke experiment identifies a clear limitation of
-the current FiTabR formulation: feature-aware representation alone is not
-sufficient to overcome severe class imbalance.
-
-\subsection{Cross-Dataset Synthesis}
-
-Across the three medical datasets, the effect of the proposed feature-aware
-representation is heterogeneous rather than uniform. Heart Disease provides
-the clearest evidence of improvement. FiTabR increases accuracy, precision,
-recall, and F1-score relative to TabR, substantially lowers cross-entropy,
-and preserves the same strong ROC-AUC. On Pima Diabetes, the improvement is
-smaller: FiTabR increases the threshold-dependent classification metrics and
-slightly reduces cross-entropy, but does not improve ROC-AUC and remains
-behind FT-Transformer and selected GBDT baselines on several metrics.
-
-Stroke Prediction represents the most difficult case. FiTabR does not
-improve the aggregate classification metrics over TabR and does not resolve
-the failure to identify minority-class examples at the default decision
-threshold. The result demonstrates that improvements in feature
-representation cannot by themselves compensate for extreme imbalance in
-the target distribution.
-
-Overall, the experiments support FiTabR as a targeted extension of TabR
-rather than a universally superior replacement. The feature-aware mechanism
-provides its strongest benefit on Heart Disease, produces modest gains on
-Pima Diabetes, and has limited effect on Stroke Prediction. Importantly, the
-comparison with the direct TabR baseline shows that improvements can be
-obtained without replacing the underlying retrieval framework. At the same
-time, the variation across datasets indicates that the effectiveness of the
-proposed representation depends on the characteristics of the underlying
-classification problem.
+Across the three datasets, the effect of FiTabR relative to TabR was
+dataset-dependent. On Heart Disease, FiTabR increased accuracy and
+substantially reduced cross-entropy, while ROC-AUC remained unchanged. On Pima
+Diabetes, the gains in threshold-dependent metrics were within the variation
+across ensembles, and ROC-AUC did not improve. On Stroke Prediction, TabR and
+FiTabR both predicted every test observation as negative, and neither
+probability-based metric changed beyond its standard deviation. FiTabR did not
+achieve the best accuracy or ROC-AUC on any dataset: ModernNCA led on Heart
+Disease, FT-Transformer on Pima Diabetes, and LightGBM and FT-Transformer on
+Stroke Prediction. Section~\ref{sec:dataset_discussion} relates these
+differences to the characteristics of each dataset after the ablation and
+attention results have been presented.
 
 The benchmark results establish the overall predictive behavior of FiTabR,
 but they do not identify which elements of the feature-aware representation
@@ -1962,174 +1822,62 @@ support interpreting FiTabR attention as model-specific feature emphasis, not
 as epidemiological, causal, or clinical risk estimates.
 
 
-
- \chapter{Conclusion}
+\chapter{Conclusion}
 \label{chap:conclusion}
 
 \section{Summary of the Thesis}
 
 This thesis investigated whether sample-specific modulation of numerical
 features can improve retrieval-augmented classification on medical tabular
-data. FiTabR was proposed as a controlled extension of TabR. A lightweight
-attention network assigns a softmax-normalized weight to each numerical
-variable of an input sample, and the numerical input is then rescaled through
-the residual form $x \odot (1 + \alpha a)$ before it reaches the TabR encoder.
-Candidate retrieval, contextual aggregation, and the prediction mechanism of
-TabR remain unchanged, so that differences between the two models could be
-attributed to the input representation. FiTabR was evaluated on the Heart
-Disease, Pima Diabetes, and Stroke Prediction datasets against TabR, ModernNCA,
-gradient-boosted decision trees, and deep tabular baselines. Each model was
-trained with 15 random seeds grouped into three five-model ensembles, and the
-results were reported as the mean and standard deviation across ensembles.
-
-\section{Answers to the Research Questions}
-
-\subsection{Effect of Sample-Specific Feature Modulation}
-
-The primary research question asked whether sample-specific numerical feature
-modulation can improve the predictive performance or probability estimates of
-retrieval-augmented tabular classification. The answer depends on the dataset.
-On Heart Disease, FiTabR increased accuracy from 0.8841 to 0.8937 and reduced
-cross-entropy from 0.3586 to 0.3038 relative to TabR, while ROC-AUC remained
-0.9510 for both models. Because the ranking of patients did not change, the
-improvement was mainly in the quality of the predicted probabilities. On Pima
-Diabetes, FiTabR reached an accuracy of 0.7586 compared with 0.7529 for TabR,
-which corresponds to at most one additional correctly classified patient per
-ensemble on the 116-sample test set. On Stroke Prediction, neither TabR nor
-FiTabR identified any positive case at the default decision threshold, and
-FiTabR obtained a slightly lower ROC-AUC (0.8095 versus 0.8136).
-
-FiTabR was also not the strongest model overall. ModernNCA achieved the
-highest accuracy on Heart Disease (0.9058), and FT-Transformer achieved the
-highest accuracy on Pima Diabetes (0.7701) and the highest ROC-AUC on Stroke
-Prediction (0.8328). The proposed module therefore improved its base model
-under some conditions, but it did not establish a new best result on these
+data. FiTabR extends TabR with a lightweight attention module that reweights
+the numerical inputs before
+the TabR encoder, while retrieval and prediction remain unchanged. FiTabR was
+compared with TabR, ModernNCA, gradient-boosted decision trees, and deep
+tabular baselines on the Heart Disease, Pima Diabetes, and Stroke Prediction
 datasets.
 
-\subsection{Contribution of the Architectural Components}
+The three research questions can be answered as follows. First, the effect of
+feature modulation depended on the dataset. On Heart Disease, FiTabR improved
+accuracy and probability estimates over TabR without changing ROC-AUC. On Pima
+Diabetes, the differences were within the variation across ensembles, and on
+Stroke Prediction the effect could not be measured under accuracy-based model
+selection. FiTabR did not achieve the best accuracy or ROC-AUC on any dataset.
+Second, residual preservation was the component with the clearest support,
+whereas the fixed scaling coefficient received no support and the benefit of
+learned nonuniform weighting remained unresolved. Third, the learned attention
+agreed with established medical knowledge only in part and was influenced by
+zero-coded missing values, so it should be read as model-specific emphasis
+rather than clinical importance.
 
-The second question asked which components of the mechanism are responsible
-for the observed differences. Residual preservation received the clearest
-support. On Heart Disease, removing the residual term reduced accuracy from
-0.8937 to 0.8647 and increased cross-entropy from 0.3038 to 0.4050, which
-indicates that multiplying the inputs directly by attention weights discards
-information that the residual form retains. The evidence for the other two
-components was weaker. Removing the scaling coefficient did not reduce
-performance on Heart Disease (accuracy 0.8986, cross-entropy 0.3028), and
-uniform weighting reached similar accuracy (0.8913) at a higher cross-entropy
-(0.3240). On Pima Diabetes, the variant without the residual term obtained a
-higher ROC-AUC (0.7994) and a lower cross-entropy (0.5254) than the full model.
-On Stroke Prediction, uniform weighting produced the lowest ROC-AUC among the
-variants (0.7727). The components therefore did not contribute consistently
-across datasets, and the benefit of learned nonuniform weighting in particular
-was not supported by every metric.
-
-\subsection{Behavior of the Learned Feature Attention}
-
-The third question asked whether the learned attention provides meaningful
-information about how the model emphasizes numerical clinical variables. The
-attention patterns agreed with established medical knowledge in part. On Heart
-Disease, cholesterol and age received the highest mean attention (0.2627 and
-0.2208). On Stroke Prediction, average glucose level and age received the
-highest attention (0.3200 and 0.2430). Clear discrepancies also appeared.
-Exercise-induced ST-segment depression and maximum heart rate received the
-lowest attention on Heart Disease despite their prognostic value, glucose
-received low attention on Pima Diabetes (0.0688) despite its central
-diagnostic role, and hypertension received the lowest attention on Stroke
-Prediction (0.1121). The standard deviations showed that the emphasis varied
-between patients, for example for cholesterol on Heart Disease (0.1155). These
-results support interpreting FiTabR attention as model-specific emphasis
-rather than as a measure of clinical importance.
-
-\section{Limitations}
-
-Several limitations restrict the conclusions that can be drawn from this
-study.
-
-\textbf{Data scale and evaluation design.} The evaluation used three public
-datasets with a single fixed train, validation, and test split each. The test
-sets contain 138, 116, and 767 samples, so a single patient changes accuracy by
-0.72 and 0.86 percentage points on Heart Disease and Pima Diabetes. No external
-validation on data from a different institution was performed.
-
-\textbf{Missing values.} In the processed data, missing measurements are
-recorded as zeros. Cholesterol is zero for 172 of 918 Heart Disease patients,
-and Insulin and SkinThickness are zero for 374 and 227 of 768 Pima Diabetes
-patients. The features with the most zero values were also among those that received 
-the highest mean attention, so part of the learned emphasis may reflect
-missingness rather than the clinical value of the measurement.
-
-\textbf{Model selection and decision threshold.} Hyperparameters and early
-stopping were selected by validation accuracy, and predictions were evaluated
-at the default threshold of 0.5. On the severely imbalanced Stroke Prediction
-dataset, this protocol favored models that predicted only the majority class. The
-zero positive-class recall therefore reflects the selection and threshold
-protocol as much as the architecture.
-
-\textbf{Scope of the base model.} The experiments used TabR-S, which has a
-linear encoder and no numerical feature embeddings. It remains untested
-whether the proposed modulation adds value to the full TabR configuration,
-whose numerical embeddings already learn feature-specific transformations.
-
-\textbf{Architectural choices.} The scaling coefficient was fixed at
-$\alpha = 2.0$ and the width of the attention network was fixed. The ablation
-variants were tuned independently, so differences between variants also
-include differences in their selected hyperparameters. Binary variables such
-as fasting blood sugar, hypertension, and heart disease were treated as
-numerical inputs and received attention weights in the same way as continuous
-measurements. In addition, Pima Diabetes contains only numerical features, so
-the module reweights all of its inputs, whereas on Heart Disease and Stroke
-Prediction the categorical features are not modulated.
-
-\textbf{Attention analysis.} The attention statistics were computed on the
-training data of the selected models. Attention weights are not necessarily
-faithful explanations of model predictions
-\cite{jain2019attention,wiegreffe2019attention}, and no perturbation-based or
-attribution-based test was performed to verify that features with higher
-attention have a larger effect on the output.
-
-\section{Future Work}
+\section{Limitations and Future Work}
 \label{sec:future-work}
-The limitations suggest several directions for further research.
 
-\textbf{Imbalanced prediction.} Model selection based on ROC-AUC or the area
-under the precision--recall curve, combined with validation-based threshold
-selection or cost-sensitive training, would allow the effect of feature
-modulation on minority-class detection to be measured independently of the
-majority-class solution.
+The conclusions are limited by the use of three public datasets with a single
+split each and small test sets, by zero-coded missing values that were not
+treated as missing, and by model selection based on validation accuracy at a
+fixed threshold of 0.5, which led to majority-class predictions on Stroke
+Prediction. In addition, the experiments used TabR without numerical
+embeddings, the scaling coefficient was fixed, categorical features were not
+modulated, and the attention analysis was not verified by perturbation or
+attribution tests \cite{jain2019attention,wiegreffe2019attention}.
 
-\textbf{Missing-value handling.} Treating zero-coded measurements as missing,
-imputing them from training statistics, and adding explicit missingness
-indicators would separate clinical emphasis from missingness in the attention
-analysis.
-
-\textbf{Extensions of the architecture.} The modulation could be combined with
-the numerical embeddings of the full TabR configuration, extended to
-categorical features, and given a learnable scaling coefficient. Applying the
-same module to other retrieval-based models such as ModernNCA would show
-whether its effect depends on TabR's value representation.
-
-\textbf{Interpretability.} Per-sample analysis of the attention weights,
-perturbation tests, and comparison with post-hoc attribution methods such as
-SHAP \cite{lundberg2017shap} would establish how closely the attention reflects
-the features that actually drive each prediction.
-
-\textbf{Clinical data.} Evaluation on larger, multi-institution clinical
-datasets, including electronic health records collected under appropriate
-ethical approval, would test whether the observations made on public
-benchmark datasets generalize to clinical practice.
+These limitations suggest the main directions for further work. Imbalance-aware
+model selection and threshold tuning would allow the effect of FiTabR on
+minority-class detection to be measured. Explicit missingness indicators would
+separate clinical emphasis from missingness. The module could also be combined
+with the numerical embeddings of the full TabR configuration, applied to other
+retrieval-based models such as ModernNCA, and examined with attribution
+methods such as SHAP \cite{lundberg2017shap}. Finally, evaluation on larger,
+multi-institution clinical datasets would test whether the findings
+generalize beyond public benchmarks.
 
 \section{Concluding Remarks}
 
-FiTabR showed that changing only the numerical representation supplied to a
-retrieval-augmented model can change its behavior: on Heart Disease the
-modification improved accuracy and probability estimates, and residual
-preservation was the component that mattered most. The same modification
-produced negligible differences on Pima Diabetes and did not address the
-minority-class problem on Stroke Prediction. Feature-aware representation is
-therefore a useful but dataset-dependent design choice for retrieval-augmented
-medical tabular learning, and its benefits should be established empirically
-for each prediction task rather than assumed.   
+Changing only the numerical representation supplied to a retrieval-augmented
+model changed its behavior on one of the three datasets. Feature-aware
+representation is therefore a dataset-dependent design choice for
+retrieval-augmented medical tabular learning, and its benefit should be
+established empirically for each prediction task.
     
     
     
