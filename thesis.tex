@@ -20,7 +20,7 @@
 \usepackage{pgfplots}
 \pgfplotsset{width=7cm, compat=1.16}
 
-
+\usepackage{makecell}
 \let\interHchar\undefined
 \let\interhword\undefined
 \usepackage[default]{dhucs-interword}
@@ -1475,18 +1475,18 @@ cross-entropy decreased substantially from $0.3586$ to $0.3038$.
 \begin{table}[H]
 \centering
 \caption[Ablation study on the Heart Disease Dataset.]{Ablation study on the Heart Disease Dataset. Results are
-reported as mean over three five-model ensembles (15 random seeds).}
+reported as mean $\pm$ standard deviation over the three five-model ensembles (15 random seeds). The ablation configurations are defined in Eq.~\eqref{eq:ablation_variants}. }
 \label{tab:heart_ablation}
 \small
-\begin{tabular}{lccc|cccc}
+\begin{tabular}{lcccc}
 \toprule
-Model & Learned $a_i$ & Residual & $\alpha=2$ & Accuracy & F1-score & ROC-AUC & Cross-Entropy \\
+Model & Accuracy & F1-score & ROC-AUC & Cross-Entropy \\
 \midrule
-TabR        & $\times$     & $\times$     & $\times$     & 0.8841 & 0.8844 & 0.9510 & 0.3586 \\
-FiTabR      & $\checkmark$ & $\checkmark$ & $\checkmark$ & 0.8937 & 0.8940 & 0.9510 & 0.3038 \\
-No Residual & $\checkmark$ & $\times$     & $\checkmark$ & 0.8647 & 0.8651 & 0.9402 & 0.4050 \\
-No Scale    & $\checkmark$ & $\checkmark$ & $\times$     & 0.8986 & 0.8988 & 0.9508 & 0.3028 \\
-Uniform     & $\times$     & $\checkmark$ & $\checkmark$ & 0.8913 & 0.8916 & 0.9509 & 0.3240 \\
+TabR        & $0.8841 \pm 0.0000$ & $0.8844 \pm 0.0000$ & $0.9510 \pm 0.0006$ & $0.3586 \pm 0.0267$ \\
+FiTabR      & $0.8937 \pm 0.0042$ & $0.8940 \pm 0.0042$ & $0.9510 \pm 0.0009$ & $0.3038 \pm 0.0097$ \\
+No Residual & $0.8647 \pm 0.0111$ & $0.8651 \pm 0.0110$ & $0.9402 \pm 0.0061$ & $0.4050 \pm 0.0603$ \\
+No Scale    & $0.8986 \pm 0.0072$ & $0.8988 \pm 0.0072$ & $0.9508 \pm 0.0016$ & $0.3028 \pm 0.0070$ \\
+Uniform     & $0.8913 \pm 0.0126$ & $0.8916 \pm 0.0125$ & $0.9509 \pm 0.0022$ & $0.3240 \pm 0.0209$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1527,21 +1527,21 @@ FiTabR model.
 \begin{table}[H]
 \centering
 \caption[Ablation study on the Pima Diabetes Dataset.]{Ablation study on the Pima Diabetes Dataset. Results are
-reported as mean over three five-model ensembles (15 random seeds).}
+reported as mean $\pm$ standard deviation over the three five-model ensembles (15 random seeds). The ablation configurations are defined in Eq.~\eqref{eq:ablation_variants}.}
 \label{tab:pima_ablation}
 \small
-\begin{tabular}{lccc|cccc}
+\begin{tabular}{lcccc}
 \toprule
-Model & Learned $a_i$ & Residual & $\alpha=2$ & Accuracy & F1-score & ROC-AUC & Cross-Entropy \\
+Model & Accuracy & F1-score & ROC-AUC & Cross-Entropy \\
 \midrule
-TabR        & $\times$     & $\times$     & $\times$     & 0.7529 & 0.7520 & 0.7963 & 0.5511 \\
-FiTabR      & $\checkmark$ & $\checkmark$ & $\checkmark$ & 0.7586 & 0.7589 & 0.7953 & 0.5474 \\
-No Residual & $\checkmark$ & $\times$     & $\checkmark$ & 0.7500 & 0.7469 & 0.7994 & 0.5254 \\
-No Scale    & $\checkmark$ & $\checkmark$ & $\times$     & 0.7471 & 0.7467 & 0.7973 & 0.5393 \\
-Uniform     & $\times$     & $\checkmark$ & $\checkmark$ & 0.7500 & 0.7501 & 0.7944 & 0.5501 \\
+TabR        & $0.7529 \pm 0.0050$ & $0.7520 \pm 0.0058$ & $0.7963 \pm 0.0072$ & $0.5511 \pm 0.0120$ \\
+FiTabR      & $0.7586 \pm 0.0086$ & $0.7589 \pm 0.0092$ & $0.7953 \pm 0.0047$ & $0.5474 \pm 0.0044$ \\
+No Residual & $0.7500 \pm 0.0086$ & $0.7469 \pm 0.0082$ & $0.7994 \pm 0.0089$ & $0.5254 \pm 0.0165$ \\
+No Scale    & $0.7471 \pm 0.0100$ & $0.7467 \pm 0.0104$ & $0.7973 \pm 0.0075$ & $0.5393 \pm 0.0187$ \\
+Uniform     & $0.7500 \pm 0.0149$ & $0.7501 \pm 0.0132$ & $0.7944 \pm 0.0044$ & $0.5501 \pm 0.0086$ \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table} 
 
 
 \begin{figure}[H]
@@ -1579,18 +1579,18 @@ metric-dependent on this dataset.
 \begin{table}[H]
 \centering
 \caption[Ablation study on the Stroke Prediction Dataset.]{Ablation study on the Stroke Prediction Dataset. Results are
-reported as mean over three five-model ensembles (15 random seeds).}
+reported as mean $\pm$ standard deviation over the three five-model ensembles (15 random seeds). The ablation configurations are defined in Eq.~\eqref{eq:ablation_variants}.}
 \label{tab:stroke_ablation}
 \small
-\begin{tabular}{lccc|cccc}
+\begin{tabular}{lcccc}
 \toprule
-Model & Learned $a_i$ & Residual & $\alpha=2$ & Accuracy & F1-score & ROC-AUC & Cross-Entropy \\
+Model & Accuracy & F1-score & ROC-AUC & Cross-Entropy \\
 \midrule
-TabR        & $\times$     & $\times$     & $\times$     & 0.9505 & 0.9263 & 0.8136 & 0.1780 \\
-FiTabR      & $\checkmark$ & $\checkmark$ & $\checkmark$ & 0.9505 & 0.9263 & 0.8095 & 0.1750 \\
-No Residual & $\checkmark$ & $\times$     & $\checkmark$ & 0.9505 & 0.9263 & 0.8104 & 0.1775 \\
-No Scale    & $\checkmark$ & $\checkmark$ & $\times$     & 0.9505 & 0.9263 & 0.7985 & 0.1806 \\
-Uniform     & $\times$     & $\checkmark$ & $\checkmark$ & 0.9505 & 0.9263 & 0.7727 & 0.1801 \\
+TabR        & $0.9505 \pm 0.0000$ & $0.9263 \pm 0.0000$ & $0.8136 \pm 0.0078$ & $0.1780 \pm 0.0050$ \\
+FiTabR      & $0.9505 \pm 0.0000$ & $0.9263 \pm 0.0000$ & $0.8095 \pm 0.0126$ & $0.1750 \pm 0.0091$ \\
+No Residual & $0.9505 \pm 0.0000$ & $0.9263 \pm 0.0000$ & $0.8104 \pm 0.0089$ & $0.1775 \pm 0.0029$ \\
+No Scale    & $0.9505 \pm 0.0000$ & $0.9263 \pm 0.0000$ & $0.7985 \pm 0.0053$ & $0.1806 \pm 0.0004$ \\
+Uniform     & $0.9505 \pm 0.0000$ & $0.9263 \pm 0.0000$ & $0.7727 \pm 0.0363$ & $0.1801 \pm 0.0120$ \\
 \bottomrule
 \end{tabular}
 \end{table}
