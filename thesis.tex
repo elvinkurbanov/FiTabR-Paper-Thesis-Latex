@@ -179,6 +179,7 @@ colorlinks = true
 \usepackage{siunitx}
 \usepackage{tabularx}
 \usepackage{float}
+\usepackage{placeins}
 \usepackage{enumitem}
 
 \usepackage{amsthm}
@@ -224,6 +225,7 @@ colorlinks = true
 \DeclareMathOperator*{\argmax}{argmax} % thin space, limits underneath in displays
   
 \begin{document}
+\setlength{\emergencystretch}{2em}
   %% 정보
   \EnglishTitle{Feature-Aware Numerical Representation for Retrieval-Augmented Medical Tabular Classification (FiTabR)}
   %% 본문이 영문일 경우, 국문 제목은 빈칸으로 둘 것
@@ -974,9 +976,13 @@ reflects both the module and its effect on the selected configuration.
 FiTabR produces an attention vector for each observation, which gives a
 sample-specific measure of the relative emphasis assigned to numerical
 features before encoding. To summarize these vectors across the dataset,
-FiTabR computes the mean attention score $\mu_a = \frac{1}{N}\sum_{i=1}^{N}
-a_i$ and the standard deviation $\sigma_a =
-\sqrt{\frac{1}{N}\sum_{i=1}^{N}(a_i - \mu_a)^2}$, where the square is taken
+FiTabR computes the mean attention score and the standard deviation
+\begin{equation}
+  \mu_a = \frac{1}{N}\sum_{i=1}^{N} a_i, \qquad
+  \sigma_a = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(a_i - \mu_a)^2},
+  \label{eq:attention_stats}
+\end{equation}
+where the square is taken
 element-wise and $N$ here denotes the number of training observations. The
 reported statistics were calculated from the FiTabR model trained with seed~0
 on each dataset. The mean indicates the average relative attention assigned to
@@ -1166,7 +1172,26 @@ Tables~\ref{tab:heart_results}--\ref{tab:stroke_results} are weighted
 averages, whereas recall in Table~\ref{tab:summary_results} is computed for
 the positive class.
 
-\begin{table}[H]
+% ============================================================
+% 5.1 Comparison with the baselines
+% ============================================================
+\section{Comparison with Baseline Models}
+\label{sec:cummulative_results}
+
+\subsection{Heart Disease}
+\label{sec:heart_results}
+
+On the Heart Disease dataset (Table~\ref{tab:heart_results}), ModernNCA~\cite{ye2025modernnca}
+achieved the highest mean accuracy (0.9058), precision, F1-score, and ROC-AUC
+(0.9527). FiTabR ranked second on the threshold-dependent metrics, with an
+accuracy of 0.8937 and an F1-score of 0.8940. It exceeded TabR, the
+gradient-boosted models (CatBoost, XGBoost, and LightGBM), and the deep tabular
+baselines (MLP, SAINT, and FT-Transformer) on accuracy, precision, and
+F1-score. CatBoost was the closest of these baselines, with an F1-score of
+0.8890. Its gap to FiTabR is about one standard deviation and corresponds to
+fewer than one patient on the 138-sample test set.
+
+\begin{table}[!htbp]
 \centering
 \caption[Performance comparison on the Heart Disease Dataset.]
 {Performance comparison on the Heart Disease Dataset. Results are
@@ -1200,19 +1225,6 @@ FiTabR         & \makecell{$0.8937$\\$\pm\,0.0042$} & \makecell{$0.8977$\\$\pm\,
 \end{tabular}
 \end{table}
 
-\section{Heart Disease}
-\label{sec:heart_results}
-
-On the Heart Disease dataset (Table~\ref{tab:heart_results}), ModernNCA~\cite{ye2025modernnca}
-achieved the highest mean accuracy (0.9058), precision, F1-score, and ROC-AUC
-(0.9527). FiTabR ranked second on the threshold-dependent metrics, with an
-accuracy of 0.8937 and an F1-score of 0.8940. It exceeded TabR, the
-gradient-boosted models (CatBoost, XGBoost, and LightGBM), and the deep tabular
-baselines (MLP, SAINT, and FT-Transformer) on accuracy, precision, and
-F1-score. CatBoost was the closest of these baselines, with an F1-score of
-0.8890. Its gap to FiTabR is about one standard deviation and corresponds to
-fewer than one patient on the 138-sample test set.
-
 Relative to its direct TabR baseline, FiTabR increased accuracy from 0.8841 to
 0.8937, an absolute gain of 0.96 percentage points. Precision and F1-score
 changed in the same direction. The two models obtained the same mean ROC-AUC
@@ -1228,8 +1240,17 @@ probability estimates, not its ranking of patients. Heart Disease therefore
 provides the clearest evidence of FiTabR improving on TabR. ModernNCA, however,
 remained the best-performing model on this dataset.
 
+\subsection{Pima Diabetes}
+\label{subsec:pima_results}
 
-\begin{table}[H]
+On the Pima Diabetes dataset (Table~\ref{tab:pima_results}) FT-Transformer achieved the highest
+mean accuracy (0.7701), precision (0.7774), F1-score (0.7722), and ROC-AUC
+(0.8135). Its accuracy lead over XGBoost (0.7672) was much smaller than its own
+standard deviation across ensembles, so the top of the ranking was not stable.
+LightGBM obtained the lowest cross-entropy (0.5253). ModernNCA, the best model
+on Heart Disease, had the lowest accuracy on this dataset (0.7356).
+
+\begin{table}[!htbp]
 \centering
 \caption[Performance comparison on the Pima Diabetes Dataset.]
 {Performance comparison on the Pima Diabetes Dataset. Results are
@@ -1263,15 +1284,6 @@ FiTabR         & \makecell{$0.7586$\\$\pm\,0.0086$} & \makecell{$0.7595$\\$\pm\,
 \end{tabular}
 \end{table}
 
-\section{Pima Diabetes}
-\label{sec:pima_results}
-On the Pima Diabetes dataset (Table~\ref{tab:pima_results}) FT-Transformer achieved the highest
-mean accuracy (0.7701), precision (0.7774), F1-score (0.7722), and ROC-AUC
-(0.8135). Its accuracy lead over XGBoost (0.7672) was much smaller than its own
-standard deviation across ensembles, so the top of the ranking was not stable.
-LightGBM obtained the lowest cross-entropy (0.5253). ModernNCA, the best model
-on Heart Disease, had the lowest accuracy on this dataset (0.7356).
-
 FiTabR did not provide the best absolute performance on Pima Diabetes. Its
 accuracy (0.7586) matched CatBoost but remained below FT-Transformer, XGBoost,
 and the MLP, and its ROC-AUC (0.7953) was below six of the eight other models.
@@ -1284,7 +1296,25 @@ difference was small and favored TabR (0.7963 versus 0.7953). On Pima Diabetes,
 FiTabR therefore improved slightly on TabR in the threshold-dependent metrics,
 within the variation across ensembles, and did not improve ranking performance.
 
-\begin{table}[H]
+\subsection{Stroke Prediction}
+\label{subsec:stroke_results}
+
+On the Stroke Prediction dataset (Table~\ref{tab:stroke_results}), almost all
+models obtained an accuracy close to 0.95. This value must be read against the
+class distribution of the test set, in which 729 of 767 observations
+(95.05\%) belong to the negative class. MLP, SAINT, FT-Transformer, TabR,
+ModernNCA, and FiTabR all obtained exactly this accuracy with zero variance,
+together with identical precision (0.9034) and F1-score (0.9263), which
+indicates that they predicted every test observation as negative. These models,
+including TabR and FiTabR, therefore failed to identify any of the 38 positive
+stroke cases at the default threshold of 0.5, and their high accuracy reflects
+the dominant negative class rather than successful stroke detection. Only
+LightGBM (0.9518) and XGBoost (0.9513) exceeded this level. LightGBM also
+obtained the lowest cross-entropy (0.1640), whereas XGBoost obtained the
+highest precision (0.9407) and F1-score (0.9300). FT-Transformer achieved the
+highest ROC-AUC (0.8328), followed by CatBoost (0.8294).
+
+\begin{table}[!htbp]
 \centering
 \caption[Performance comparison on the Stroke Prediction Dataset.]
 {Performance comparison on the Stroke Prediction Dataset. Results are
@@ -1318,31 +1348,16 @@ FiTabR         & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,
 \end{tabular}
 \end{table}
 
-\section{Stroke Prediction}
-\label{sec:stroke_results}
-On the Stroke Prediction dataset (Table~\ref{tab:stroke_results}), almost all
-models obtained an accuracy close to 0.95. This value must be read against the
-class distribution of the test set, in which 729 of 767 observations
-(95.05\%) belong to the negative class. MLP, SAINT, FT-Transformer, TabR,
-ModernNCA, and FiTabR all obtained exactly this accuracy with zero variance,
-together with identical precision (0.9034) and F1-score (0.9263), which
-indicates that they predicted every test observation as negative. These models,
-including TabR and FiTabR, therefore failed to identify any of the 38 positive
-stroke cases at the default threshold of 0.5, and their high accuracy reflects
-the dominant negative class rather than successful stroke detection. Only
-LightGBM (0.9518) and XGBoost (0.9513) exceeded this level. LightGBM also
-obtained the lowest cross-entropy (0.1640), whereas XGBoost obtained the
-highest precision (0.9407) and F1-score (0.9300). FT-Transformer achieved the
-highest ROC-AUC (0.8328), followed by CatBoost (0.8294).
-
 Relative to TabR, FiTabR reduced cross-entropy slightly from 0.1780 to 0.1750,
 whereas its ROC-AUC decreased from 0.8136 to 0.8095. Both differences were
 smaller than the corresponding standard deviations, and FiTabR ranked seventh
 of the nine models in ROC-AUC. FiTabR provided no measurable benefit over TabR
 on the Stroke Prediction dataset (see Section~\ref{sec:dataset_discussion}).
 
-                     
-\begin{table}[H]
+\subsection{Summary of the Comparison}
+\label{subsec:comparison_summary}
+
+\begin{table}[!htbp]
 \centering
 \caption[Summary of the main results on the three datasets.]{Summary of
 the main results on the three datasets. FiTabR is compared with TabR, the
@@ -1372,7 +1387,6 @@ FT-Transformer & $0.9505 \pm 0.0000$ & $0.0000 \pm 0.0000$ & $0.8328 \pm 0.0036$
 \end{tabular}
 \end{table}
 
-\subsection{Summary of the Comparison}
 Across the three datasets, the effect of FiTabR relative to TabR was
 dataset-dependent. On Heart Disease, FiTabR increased accuracy and
 substantially reduced cross-entropy, while ROC-AUC remained unchanged. On Pima
@@ -1395,6 +1409,10 @@ examines the model-internal emphasis assigned to the numerical variables,
 without treating the attention values as causal or clinical importance
 scores.
 
+% ============================================================
+% 5.2 Ablation study
+% ============================================================
+\FloatBarrier
 \section{Ablation Study}
 \label{sec:ablation}
 
@@ -1497,11 +1515,9 @@ covering 15 trained models in total. The reported values
 represent the mean and sample standard deviation across the three
 ensembles.
 
-% ============================================================
-% Heart Disease
-% ============================================================
 \subsection{Heart Disease}
 \label{subsec:heart_ablation}
+
 As shown in Table~\ref{tab:heart_ablation}, the Heart Disease results
 showed the clearest effect of the proposed
 representation mechanism. FiTabR improved the mean accuracy from
@@ -1509,7 +1525,7 @@ $0.8841$ for TabR to $0.8937$ and the F1-score from $0.8844$ to
 $0.8940$. The ROC-AUC remained unchanged, while
 cross-entropy decreased substantially from $0.3586$ to $0.3038$.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Ablation study on the Heart Disease Dataset.]{Ablation study on the Heart Disease Dataset. Results are
 reported as mean $\pm$ standard deviation over the three five-model ensembles (15 random seeds). The ablation configurations are defined in Eq.~\eqref{eq:ablation_variants}. }
@@ -1538,17 +1554,18 @@ for the Heart Disease dataset.
 The No Scale configuration obtained the numerically highest accuracy and
 F1-score, as well as the lowest mean cross-entropy. However, the
 difference between No Scale and complete FiTabR was small relative to the
-variation across ensembles. Thus, the experiment does not provide
+variation across ensembles (Figure~\ref{fig:heart_ablation_performance}). Thus, the experiment does not provide
 evidence that the fixed coefficient $\alpha=2.0$ improves performance.
 Instead, the learned residual weighting remained effective when the fixed
 scaling term was removed.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]
     {figure/heart_ablation_performance.pdf}
-    \caption{Ablation performance on the Heart Disease Dataset.}
-    \label{fig:heart_ablation_performance}
+    \caption[Ablation performance on the Heart Disease Dataset.]{Ablation performance on the Heart Disease Dataset. The y-axis starts at
+0.60, as marked by the axis break.}
+    \label{fig:heart_ablation_performance}  
 \end{figure}
 
 Uniform weighting was also competitive with the complete model. This
@@ -1557,11 +1574,21 @@ numerical feature modulation itself rather than exclusively from the
 learned sample-specific attention distribution. Nevertheless, the
 Uniform configuration exhibited greater variability than the complete
 FiTabR model.
-% ============================================================
-% Pima Diabetes
-% ============================================================
 
-\begin{table}[H]
+\subsection{Pima Diabetes}
+\label{subsec:pima_ablation}
+
+Table~\ref{tab:pima_ablation} presents the corresponding ablation
+results on the Pima Diabetes dataset. The differences between the 
+Pima Diabetes configurations were substantially
+smaller than those observed on Heart Disease. Relative to
+TabR, complete FiTabR increased mean accuracy from $0.7529$ to $0.7586$
+and weighted F1-score from $0.7520$ to $0.7589$, while cross-entropy
+decreased from $0.5511$ to $0.5474$. In contrast, mean ROC-AUC changed
+slightly from $0.7963$ to $0.7953$, so the result does not indicate an
+improvement in ranking performance.
+
+\begin{table}[!htbp]
 \centering
 \caption[Ablation study on the Pima Diabetes Dataset.]{Ablation study on the Pima Diabetes Dataset. Results are
 reported as mean $\pm$ standard deviation over the three five-model ensembles (15 random seeds). The ablation configurations are defined in Eq.~\eqref{eq:ablation_variants}.}
@@ -1578,30 +1605,9 @@ No Scale    & $0.7471 \pm 0.0100$ & $0.7467 \pm 0.0104$ & $0.7973 \pm 0.0075$ & 
 Uniform     & $0.7500 \pm 0.0149$ & $0.7501 \pm 0.0132$ & $0.7944 \pm 0.0044$ & $0.5501 \pm 0.0086$ \\
 \bottomrule
 \end{tabular}
-\end{table} 
+\end{table}
 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]
-    {figure/pima_ablation_performance.pdf}
-    \caption{Ablation performance on the Pima Diabetes Dataset.\\}
-    \label{fig:pima_ablation_performance}
-\end{figure}
-
-\subsection{Pima Diabetes}
-\label{subsec:pima_ablation}
-Table~\ref{tab:pima_ablation} presents the corresponding ablation
-results on the Pima Diabetes dataset. The differences between the 
-Pima Diabetes configurations were substantially
-smaller than those observed on Heart Disease. Relative to
-TabR, complete FiTabR increased mean accuracy from $0.7529$ to $0.7586$
-and weighted F1-score from $0.7520$ to $0.7589$, while cross-entropy
-decreased from $0.5511$ to $0.5474$. In contrast, mean ROC-AUC changed
-slightly from $0.7963$ to $0.7953$, so the result does not indicate an
-improvement in ranking performance.
-
-The ablated configurations were similarly close. No Residual obtained the
+The ablated configurations were similarly close (Figure~\ref{fig:pima_ablation_performance}). No Residual obtained the
 highest mean ROC-AUC ($0.7994$) and the lowest cross-entropy ($0.5254$),
 while No Scale and Uniform remained close to the TabR baseline. In contrast
 to Heart Disease, the experiment therefore does not identify one component
@@ -1609,11 +1615,26 @@ whose benefit is consistent across the reported metrics. The results
 instead suggest that the effect of feature weighting is weaker and more
 metric-dependent on this dataset.
 
-% ============================================================
-% Stroke Prediction
-% ============================================================
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]
+    {figure/pima_ablation_performance.pdf}
+    \caption[Ablation performance on the Pima Diabetes Dataset.]{Ablation performance on the Pima Diabetes Dataset. The y-axis starts at
+0.60, as marked by the axis break.}
+    \label{fig:pima_ablation_performance}
+\end{figure}
 
-\begin{table}[H]
+\subsection{Stroke Prediction}
+\label{subsec:stroke_ablation_performance}
+
+Table~\ref{tab:stroke_ablation} reports the ablation results on the
+Stroke Prediction dataset.
+The threshold-based metrics were identical across all configurations on
+the Stroke Prediction dataset. Consequently, accuracy and weighted
+F1-score did not distinguish between the proposed feature-weighting
+variants.
+
+\begin{table}[!htbp]
 \centering
 \caption[Ablation study on the Stroke Prediction Dataset.]{Ablation study on the Stroke Prediction Dataset. Results are
 reported as mean $\pm$ standard deviation over the three five-model ensembles (15 random seeds). The ablation configurations are defined in Eq.~\eqref{eq:ablation_variants}.}
@@ -1631,16 +1652,6 @@ Uniform     & $0.9505 \pm 0.0000$ & $0.9263 \pm 0.0000$ & $0.7727 \pm 0.0363$ & 
 \bottomrule
 \end{tabular}
 \end{table}
-
-\subsection{Stroke Prediction}
-\label{subsec:stroke_ablation_performance}
-
-Table~\ref{tab:stroke_ablation} reports the ablation results on the
-Stroke Prediction dataset.
-The threshold-based metrics were identical across all configurations on
-the Stroke Prediction dataset. Consequently, accuracy and weighted
-F1-score did not distinguish between the proposed feature-weighting
-variants.
 
 Differences were instead observed in probability-based metrics. TabR
 obtained the highest mean ROC-AUC of $0.8136$, while complete FiTabR
@@ -1661,17 +1672,14 @@ discrimination. The result also illustrates that weighted
 threshold-based metrics can conceal differences between models on a
 strongly imbalanced dataset.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]
     {figure/stroke_ablation_performance.pdf}
-    \caption{Ablation performance on the Stroke Prediction Dataset. }
+    \caption[Ablation performance on the Stroke Prediction Dataset.]{Ablation performance on the Stroke Prediction Dataset. The y-axis starts at
+0.60, as marked by the axis break. }
     \label{fig:stroke_ablation_performance}
 \end{figure}
-
-% ============================================================
-% Overall Discussion
-% ============================================================
 
 \subsection{Discussion}
 \label{subsec:ablation_discussion}
@@ -1710,6 +1718,11 @@ strongest evidence obtained on Heart Disease. Among the examined design
 choices, the residual term received the clearest support on Heart Disease, 
 while the contribution of fixed attention scaling and learned
 sample-specific weighting was more dataset-dependent.
+
+% ============================================================
+% 5.3 Attention analysis
+% ============================================================
+\FloatBarrier
 \section{Clinical Concordance of Learned Feature Attention}
 \label{sec:clinical_attention}
 
@@ -1724,7 +1737,19 @@ qualitatively with established clinical knowledge
 \cite{visseren2021,dagostino2008,score2_2021,ctt2012,erfc2010,
 ada2026diagnosis,bushnell2024}.
 
-\begin{table}[H]
+\subsection{Heart Disease}
+\label{subsec:heart_attention}
+
+Cholesterol and age received the two highest mean attention values
+(Table~\ref{tab:heart_attention_domain} and
+Figure~\ref{fig:heart_attention}), in line with their established role in
+cardiovascular risk. RestingBP received intermediate attention,
+and Oldpeak and MaxHR received the lowest, although both have
+known prognostic value. The large standard deviation of cholesterol attention
+($0.1155$) shows that FiTabR emphasized this feature differently across
+patients.
+
+\begin{table}[!htbp]
 \centering
 \caption[Comparison of FiTabR attention on the Heart Disease Dataset.]{Comparison of FiTabR attention with established medical
 domain knowledge on the Heart Disease Dataset. Bold values have a mean attention above the uniform value (dashed line in Figure~\ref{fig:heart_attention}).}
@@ -1779,8 +1804,7 @@ cardiovascular outcomes \cite{lauer1996}. \\
 \end{tabularx}
 \end{table}
 
-
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]
     {figure/heart_attention_analysis.pdf}
@@ -1788,18 +1812,6 @@ cardiovascular outcomes \cite{lauer1996}. \\
     dashed line shows the uniform value $1/F$ for each numerical feature.}
     \label{fig:heart_attention}
 \end{figure}
-
-\subsection{Heart Disease}
-\label{subsec:heart_attention}
-
-Cholesterol and age received the two highest mean attention values
-(Table~\ref{tab:heart_attention_domain} and
-Figure~\ref{fig:heart_attention}), in line with their established role in
-cardiovascular risk. RestingBP received intermediate attention,
-and Oldpeak and MaxHR received the lowest, although both have
-known prognostic value. The large standard deviation of cholesterol attention
-($0.1155$) shows that FiTabR emphasized this feature differently across
-patients.
 
 \subsection{Pima Diabetes}
 \label{subsec:pima_attention}
@@ -1886,6 +1898,7 @@ risk \cite{ada2026diagnosis}. \\
     dashed line shows the uniform value $1/F$ for each numerical feature.}
     \label{fig:pima_attention}
 \end{figure}
+
 \subsection{Stroke Prediction}
 \label{subsec:stroke_attention}
 
@@ -1971,6 +1984,11 @@ Diabetes and Hypertension on Stroke Prediction received low attention despite
 their central clinical roles. This partial agreement is consistent with
 reading FiTabR attention as model-specific feature emphasis rather than as a
 clinical ranking of risk factors.
+
+% ============================================================
+% 5.4 Discussion across datasets
+% ============================================================
+\FloatBarrier
 \section{Dataset Characteristics and Differences in Effect}
 \label{sec:dataset_discussion}
 
@@ -2035,6 +2053,7 @@ that the module reweights, and whether zero values encode missing
 measurements. Because these conditions vary together across only three
 datasets, this thesis cannot isolate their individual contributions. The
 resulting limitations are summarized in Section~\ref{sec:future-work}.
+
 \chapter{Conclusion}
 \label{chap:conclusion}
 
