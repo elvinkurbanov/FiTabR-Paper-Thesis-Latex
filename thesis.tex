@@ -18,7 +18,13 @@
 \usepackage{textcomp}
 \usepackage{cite}
 \usepackage{pgfplots}
+
 \pgfplotsset{width=7cm, compat=1.16}
+% Attention tables: bold a value only if its mean is above the uniform value 1/F
+\newcommand{\attuniform}{0}
+\newcommand{\attcell}[2]{%
+  \pgfmathtruncatemacro{\attabove}{(#1 > \attuniform) ? 1 : 0}%
+  \ifnum\attabove=1 $\mathbf{#1 \pm #2}$\else $#1 \pm #2$\fi}
 
 \usepackage{makecell}
 \let\interHchar\undefined
@@ -452,23 +458,23 @@ this thesis are summarized as follows:
     knowledge.
 \end{enumerate}
 
-The content of this thesis is organized as follows. Chapter II reviews
+The content of this thesis is organized as follows. Chapter~\ref{chap:background} reviews
 tree-based tabular learning, deep learning methods for structured data,
 retrieval-augmented tabular learning, the TabR architecture, and feature
-attention approaches relevant to this work. Chapter III presents the proposed
+attention approaches relevant to this work. Chapter~\ref{chap:methodology} presents the proposed
 FiTabR architecture, including the problem formulation, feature-attention
 module, residual feature weighting, and integration with the TabR retrieval
-framework. Chapter IV describes the experimental setup, including the
+framework. Chapter~\ref{chap:experimental-setup} describes the experimental setup, including the
 datasets, preprocessing, baseline models, evaluation metrics, and
-implementation details. Chapter V presents the main comparative results, the
+implementation details. Chapter~\ref{chap:results} presents the main comparative results, the
 ablation experiments, the attention analysis, and a discussion of the observed
-behavior. Finally, Chapter VI summarizes the main findings, discusses the
+behavior. Finally, Chapter~\ref{chap:conclusion} summarizes the main findings, discusses the
 limitations of the study, and outlines directions for future research.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % II. RESEARCH BACKGROUND / RELATED WORK
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \chapter{Research Background}
+\label{chap:background}
 
 \section{Classical Machine Learning for Tabular Data}
 
@@ -584,18 +590,18 @@ of tabular deep learning, suggesting that the representation on which
 similarity is computed is itself an important architectural consideration.
 
 ModernNCA revisited Neighbourhood Components Analysis (NCA) as a deep
-baseline for tabular data \cite{ye2025modernnca}. The method learned a
-nonlinear mapping of the input features into an embedding space and predicted
+baseline for tabular data \cite{ye2025modernnca}. The method learns a
+nonlinear mapping of the input features into an embedding space and predicts
 the label of a target observation as a weighted average of the labels of
 training observations, with weights given by a softmax over negative Euclidean
-distances in that space. During training, each mini-batch used only a random
-subset of the training set as candidate neighbors, which reduced computation
-and added stochasticity; at inference, the full training set was used. Unlike
-TabR, ModernNCA did not use an attention-like context module and predicted
+distances in that space. During training, each mini-batch uses only a random
+subset of the training set as candidate neighbors, which reduces computation
+and adds stochasticity; at inference, the full training set is used. Unlike
+TabR, ModernNCA does not use an attention-like context module and predicts
 directly from the weighted neighbor labels. On a benchmark of 300 datasets, it
 obtained a better average rank than TabR while requiring approximately half of
 its training time and memory \cite{ye2025modernnca}. ModernNCA therefore
-improved retrieval-based prediction by learning the representation in which
+improves retrieval-based prediction by learning the representation in which
 neighbors are compared, rather than by making the retrieval step more complex.
 
 FiTabR builds on the same observation but changes the representation in a
@@ -1032,7 +1038,7 @@ Each dataset was divided into disjoint training, validation, and test subsets us
 
 Numerical features were processed using quantile transformation. This operation reduced the effect of extreme values and differences in feature scale. The transformation was estimated from the training subset and then applied to the validation and test subsets. Categorical variables were integer encoded using mappings derived from the training data. The same mappings were retained for the remaining subsets.
 
-Missing numerical values were imputed with the median of the corresponding feature, calculated from the training subset. Unmeasured values are recorded as zero in the original data (for example, cholesterol, insulin, and skin thickness); these zero values were kept as recorded and not treated as missing. Missing categorical values were represented by a dedicated category or processed according to the categorical policy supported by the corresponding model. Validation- and test-set statistics were not used during imputation.
+Missing numerical values were imputed with the median of the corresponding feature, calculated from the training subset. Unmeasured values are recorded as zero in the original data (for example, Cholesterol, Insulin, and SkinThickness); these zero values were kept as recorded and not treated as missing. Missing categorical values were represented by a dedicated category or processed according to the categorical policy supported by the corresponding model. Validation- and test-set statistics were not used during imputation.
 
 Synthetic oversampling was not applied in the principal experiments. The original class distributions were preserved to avoid introducing artificial observations into the retrieval candidate memory. The effects of class imbalance were assessed using recall, F1-score, and receiver operating characteristic area under the curve (ROC-AUC), in addition to accuracy.
 
@@ -1155,33 +1161,42 @@ together with an MLP and the tabular deep-learning models SAINT and
 FT-Transformer \cite{somepalli2021saint,gorishniy2021revisiting}. TabR and ModernNCA
 are included as the retrieval architecture baselines
 \cite{gorishniy2024tabr,ye2025modernnca}. The reported values correspond to ensemble
-evaluation and are expressed as means. Precision and F1-score in
+evaluation and are expressed as mean ± SD. Precision and F1-score in
 Tables~\ref{tab:heart_results}--\ref{tab:stroke_results} are weighted
 averages, whereas recall in Table~\ref{tab:summary_results} is computed for
 the positive class.
-
 
 \begin{table}[H]
 \centering
 \caption[Performance comparison on the Heart Disease Dataset.]
 {Performance comparison on the Heart Disease Dataset. Results are
-reported as mean over three five-model ensembles (15 random seeds).}
+reported as mean $\pm$ standard deviation over the three five-model ensembles.}
 \label{tab:heart_results}
 \small
+\setlength{\tabcolsep}{5pt}
+\setcellgapes{1.5pt}\makegapedcells
 \begin{tabular}{lccccc}
-\hline
+\toprule
 \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Cross-Entropy} \\
-\hline
-CatBoost       & 0.8889 & 0.8896 & 0.8890 & 0.9334 & 0.3390 \\
-XGBoost        & 0.8841 & 0.8856 & 0.8843 & 0.9341 & 0.3481 \\
-LightGBM       & 0.8841 & 0.8847 & 0.8842 & 0.9428 & 0.3281 \\
-MLP            & 0.8720 & 0.8729 & 0.8722 & 0.9351 & 0.3350 \\
-SAINT          & 0.8792 & 0.8814 & 0.8795 & 0.9390 & 0.3322 \\
-FT-Transformer & 0.8696 & 0.8716 & 0.8698 & 0.9344 & 0.3582 \\
-TabR           & 0.8841 & 0.8880 & 0.8844 & 0.9510 & 0.3586 \\
-ModernNCA      & \textbf{0.9058} & \textbf{0.9070} & \textbf{0.9060} & \textbf{0.9527} & 0.3039 \\
-FiTabR         & 0.8937 & 0.8977 & 0.8940 & 0.9510 & \textbf{0.3038} \\
-\hline
+\midrule
+CatBoost       & \makecell{$0.8889$\\$\pm\,0.0042$} & \makecell{$0.8896$\\$\pm\,0.0043$} & \makecell{$0.8890$\\$\pm\,0.0042$} & \makecell{$0.9334$\\$\pm\,0.0001$} & \makecell{$0.3390$\\$\pm\,0.0060$} \\
+\addlinespace[3pt]
+XGBoost        & \makecell{$0.8841$\\$\pm\,0.0000$} & \makecell{$0.8856$\\$\pm\,0.0008$} & \makecell{$0.8843$\\$\pm\,0.0001$} & \makecell{$0.9341$\\$\pm\,0.0030$} & \makecell{$0.3481$\\$\pm\,0.0146$} \\
+\addlinespace[3pt]
+LightGBM       & \makecell{$0.8841$\\$\pm\,0.0000$} & \makecell{$0.8847$\\$\pm\,0.0000$} & \makecell{$0.8842$\\$\pm\,0.0000$} & \makecell{$0.9428$\\$\pm\,0.0005$} & \makecell{$0.3281$\\$\pm\,0.0086$} \\
+\midrule
+MLP            & \makecell{$0.8720$\\$\pm\,0.0042$} & \makecell{$0.8729$\\$\pm\,0.0045$} & \makecell{$0.8722$\\$\pm\,0.0042$} & \makecell{$0.9351$\\$\pm\,0.0007$} & \makecell{$0.3350$\\$\pm\,0.0031$} \\
+\addlinespace[3pt]
+SAINT          & \makecell{$0.8792$\\$\pm\,0.0221$} & \makecell{$0.8814$\\$\pm\,0.0205$} & \makecell{$0.8795$\\$\pm\,0.0220$} & \makecell{$0.9390$\\$\pm\,0.0011$} & \makecell{$0.3322$\\$\pm\,0.0186$} \\
+\addlinespace[3pt]
+FT-Transformer & \makecell{$0.8696$\\$\pm\,0.0072$} & \makecell{$0.8716$\\$\pm\,0.0064$} & \makecell{$0.8698$\\$\pm\,0.0072$} & \makecell{$0.9344$\\$\pm\,0.0037$} & \makecell{$0.3582$\\$\pm\,0.0098$} \\
+\midrule
+TabR           & \makecell{$0.8841$\\$\pm\,0.0000$} & \makecell{$0.8880$\\$\pm\,0.0000$} & \makecell{$0.8844$\\$\pm\,0.0000$} & \makecell{$0.9510$\\$\pm\,0.0006$} & \makecell{$0.3586$\\$\pm\,0.0267$} \\
+\addlinespace[3pt]
+ModernNCA      & \makecell{$\mathbf{0.9058}$\\$\pm\,0.0072$} & \makecell{$\mathbf{0.9070}$\\$\pm\,0.0079$} & \makecell{$\mathbf{0.9060}$\\$\pm\,0.0073$} & \makecell{$\mathbf{0.9527}$\\$\pm\,0.0016$} & \makecell{$0.3039$\\$\pm\,0.0140$} \\
+\addlinespace[3pt]
+FiTabR         & \makecell{$0.8937$\\$\pm\,0.0042$} & \makecell{$0.8977$\\$\pm\,0.0043$} & \makecell{$0.8940$\\$\pm\,0.0042$} & \makecell{$0.9510$\\$\pm\,0.0009$} & \makecell{$\mathbf{0.3038}$\\$\pm\,0.0097$} \\
+\bottomrule
 \end{tabular}
 \end{table}
 
@@ -1218,25 +1233,36 @@ remained the best-performing model on this dataset.
 \centering
 \caption[Performance comparison on the Pima Diabetes Dataset.]
 {Performance comparison on the Pima Diabetes Dataset. Results are
-reported as mean over three five-model ensembles (15 random seeds).}
+reported as mean $\pm$ standard deviation over the three five-model ensembles.}
 \label{tab:pima_results}
 \small
+\setlength{\tabcolsep}{5pt}
+\setcellgapes{1.5pt}\makegapedcells
 \begin{tabular}{lccccc}
-\hline
+\toprule
 \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Cross-Entropy} \\
-\hline
-CatBoost       & 0.7586 & 0.7550 & 0.7554 & 0.7918 & 0.6831 \\
-XGBoost        & 0.7672 & 0.7636 & 0.7610 & 0.8078 & 0.5895 \\
-LightGBM       & 0.7500 & 0.7467 & 0.7437 & 0.8086 & \textbf{0.5253} \\
-MLP            & 0.7644 & 0.7633 & 0.7635 & 0.7918 & 0.5659 \\
-SAINT          & 0.7529 & 0.7638 & 0.7558 & 0.8054 & 0.5339 \\
-FT-Transformer & \textbf{0.7701} & \textbf{0.7774} & \textbf{0.7722} & \textbf{0.8135} & 0.5337 \\
-TabR           & 0.7529 & 0.7515 & 0.7520 & 0.7963 & 0.5511 \\
-ModernNCA      & 0.7356 & 0.7380 & 0.7364 & 0.8021 & 0.5584 \\
-FiTabR         & 0.7586 & 0.7595 & 0.7589 & 0.7953 & 0.5474 \\
-\hline
+\midrule
+CatBoost       & \makecell{$0.7586$\\$\pm\,0.0086$} & \makecell{$0.7550$\\$\pm\,0.0083$} & \makecell{$0.7554$\\$\pm\,0.0080$} & \makecell{$0.7918$\\$\pm\,0.0035$} & \makecell{$0.6831$\\$\pm\,0.0029$} \\
+\addlinespace[3pt]
+XGBoost        & \makecell{$0.7672$\\$\pm\,0.0000$} & \makecell{$0.7636$\\$\pm\,0.0002$} & \makecell{$0.7610$\\$\pm\,0.0011$} & \makecell{$0.8078$\\$\pm\,0.0034$} & \makecell{$0.5895$\\$\pm\,0.0236$} \\
+\addlinespace[3pt]
+LightGBM       & \makecell{$0.7500$\\$\pm\,0.0149$} & \makecell{$0.7467$\\$\pm\,0.0159$} & \makecell{$0.7437$\\$\pm\,0.0132$} & \makecell{$0.8086$\\$\pm\,0.0060$} & \makecell{$\mathbf{0.5253}$\\$\pm\,0.0023$} \\
+\midrule
+MLP            & \makecell{$0.7644$\\$\pm\,0.0050$} & \makecell{$0.7633$\\$\pm\,0.0071$} & \makecell{$0.7635$\\$\pm\,0.0065$} & \makecell{$0.7918$\\$\pm\,0.0054$} & \makecell{$0.5659$\\$\pm\,0.0185$} \\
+\addlinespace[3pt]
+SAINT          & \makecell{$0.7529$\\$\pm\,0.0100$} & \makecell{$0.7638$\\$\pm\,0.0073$} & \makecell{$0.7558$\\$\pm\,0.0095$} & \makecell{$0.8054$\\$\pm\,0.0003$} & \makecell{$0.5339$\\$\pm\,0.0048$} \\
+\addlinespace[3pt]
+FT-Transformer & \makecell{$\mathbf{0.7701}$\\$\pm\,0.0263$} & \makecell{$\mathbf{0.7774}$\\$\pm\,0.0203$} & \makecell{$\mathbf{0.7722}$\\$\pm\,0.0250$} & \makecell{$\mathbf{0.8135}$\\$\pm\,0.0071$} & \makecell{$0.5337$\\$\pm\,0.0223$} \\
+\midrule
+TabR           & \makecell{$0.7529$\\$\pm\,0.0050$} & \makecell{$0.7515$\\$\pm\,0.0062$} & \makecell{$0.7520$\\$\pm\,0.0058$} & \makecell{$0.7963$\\$\pm\,0.0072$} & \makecell{$0.5511$\\$\pm\,0.0120$} \\
+\addlinespace[3pt]
+ModernNCA      & \makecell{$0.7356$\\$\pm\,0.0199$} & \makecell{$0.7380$\\$\pm\,0.0162$} & \makecell{$0.7364$\\$\pm\,0.0182$} & \makecell{$0.8021$\\$\pm\,0.0186$} & \makecell{$0.5584$\\$\pm\,0.0580$} \\
+\addlinespace[3pt]
+FiTabR         & \makecell{$0.7586$\\$\pm\,0.0086$} & \makecell{$0.7595$\\$\pm\,0.0099$} & \makecell{$0.7589$\\$\pm\,0.0092$} & \makecell{$0.7953$\\$\pm\,0.0047$} & \makecell{$0.5474$\\$\pm\,0.0044$} \\
+\bottomrule
 \end{tabular}
 \end{table}
+
 \section{Pima Diabetes}
 \label{sec:pima_results}
 On the Pima Diabetes dataset (Table~\ref{tab:pima_results}) FT-Transformer achieved the highest
@@ -1257,27 +1283,38 @@ these differences was about one standard deviation or less. The ROC-AUC
 difference was small and favored TabR (0.7963 versus 0.7953). On Pima Diabetes,
 FiTabR therefore improved slightly on TabR in the threshold-dependent metrics,
 within the variation across ensembles, and did not improve ranking performance.
+
 \begin{table}[H]
 \centering
 \caption[Performance comparison on the Stroke Prediction Dataset.]
 {Performance comparison on the Stroke Prediction Dataset. Results are
-reported as mean over three five-model ensembles (15 random seeds).}
+reported as mean $\pm$ standard deviation over the three five-model ensembles.}
 \label{tab:stroke_results}
 \small
+\setlength{\tabcolsep}{5pt}
+\setcellgapes{1.5pt}\makegapedcells
 \begin{tabular}{lccccc}
-\hline
+\toprule
 \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{F1-score} & \textbf{ROC-AUC} & \textbf{Cross-Entropy} \\
-\hline
-CatBoost       & 0.9500 & 0.9033 & 0.9261 & 0.8294 & 0.3105 \\
-XGBoost        & 0.9513 & \textbf{0.9407} & \textbf{0.9300} & 0.8201 & 0.2259 \\
-LightGBM       & \textbf{0.9518} & 0.9376 & 0.9294 & 0.8199 & \textbf{0.1640} \\
-MLP            & 0.9505 & 0.9034 & 0.9263 & 0.8220 & 0.1738 \\
-SAINT          & 0.9505 & 0.9034 & 0.9263 & 0.7368 & 0.2042 \\
-FT-Transformer & 0.9505 & 0.9034 & 0.9263 & \textbf{0.8328} & 0.1663 \\
-TabR           & 0.9505 & 0.9034 & 0.9263 & 0.8136 & 0.1780 \\
-ModernNCA      & 0.9505 & 0.9034 & 0.9263 & 0.7808 & 0.1712 \\
-FiTabR         & 0.9505 & 0.9034 & 0.9263 & 0.8095 & 0.1750 \\
-\hline
+\midrule
+CatBoost       & \makecell{$0.9500$\\$\pm\,0.0008$} & \makecell{$0.9033$\\$\pm\,0.0000$} & \makecell{$0.9261$\\$\pm\,0.0004$} & \makecell{$0.8294$\\$\pm\,0.0168$} & \makecell{$0.3105$\\$\pm\,0.0525$} \\
+\addlinespace[3pt]
+XGBoost        & \makecell{$0.9513$\\$\pm\,0.0008$} & \makecell{$\mathbf{0.9407}$\\$\pm\,0.0125$} & \makecell{$\mathbf{0.9300}$\\$\pm\,0.0016$} & \makecell{$0.8201$\\$\pm\,0.0024$} & \makecell{$0.2259$\\$\pm\,0.0678$} \\
+\addlinespace[3pt]
+LightGBM       & \makecell{$\mathbf{0.9518}$\\$\pm\,0.0013$} & \makecell{$0.9376$\\$\pm\,0.0296$} & \makecell{$0.9294$\\$\pm\,0.0031$} & \makecell{$0.8199$\\$\pm\,0.0023$} & \makecell{$\mathbf{0.1640}$\\$\pm\,0.0007$} \\
+\midrule
+MLP            & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,0.0000$} & \makecell{$0.9263$\\$\pm\,0.0000$} & \makecell{$0.8220$\\$\pm\,0.0087$} & \makecell{$0.1738$\\$\pm\,0.0129$} \\
+\addlinespace[3pt]
+SAINT          & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,0.0000$} & \makecell{$0.9263$\\$\pm\,0.0000$} & \makecell{$0.7368$\\$\pm\,0.0528$} & \makecell{$0.2042$\\$\pm\,0.0067$} \\
+\addlinespace[3pt]
+FT-Transformer & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,0.0000$} & \makecell{$0.9263$\\$\pm\,0.0000$} & \makecell{$\mathbf{0.8328}$\\$\pm\,0.0036$} & \makecell{$0.1663$\\$\pm\,0.0049$} \\
+\midrule
+TabR           & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,0.0000$} & \makecell{$0.9263$\\$\pm\,0.0000$} & \makecell{$0.8136$\\$\pm\,0.0078$} & \makecell{$0.1780$\\$\pm\,0.0050$} \\
+\addlinespace[3pt]
+ModernNCA      & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,0.0000$} & \makecell{$0.9263$\\$\pm\,0.0000$} & \makecell{$0.7808$\\$\pm\,0.0203$} & \makecell{$0.1712$\\$\pm\,0.0029$} \\
+\addlinespace[3pt]
+FiTabR         & \makecell{$0.9505$\\$\pm\,0.0000$} & \makecell{$0.9034$\\$\pm\,0.0000$} & \makecell{$0.9263$\\$\pm\,0.0000$} & \makecell{$0.8095$\\$\pm\,0.0126$} & \makecell{$0.1750$\\$\pm\,0.0091$} \\
+\bottomrule
 \end{tabular}
 \end{table}
 
@@ -1301,8 +1338,8 @@ highest ROC-AUC (0.8328), followed by CatBoost (0.8294).
 Relative to TabR, FiTabR reduced cross-entropy slightly from 0.1780 to 0.1750,
 whereas its ROC-AUC decreased from 0.8136 to 0.8095. Both differences were
 smaller than the corresponding standard deviations, and FiTabR ranked seventh
-of the nine models in ROC-AUC. Stroke Prediction is accordingly the dataset on
-which FiTabR provided no measurable benefit over TabR.
+of the nine models in ROC-AUC. FiTabR provided no measurable benefit over TabR
+on the Stroke Prediction dataset (see Section~\ref{sec:dataset_discussion}).
 
                      
 \begin{table}[H]
@@ -1514,11 +1551,11 @@ scaling term was removed.
     \label{fig:heart_ablation_performance}
 \end{figure}
 
-Uniform weighting is also competitive with the complete model. This
+Uniform weighting was also competitive with the complete model. This
 suggests that part of the gain on Heart Disease may originate from
 numerical feature modulation itself rather than exclusively from the
 learned sample-specific attention distribution. Nevertheless, the
-Uniform configuration exhibits greater variability than the complete
+Uniform configuration exhibited greater variability than the complete
 FiTabR model.
 % ============================================================
 % Pima Diabetes
@@ -1690,10 +1727,11 @@ ada2026diagnosis,bushnell2024}.
 \begin{table}[H]
 \centering
 \caption[Comparison of FiTabR attention on the Heart Disease Dataset.]{Comparison of FiTabR attention with established medical
-domain knowledge on the Heart Disease Dataset.}
+domain knowledge on the Heart Disease Dataset. Bold values have a mean attention above the uniform value (dashed line in Figure~\ref{fig:heart_attention}).}
 \label{tab:heart_attention_domain}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\tabcolsep}{5pt}
+\renewcommand{\attuniform}{1/6}   % F = 6 numerical features
 \small
 
 \begin{tabularx}{\textwidth}{
@@ -1708,32 +1746,32 @@ domain knowledge on the Heart Disease Dataset.}
 \midrule
 
 Cholesterol &
-$\mathbf{0.2627 \pm 0.1155}$ &
+\attcell{0.2627}{0.1155} &
 Major contributor to atherosclerotic cardiovascular risk
 \cite{ctt2012,visseren2021}. \\
 
 Age &
-$\mathbf{0.2208 \pm 0.0765}$ &
+\attcell{0.2208}{0.0765} &
 Major cardiovascular risk determinant included in established
 risk-prediction models \cite{dagostino2008,score2_2021}. \\
 
 RestingBP &
-$0.1691 \pm 0.0600$ &
+\attcell{0.1691}{0.0600} &
 Elevated blood pressure is a major modifiable cardiovascular
 risk factor \cite{lewington2002,visseren2021}. \\
 
 FastingBS &
-$0.1246 \pm 0.0637$ &
+\attcell{0.1246}{0.0637} &
 Diabetes and elevated glucose are associated with increased
 cardiovascular risk \cite{erfc2010}. \\
 
 Oldpeak &
-$0.1226 \pm 0.0502$ &
+\attcell{0.1226}{0.0502} &
 Exercise-induced ST-segment deviation has established diagnostic
 and prognostic relevance \cite{mark1991}. \\
 
 MaxHR &
-$0.1002 \pm 0.0544$ &
+\attcell{0.1002}{0.0544} &
 Impaired exercise heart-rate response is associated with adverse
 cardiovascular outcomes \cite{lauer1996}. \\
 
@@ -1747,7 +1785,7 @@ cardiovascular outcomes \cite{lauer1996}. \\
     \includegraphics[width=\textwidth]
     {figure/heart_attention_analysis.pdf}
     \caption[FiTabR feature-attention distribution on the Heart Disease Dataset.]{FiTabR feature-attention distribution on the Heart Disease Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
-    uniform bars show the reference value $1/F$ for each numerical feature.}
+    dashed line shows the uniform value $1/F$ for each numerical feature.}
     \label{fig:heart_attention}
 \end{figure}
 
@@ -1757,8 +1795,8 @@ cardiovascular outcomes \cite{lauer1996}. \\
 Cholesterol and age received the two highest mean attention values
 (Table~\ref{tab:heart_attention_domain} and
 Figure~\ref{fig:heart_attention}), in line with their established role in
-cardiovascular risk. Resting blood pressure received intermediate attention,
-and Oldpeak and maximum heart rate received the lowest, although both have
+cardiovascular risk. RestingBP received intermediate attention,
+and Oldpeak and MaxHR received the lowest, although both have
 known prognostic value. The large standard deviation of cholesterol attention
 ($0.1155$) shows that FiTabR emphasized this feature differently across
 patients.
@@ -1766,21 +1804,22 @@ patients.
 \subsection{Pima Diabetes}
 \label{subsec:pima_attention}
 
-SkinThickness received the highest mean attention, followed by insulin, BMI,
-and age (Table~\ref{tab:pima_attention_domain} and
+SkinThickness received the highest mean attention, followed by Insulin, BMI,
+and Age (Table~\ref{tab:pima_attention_domain} and
 Figure~\ref{fig:pima_attention}). These variables relate to adiposity and
-insulin regulation in Type 2 diabetes, and insulin attention varied most
+insulin regulation in Type 2 diabetes, and Insulin attention varied most
 across samples (standard deviation $0.1157$). The main discrepancy is
-glucose, which is central to diabetes diagnosis but received low attention,
-as did blood pressure and the diabetes pedigree function.
+Glucose, which is central to diabetes diagnosis but received low attention,
+as did BloodPressure and DPFunction.
 
 \begin{table}[H]
 \centering
 \caption[Comparison of FiTabR attention on the Pima Diabetes Dataset.]{Comparison of FiTabR attention with established medical
-domain knowledge on the Pima Diabetes Dataset.}
+domain knowledge on the Pima Diabetes Dataset. Bold values have a mean attention above the uniform value (dashed line in Figure~\ref{fig:pima_attention}).}
 \label{tab:pima_attention_domain}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\tabcolsep}{5pt}
+\renewcommand{\attuniform}{1/8}   % F = 8 numerical features
 \small
 
 \begin{tabularx}{\textwidth}{
@@ -1795,43 +1834,43 @@ domain knowledge on the Pima Diabetes Dataset.}
 \midrule
 
 SkinThickness &
-$\mathbf{0.2139 \pm 0.0816}$ &
+\attcell{0.2139}{0.0816} &
 Indicator of subcutaneous adiposity associated with insulin
 resistance and Type 2 diabetes risk
 \cite{sosenko1993,ada2026obesity}. \\
 
 Insulin &
-$\mathbf{0.1687 \pm 0.1157}$ &
+\attcell{0.1687}{0.1157} &
 Insulin resistance and $\beta$-cell dysfunction are central to
 Type 2 diabetes pathophysiology \cite{defronzo2009}. \\
 
 BMI &
-$0.1474 \pm 0.0548$ &
+\attcell{0.1474}{0.0548} &
 Overweight and obesity are established Type 2 diabetes risk
 factors \cite{ada2026diagnosis,ada2026obesity}. \\
 
 Age &
-$0.1438 \pm 0.0459$ &
+\attcell{0.1438}{0.0459} &
 Increasing age is an established diabetes risk factor used in
 screening recommendations \cite{ada2026diagnosis}. \\
 
 Pregnancies &
-$0.1276 \pm 0.0469$ &
+\attcell{0.1276}{0.0469} &
 Pregnancy-related metabolic history can be associated with
 future diabetes risk \cite{ada2026diagnosis}. \\
 
 Glucose &
-$0.0688 \pm 0.0389$ &
+\attcell{0.0688}{0.0389} &
 Glucose measurement is central to diabetes screening and
 diagnosis \cite{ada2026diagnosis}. \\
 
 DPFunction &
-$0.0658 \pm 0.0370$ &
+\attcell{0.0658}{0.0370} &
 Represents familial predisposition; family history is an
 established diabetes risk factor \cite{ada2026diagnosis}. \\
 
 BloodPressure &
-$\mathbf{0.0641 \pm 0.0370}$ &
+\attcell{0.0641}{0.0370} &
 Hypertension is associated with cardiometabolic and diabetes
 risk \cite{ada2026diagnosis}. \\
 
@@ -1844,29 +1883,30 @@ risk \cite{ada2026diagnosis}. \\
     \includegraphics[width=\textwidth]
     {figure/pima_attention_analysis.pdf}
     \caption[FiTabR feature-attention distribution on the Pima Diabetes Dataset.]{FiTabR feature-attention distribution on the Pima Diabetes Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
-    uniform bars show the reference value $1/F$ for each numerical feature.}
+    dashed line shows the uniform value $1/F$ for each numerical feature.}
     \label{fig:pima_attention}
 \end{figure}
 \subsection{Stroke Prediction}
 \label{subsec:stroke_attention}
 
-Average glucose level and age received the highest mean attention
+AvgGlucoseLevel and Age received the highest mean attention
 (Table~\ref{tab:stroke_attention_domain} and
 Figure~\ref{fig:stroke_attention}), consistent with their established
-association with stroke risk, and glucose attention varied most across
+association with stroke risk, and AvgGlucoseLevel attention varied most across
 samples (standard deviation $0.1262$). Hypertension, a major modifiable
 stroke risk factor, received the lowest attention. The binary hypertension
 variable carries less information than a continuous blood-pressure
 measurement, and the model may also represent related information through
-age, glucose, BMI, and heart disease.
+Age, AvgGlucoseLevel, BMI and HeartDisease.
 
 \begin{table}[H]
 \centering
 \caption[Comparison of FiTabR attention on the Stroke Prediction Dataset.]{Comparison of FiTabR attention with established medical
-domain knowledge on the Stroke Prediction Dataset.}
+domain knowledge on the Stroke Prediction Dataset. Bold values have a mean attention above the uniform value (dashed line in Figure~\ref{fig:stroke_attention}).}
 \label{tab:stroke_attention_domain}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\tabcolsep}{5pt}
+\renewcommand{\attuniform}{1/5}   % F = 5 numerical features
 \small
 
 \begin{tabularx}{\textwidth}{
@@ -1880,28 +1920,28 @@ domain knowledge on the Stroke Prediction Dataset.}
 \textbf{Established Clinical Context} \\
 \midrule
 
-Average glucose level &
-$\mathbf{0.3200 \pm 0.1262}$ &
+AvgGlucoseLevel &
+\attcell{0.3200}{0.1262} &
 Diabetes and hyperglycemia are established stroke risk factors
 \cite{erfc2010,bushnell2024}. \\
 
 Age &
-$\mathbf{0.2430 \pm 0.0540}$ &
+\attcell{0.2430}{0.0540} &
 Major non-modifiable determinant of stroke risk
 \cite{wolf1991}. \\
 
-Heart disease &
-$0.1920 \pm 0.0576$ &
+HeartDisease &
+\attcell{0.1920}{0.0576} &
 Cardiovascular disease is associated with increased stroke risk
 \cite{kannel1983}. \\
 
 BMI &
-$0.1329 \pm 0.0794$ &
+\attcell{0.1329}{0.0794} &
 Higher BMI is associated with stroke risk, partly through
 metabolic risk factors \cite{gbd2014}. \\
 
 Hypertension &
-$\mathbf{0.1121 \pm 0.0695}$ &
+\attcell{0.1121}{0.0695} &
 Major modifiable stroke risk factor and prevention target
 \cite{bushnell2024,lewington2002}. \\
 
@@ -1916,7 +1956,7 @@ Major modifiable stroke risk factor and prevention target
     \caption[FiTabR feature-attention distribution on the Stroke Prediction
     Dataset.]{FiTabR feature-attention distribution on the Stroke Prediction
     Dataset. Learned bars show mean attention with $\pm 1$ standard deviation;
-    uniform bars show the reference value $1/F$ for each numerical feature.}
+    dashed line shows the uniform value $1/F$ for each numerical feature.}
     \label{fig:stroke_attention}
 \end{figure}
 
@@ -1924,10 +1964,10 @@ Major modifiable stroke risk factor and prevention target
 \label{subsec:attention_summary}
 
 Across the three datasets, the learned attention agreed with clinical
-knowledge only in part. Cholesterol and age on Heart Disease, adiposity- and
-insulin-related variables on Pima Diabetes, and average glucose level and age
-on Stroke Prediction received high attention, whereas glucose on Pima
-Diabetes and hypertension on Stroke Prediction received low attention despite
+knowledge only in part. Cholesterol and Age on Heart Disease, adiposity- and
+insulin-related variables on Pima Diabetes, and AvgGlucoseLevel and Age
+on Stroke Prediction received high attention, whereas Glucose on Pima
+Diabetes and Hypertension on Stroke Prediction received low attention despite
 their central clinical roles. This partial agreement is consistent with
 reading FiTabR attention as model-specific feature emphasis rather than as a
 clinical ranking of risk factors.
@@ -1962,9 +2002,9 @@ Pima Diabetes is the smallest dataset. With 116 test patients, one patient
 corresponds to an accuracy difference of 0.0086, and the FiTabR--TabR
 difference of 0.0057 was smaller than this. All eight features are
 numerical, so the attention module reweights the complete input. Two of
-these features contain many zero-coded values: insulin in 48.7\% of the
-patients and skin thickness in 29.6\%. These two features received the
-highest attention, whereas glucose, which is central to diabetes diagnosis
+these features contain many zero-coded values: Insulin in 48.7\% of the
+patients and SkinThickness in 29.6\%. These two features received the
+highest attention, whereas Glucose, which is central to diabetes diagnosis
 and is zero in fewer than 1\% of the patients, received low attention
 (Section~\ref{subsec:pima_attention}). This pattern is consistent with the
 module emphasizing where measurements are missing rather than metabolic
@@ -1984,8 +2024,8 @@ dataset, not from the attention module itself. On the threshold-independent
 metrics, FiTabR and TabR differed by less than one standard deviation in
 both ROC-AUC ($0.8095 \pm 0.0126$ versus $0.8136 \pm 0.0078$) and
 cross-entropy ($0.1750 \pm 0.0091$ versus $0.1780 \pm 0.0050$). In
-addition, two of the five numerical features, hypertension and heart
-disease, are binary indicators, which leaves less within-feature variation
+addition, two of the five numerical features, Hypertension and HeartDisease,
+are binary indicators, which leaves less within-feature variation
 for the module to reweight.
 
 Across the three datasets, the effect of FiTabR therefore depended less on
